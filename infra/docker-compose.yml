@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  grafana:
+    image: grafana/grafana:9.1.7
+    ports:
+      - 8081:3000
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg14
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=timescale
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - timescaledb-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "6081:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@example.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  timescaledb-data:
+  pgadmin-data:
