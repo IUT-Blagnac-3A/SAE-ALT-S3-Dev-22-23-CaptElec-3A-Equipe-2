@@ -39,6 +39,17 @@ services:
     depends_on:
       - timescaledb
 
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer_container
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
 volumes:
+  portainer_data:
   timescaledb-data:
   pgadmin-data:
