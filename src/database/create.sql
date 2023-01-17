@@ -1,0 +1,37 @@
+CREATE TABLE UserC(
+   id VARCHAR(50),
+   firstname VARCHAR(50),
+   lastname VARCHAR(50),
+   password VARCHAR(50),
+   email VARCHAR(50),
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE Project(
+   PId VARCHAR(50),
+   public LOGICAL NOT NULL,
+   PRIMARY KEY(PId)
+);
+
+CREATE TABLE SVG(
+   SVGId VARCHAR(50),
+   content TEXT,
+   PId VARCHAR(50) NOT NULL,
+   PRIMARY KEY(SVGId),
+   FOREIGN KEY(PId) REFERENCES Project(PId)
+);
+
+CREATE TABLE Device(
+   DId VARCHAR(50),
+   PId VARCHAR(50) NOT NULL,
+   PRIMARY KEY(DId),
+   FOREIGN KEY(PId) REFERENCES Project(PId)
+);
+
+CREATE TABLE has(
+   id VARCHAR(50),
+   PId VARCHAR(50),
+   PRIMARY KEY(id, PId),
+   FOREIGN KEY(id) REFERENCES UserC(id),
+   FOREIGN KEY(PId) REFERENCES Project(PId)
+);
