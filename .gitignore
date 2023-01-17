@@ -6,6 +6,8 @@
 *.log
 /node_modules/
 
+.env
+
 /.angular/cache/
 
 # CircleCI temporary file for cache key computation.
