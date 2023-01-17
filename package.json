@@ -21,7 +21,6 @@
     "dotenv": "^16.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "xoauth2": "^1.2.0",
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
