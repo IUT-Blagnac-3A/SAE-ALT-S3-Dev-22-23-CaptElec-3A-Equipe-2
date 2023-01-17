@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg14
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=timescale
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - timescaledb-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "6081:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@example.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    
+  api:
+    build: 
+      context: ../server/api
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - timescaledb
+  
+  mqtt:
+    build: 
+      context: ../server/mqtt
+      dockerfile: Dockerfile
+    depends_on:
+      - timescaledb
+
+volumes:
+  timescaledb-data:
+  pgadmin-data:
