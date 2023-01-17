@@ -1,21 +1,23 @@
 const express = require('express');
 // const bodyParser = require('body-parser');
 const app = express();
-const db = require('./postgres');
+const db = require('../mqtt/db');
 
 app.get('/', (req, res) => {
-    res.send('Hello World')
+    res.send('Hello world')
 })
 
 app.get('/data', async (req, res) => {
-    const result = await db.query('select * from mqtt_data');
-    res.json(result.rows)
+    const result = await db.getAllData();
+    console.log(result)
+    res.json(result)
 })
 
 app.get('/data/:deviceName', async (req, res) => {
-    dN = req.params.deviceName
-    const result = await db.query('select  * from mqtt_data where deviceName = $1', [dN])
-    res.json(result.rows)
+    deviceName = req.params.deviceName
+    const result = await db.getDatasFromDevice(deviceName)
+    console.log(result)
+    res.json(result)
 })
 
 app.listen(3000, () => {

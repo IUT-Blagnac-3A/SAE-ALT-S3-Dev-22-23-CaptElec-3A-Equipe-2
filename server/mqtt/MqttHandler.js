@@ -37,7 +37,7 @@ class MqttHandler {
                             humidity:res.object.humidity,
                             pressure:res.object.pressure,
                             temperature:res.object.temperature }
-            console.log(db.insertDatas(datas))
+            db.insertDatas(datas)
         });
 
         this.mqttClient.on('close', () => {

@@ -11,12 +11,26 @@ const sql = postgres('postgres://timescale:password@localhost:5432/timescale', {
 })
 
 async function insertDatas({ deviceName, ts, activity, co2, humidity, pressure, temperature }) {
-    const datas = await sql`
+    const res = await sql`
         INSERT INTO mqtt_data ( deviceName, ts, activity, co2, humidity, pressure, temperature )
         VALUES ( ${ deviceName }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
-        returning deviceName, ts, activity, co2, humidity, pressure, temperature
+        RETURNING deviceName, ts, activity, co2, humidity, pressure, temperature
     `
-    return datas
+    return res
 }
 
-module.exports = {sql, insertDatas}
+async function getAllData() {
+    const res = await sql`
+        SELECT * FROM mqtt_data
+    `
+    return res
+}
+
+async function getDatasFromDevice(deviceName) {
+    const res = await sql`
+        SELECT  * FROM mqtt_data WHERE deviceName = ${ deviceName }
+    `
+    return res
+}
+
+module.exports = {sql, insertDatas, getAllData, getDatasFromDevice}
