@@ -1,7 +1,7 @@
 const express = require('express');
 // const bodyParser = require('body-parser');
 const app = express();
-const db = require('../mqtt/db');
+const db = require('./db');
 
 app.get('/', (req, res) => {
     res.send('Hello world')

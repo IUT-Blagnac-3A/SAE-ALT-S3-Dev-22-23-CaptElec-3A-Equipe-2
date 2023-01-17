@@ -1,11 +1,6 @@
 version: "3"
 
 services:
-  grafana:
-    image: grafana/grafana:9.1.7
-    ports:
-      - 8081:3000
-
   timescaledb:
     image: timescale/timescaledb:latest-pg14
     ports:
@@ -27,6 +22,22 @@ services:
       PGADMIN_DEFAULT_PASSWORD: password
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+    
+  api:
+    build: 
+      context: ../server/api
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - timescaledb
+  
+  mqtt:
+    build: 
+      context: ../server/mqtt
+      dockerfile: Dockerfile
+    depends_on:
+      - timescaledb
 
 volumes:
   timescaledb-data:
