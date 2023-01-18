@@ -11,4 +11,4 @@ RUN npm install --production
 
 COPY . .
 
-CMD ["sh","-c","node mainBattery.js && node mainData.js"]
+CMD ["node", "main.js"]
