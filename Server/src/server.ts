@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use("/", routes);
 
-// start our server on port 4000
-app.listen(4000, "localhost", function () {
-  console.log("✔ Backend Server now listening on 4201");
+// start our server on port 4001
+app.listen(4001, "localhost", function () {
+  console.log("✔ Backend Server now listening on 4001");
 });
