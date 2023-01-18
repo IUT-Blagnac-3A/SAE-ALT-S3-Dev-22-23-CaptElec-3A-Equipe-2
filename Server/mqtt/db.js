@@ -2,12 +2,12 @@
 const postgres = require('postgres') 
 
 // Connection to database
-const sql = postgres('postgres://timescale:password@localhost:5432/timescale', {
-    host: 'timescaledb',      // Postgres ip address[s] or domain name[s]
-    port: 5432,             // Postgres server port[s]
-    database: 'timescale',  // Name of database to connect to
-    username: 'timescale',  // Username of database user
-    password: 'password',   // Password of database user
+const sql = postgres('postgres://postgres:password@postgres:5432/postgres', {
+    host: process.env.POSTGRES_HOST,      // Postgres ip address[s] or domain name[s]
+    port: process.env.POSTGRES_PORT,             // Postgres server port[s]
+    database: process.env.POSTGRES_DB,  // Name of database to connect to
+    username: process.env.POSTGRES_USERNAME,  // Username of database user
+    password: process.env.POSTGRES_PASSWORD,   // Password of database user
 })
 
 async function insertDatasToMqttData({ deviceName, ts, activity, co2, humidity, pressure, temperature }) {
