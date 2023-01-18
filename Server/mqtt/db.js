@@ -10,11 +10,20 @@ const sql = postgres('postgres://timescale:password@localhost:5432/timescale', {
     password: 'password',   // Password of database user
 })
 
-async function insertDatas({ deviceName, ts, activity, co2, humidity, pressure, temperature }) {
+async function insertDatasToMqttData({ deviceName, ts, activity, co2, humidity, pressure, temperature }) {
     const res = await sql`
         INSERT INTO mqtt_data ( deviceName, ts, activity, co2, humidity, pressure, temperature )
         VALUES ( ${ deviceName }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
         RETURNING deviceName, ts, activity, co2, humidity, pressure, temperature
+    `
+    return res
+}
+
+async function insertDatasToRoom({ projet, room, deviceName, ts, battery }) {
+    const res = await sql`
+        INSERT INTO room ( projet, room, deviceName, ts, battery )
+        VALUES ( ${ projet }, ${ room }, ${ deviceName }, ${ ts }, ${ battery } )
+        RETURNING projet, room, deviceName, ts, battery
     `
     return res
 }
@@ -33,4 +42,4 @@ async function getDatasFromDevice(deviceName) {
     return res
 }
 
-module.exports = {sql, insertDatas, getAllData, getDatasFromDevice}
+module.exports = {sql, insertDatasToMqttData, insertDatasToRoom, getAllData, getDatasFromDevice}

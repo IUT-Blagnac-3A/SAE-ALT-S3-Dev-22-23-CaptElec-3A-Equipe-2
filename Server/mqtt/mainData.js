@@ -1,4 +1,4 @@
-var mqttHandler = require('./MqttHandler')
+var mqttHandler = require('./MqttHandlerData')
 
 var client = new mqttHandler()
 client.connect()
