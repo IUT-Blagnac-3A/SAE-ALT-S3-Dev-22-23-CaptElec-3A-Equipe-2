@@ -1,12 +1,13 @@
 const mqtt = require('mqtt')
 
 class MqttHandler {
-    constructor(host) {
+    constructor(host, topic) {
         this.mqttClient = null;
         this.host = host;
+        this.topic = topic;
     }
 
-    connect(topic, callback) {
+    connect(callback) {
         this.mqttClient = mqtt.connect(this.host)
 
         // Mqtt error calback
@@ -20,7 +21,7 @@ class MqttHandler {
             console.log(`mqtt client connected`);
         });
 
-        this.mqttClient.subscribe(topic);
+        this.mqttClient.subscribe(this.topic);
 
         this.mqttClient.on('message', function (topic, message) {
             const res = JSON.parse(message.toString())
