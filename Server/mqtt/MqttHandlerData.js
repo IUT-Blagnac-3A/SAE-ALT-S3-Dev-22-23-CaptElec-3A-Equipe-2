@@ -28,7 +28,6 @@ class MqttHandler {
         // When a message arrives, console.log it
         this.mqttClient.on('message', function (topic, message) {
             const ts_temp = Date.now()
-            console.log(message.toString());
             var res = JSON.parse(message.toString())
             var datas = {   deviceName:res.deviceName,
                             ts:ts_temp,
@@ -37,7 +36,8 @@ class MqttHandler {
                             humidity:res.object.humidity,
                             pressure:res.object.pressure,
                             temperature:res.object.temperature }
-            db.insertDatas(datas)
+            console.log(datas)
+            db.insertDatasToMqttData(datas)
         });
 
         this.mqttClient.on('close', () => {
