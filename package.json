@@ -1,6 +1,18 @@
 {
   "scripts": {
-    "serve": "concurrently \"cd Frontend && ng serve\" \"cd Server && npm run serve\""
+    "serve": "concurrently \"cd Frontend && ng serve\" \"cd Server && npm run serve\"",
+    "cleanRootWindows": "rd /s /q node_modules",
+    "cleanRootLinux": "rm -rf node_modules Frontend/node_modules Server/node_modules",
+    "cleanFrontendWindows": "cd Frontend && rd /s /q node_modules",
+    "cleanFrontendLinux": "cd Frontend && rm -rf node_modules",
+    "cleanServerWindows": "cd Server && rd /s /q node_modules",
+    "cleanServerLinux": "cd Server && rm -rf node_modules",
+    "cleanW": "npm run cleanRootWindows && npm run cleanFrontendWindows && npm run cleanServerWindows",
+    "cleanL": "npm run cleanRootLinux && npm run cleanFrontendLinux && npm run cleanServerLinux",
+    "buildRoot": "npm install",
+    "buildFrontend": "cd Frontend && npm install",
+    "buildServer": "cd Server && npm install",
+    "build": "npm run buildRoot && npm run buildFrontend && npm run buildServer"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"
