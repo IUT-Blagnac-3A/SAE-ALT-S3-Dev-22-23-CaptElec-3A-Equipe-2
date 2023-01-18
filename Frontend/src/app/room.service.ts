@@ -11,7 +11,7 @@ export class RoomService {
   constructor(private http: HttpClient) {}
 
   public getRooms(): Observable<Room[]>{
-    return this.http.get<any>('localhost:3000/data');
+    return this.http.get<any>('http://localhost:3000/data');
   }
 
 }
