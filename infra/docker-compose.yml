@@ -25,7 +25,7 @@ services:
     
   api:
     build: 
-      context: ../server/api
+      context: ../Server/api
       dockerfile: Dockerfile
     ports:
       - 3000:3000
@@ -34,7 +34,7 @@ services:
   
   mqtt:
     build: 
-      context: ../server/mqtt
+      context: ../Server/mqtt
       dockerfile: Dockerfile
     depends_on:
       - timescaledb

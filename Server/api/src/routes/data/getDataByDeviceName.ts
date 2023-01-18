@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getDatasFromDevice } from '../../db/dbConnection.js'
+import { getDatasFromDevice } from '../../models/data.js'
 
 export default async function getDataFromDevice (req: Request, res: Response) {
     const deviceName: string = req.params.deviceName
