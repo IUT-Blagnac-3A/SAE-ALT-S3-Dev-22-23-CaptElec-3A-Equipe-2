@@ -2,6 +2,10 @@ import express, { Express } from 'express';
 import { routes } from './routes/route.js';
 import corsMiddleware from './middleware/cors.js';
 import bodyParser from 'body-parser';
+import * as dotenv from 'dotenv';
+
+dotenv.config()
+console.log(process.env)
 
 const app: Express = express();
 
@@ -15,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json());
 app.use("/", routes);
 
-app.listen(3000, () => {
-    console.log('App running on port 3000')
+const port = process.env.API_PORT
+app.listen(port, () => {
+    console.log('App running on port ', port)
 })

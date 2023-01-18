@@ -12,7 +12,7 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
 
         if (token == null) return res.sendStatus(401)
 
-        const decoded: string | jwt.JwtPayload = jwt.verify(token, "process.env.TOKEN_SECRET" as string);
+        const decoded: string | jwt.JwtPayload = jwt.verify(token, process.env.TOKEN_SECRET as string);
         (req as CustomRequest).token = decoded
 
         console.log('decoded : ', decoded)
