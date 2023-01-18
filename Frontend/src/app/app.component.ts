@@ -12,6 +12,7 @@ import File from "./modules/File";
 })
 export class AppComponent {
   svgFiles: File[] = [];
+  title="test";
 
   constructor(private svgService: SVGService) {}
 
