@@ -2,13 +2,9 @@
 
 # Introduction
 
-<div>
-
-<img  width="75" height="75" style="float: left; margin: 0 10px 0 0; border-radius:10px" alt="Discord" src="https://cdn.discordapp.com/attachments/579303130886569984/1065183148473843742/1519871482152.png">
+<img width="75" height="75" style="float: left; margin: 0 10px 0 0; border-radius:10px" alt="Discord" src="https://cdn.discordapp.com/attachments/579303130886569984/1065183148473843742/1519871482152.png">
 
 This project is a simple web application in the context of the SAE at the IUT of Blagnac. The website allows you to import svg maps and add sensors to work with them. (C02, temperature, humidity, etc.)
-
-</div>
 
 ---
 
