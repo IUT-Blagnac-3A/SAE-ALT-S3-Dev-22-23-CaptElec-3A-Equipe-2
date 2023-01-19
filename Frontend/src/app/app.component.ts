@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild, QueryList, ElementRef } from "@angular/core";
 
 import SVGService from "./modules/SVG";
 
@@ -12,6 +12,8 @@ import { ViewService } from "./view.service";
   templateUrl: "./app.component.html",
 })
 export class AppComponent {
+  @ViewChild("svg") svg: ElementRef | null = null;
+
   svgFiles: File[] = [];
   viewService!: ViewService;
 
@@ -27,10 +29,53 @@ export class AppComponent {
       "IUT_BLAGNAC"
     );
 
-    console.log(values);
-
     values.forEach((files: File) => {
       files.displayOnPage();
     });
+  }
+
+  ngAfterViewInit() {
+    let svgContainer = document.getElementById("svg-container");
+    let observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "childList") {
+          let groups = mutation.addedNodes;
+          groups.forEach((group: Node, index: number, parent: NodeList) => {
+            if (group instanceof Element && group.tagName === "DIV") {
+              let gs = group.querySelectorAll("g");
+              gs.forEach((group: Node, index: number, parent: NodeList) => {
+                group.addEventListener("mouseenter", (g) => {
+                  if (group instanceof Element) {
+                    let path = group.querySelector("path");
+                    let currentStyle = path?.getAttribute("style");
+
+                    if (currentStyle != null) {
+                      path?.setAttribute(
+                        "style",
+                        currentStyle.replace("fill:none", "fill:red")
+                      );
+                    }
+                  }
+                });
+                group.addEventListener("mouseleave", (g) => {
+                  if (group instanceof Element) {
+                    let path = group.querySelector("path");
+                    let currentStyle = path?.getAttribute("style");
+                    if (currentStyle != null) {
+                      path?.setAttribute(
+                        "style",
+                        currentStyle.replace("fill:red", "fill:none")
+                      );
+                    }
+                  }
+                });
+              });
+            }
+          });
+        }
+      });
+    });
+    if (!svgContainer) throw new Error("Container not found");
+    observer.observe(svgContainer, { childList: true });
   }
 }

@@ -12,13 +12,13 @@ export default class File {
   /**
    * We're working with a xml svg file, so we need to parse it to be able to use it
    */
-  displayOnPage() {
+  async displayOnPage() {
     let container = document.getElementById("svg-container");
     if (container == null) throw new Error("Container not found");
-    let element = document.createElement("div");
+    let element = await document.createElement("div");
     element.className = "svg-file";
-    element.innerHTML = this._content as string;
-    container.appendChild(element);
+    element.innerHTML = (await this._content) as string;
+    await container.appendChild(element);
   }
 
   get name() {
