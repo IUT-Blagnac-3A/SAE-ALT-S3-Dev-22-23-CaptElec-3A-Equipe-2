@@ -11,30 +11,35 @@ import File from "./File";
 export default class SVGService {
   constructor(private http: HttpClient) {}
 
-  getSVGFromClientProject(
+  async getSVGFromClientProject(
     firstname: string,
     secondname: string,
     id: string,
-    projectname: string
-  ): File[] {
-    let svgFiles: File[] = [];
-    // let path = `'../../../../database'/${firstname[0].toLowerCase()}${secondname[0].toLowerCase()}-${id}/${projectname}/`;
-    let path = `./assets/database/rb/`;
-    // This is where we use the HttpClient to make a GET request to the server to get the files
-    this.http
-      .get(path)
-      .pipe(
-        map((files: any) => {
-          files.forEach((file: any) => {
-            if (file.endsWith(".svg")) svgFiles.push(new File(file, path));
-          });
-          return svgFiles;
-        })
-      )
-      .subscribe((svgFiles: File[]) => {
-        return svgFiles;
-      });
-    return svgFiles;
+    projectname: string,
+    index: number = 0
+  ): Promise<File[]> {
+    return new Promise(async (resolve, reject) => {
+      let svgFiles: File[] = [];
+      let path = `http://localhost:3000/svgs/${firstname}/${secondname}/${id}/${projectname}/`;
+      let file: File;
+
+      const formData = new FormData();
+      formData.append("firstname", firstname);
+      formData.append("lastname", secondname);
+      formData.append("id", id);
+      formData.append("projectname", projectname);
+
+      await this.http
+        .post(`${path}`, formData, { responseType: "json" })
+        .subscribe((data: any) => {
+          // {"1et.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><path d=\"M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 90C27.5 90 10 72.5 10 50S27.5 10 50 10s40 17.5 40 40-17.5 40-40 40z\"/></svg>"}
+          for (let key in data) {
+            file = new File(key, path, data[key]);
+            svgFiles.push(file);
+          }
+          resolve(svgFiles);
+        });
+    });
   }
 
   /**

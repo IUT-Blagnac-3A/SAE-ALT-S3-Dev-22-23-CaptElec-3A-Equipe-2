@@ -1,30 +1,30 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Room } from '../room';
-import { RoomService } from '../room.service';
+import { HttpErrorResponse } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { Room } from "../room";
+import { RoomService } from "../room.service";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.scss"],
 })
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
   rooms!: Room[];
 
-  constructor(private roomService: RoomService){}
+  constructor(private roomService: RoomService) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.getRooms();
   }
 
-  public getRooms(){
-    this.roomService.getRooms().subscribe(
-      (response: Room[])=>{
-        this.rooms = response
-      },
-      (error: HttpErrorResponse)=>{
-        alert(error.message)
-      }
-    )
+  public getRooms() {
+    // this.roomService.getRooms().subscribe(
+    //   (response: Room[])=>{
+    //     this.rooms = response
+    //   },
+    //   (error: HttpErrorResponse)=>{
+    //     alert(error.message)
+    //   }
+    // )
   }
 }

@@ -20,9 +20,10 @@ export default async function getSvgs(req: Request, res: Response) {
     return;
   }
 
-  let parentPath = "./src/db/svgs";
+  let parentPath = "./src/database";
   let direct = `${firstname[0].toLowerCase()}${lastname[0].toLowerCase()}-${id}/${projectname}`;
   const path = `${parentPath}/${direct}/`;
+
   if (!fs.existsSync(path)) {
     res.status(404).send("Folder not found");
     return;
@@ -41,74 +42,15 @@ export default async function getSvgs(req: Request, res: Response) {
   srcDirName = srcDirName.slice(0, srcDirName.length - 2);
   let srcFolder = srcDirName.join("/");
   // Send the file buffer to the client
-  res.setHeader("Content-Type", "image/svg+xml");
-  res.sendFile(`${srcFolder}/db/svgs/${direct}/${files[0]}`);
-}
 
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
-
-import Project from "./Project";
-import File from "./File";
-
-@Injectable({
-  providedIn: "root",
-})
-export default class SVGService {
-  constructor(private http: HttpClient) {}
-
-  test() {
-    // Http request to the server to get the svg files
-    this.http
-      // routes.post("/svgs/:firstname/:secondname/:id/:projectname", getSvgs);
-
-      .get("http://localhost:3000/svgs/remy/boulle/0acf456wf/IUT_BLAGNAC")
-      .subscribe((data) => {
-        console.log(data);
-      });
+  // resultfiles = {"filenameOne": data}
+  let resultfiles = {};
+  for (let i = 0; i < files.length; i++) {
+    let name = files[i].split(".")[0];
+    let filePath = `${srcFolder}/${path.slice(5)}/${files[i]}`;
+    let content = fs.readFileSync(`${filePath}`, "utf8");
+    resultfiles = { ...resultfiles, [name]: content };
   }
 
-  getSVGFromClientProject(
-    firstname: string,
-    secondname: string,
-    id: string,
-    projectname: string
-  ): File[] {
-    let svgFiles: File[] = [];
-    // let path = `'../../../../database'/${firstname[0].toLowerCase()}${secondname[0].toLowerCase()}-${id}/${projectname}/`;
-    let path = `./assets/database/rb/`;
-    // This is where we use the HttpClient to make a GET request to the server to get the files
-    this.http
-      .get(path)
-      .pipe(
-        map((files: any) => {
-          files.forEach((file: any) => {
-            if (file.endsWith(".svg")) svgFiles.push(new File(file, path));
-          });
-          return svgFiles;
-        })
-      )
-      .subscribe((svgFiles: File[]) => {
-        return svgFiles;
-      });
-    return svgFiles;
-  }
-
-  /**
-   * Method that displays the SVGs files in the html page in a given container
-   * @param svgFiles
-   */
-  displaySVGsOnPage(svgFiles: File[], containerId: string): void {
-    if (svgFiles.length == 0) throw new Error("No SVG files found");
-    let container = document.getElementById(containerId);
-    console.log(container);
-
-    if (container == null) throw new Error("Container not found");
-    svgFiles.forEach((file: any) => {
-      let img = document.createElement("img");
-      img.src = file.path + "/" + file.name;
-      container?.appendChild(img);
-    });
-  }
+  res.send(resultfiles);
 }
