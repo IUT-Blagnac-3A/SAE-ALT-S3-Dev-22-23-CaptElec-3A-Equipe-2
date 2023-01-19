@@ -16,6 +16,7 @@ export default class File {
     let container = document.getElementById("svg-container");
     if (container == null) throw new Error("Container not found");
     let element = document.createElement("div");
+    element.className = "svg-file";
     element.innerHTML = this._content as string;
     container.appendChild(element);
   }

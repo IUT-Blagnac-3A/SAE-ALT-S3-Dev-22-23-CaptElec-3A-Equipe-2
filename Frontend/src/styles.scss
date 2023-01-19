@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+#svg-container svg {
+  // Center
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  height: 80%;
+}
