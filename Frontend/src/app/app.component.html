@@ -1,5 +1,11 @@
 <app-header></app-header>
-<app-dashboard></app-dashboard>
+
+<app-dashboard *ngIf="viewService.getView()==='Dashboard'"></app-dashboard>
+<app-notifications *ngIf="viewService.getView()==='Notifications'"></app-notifications>
+<app-administration *ngIf="viewService.getView()==='Administration'"></app-administration>
+<app-projects *ngIf="viewService.getView()==='Projects'"></app-projects>
+<app-helper *ngIf="viewService.getView()==='Help'"></app-helper>
+
 <app-footer></app-footer>
 
 <router-outlet></router-outlet>
