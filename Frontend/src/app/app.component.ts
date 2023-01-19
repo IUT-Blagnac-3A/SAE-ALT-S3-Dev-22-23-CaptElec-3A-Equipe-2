@@ -5,6 +5,7 @@ import SVGService from "./modules/SVG";
 // import SVG from "src/modules/SVG";
 
 import File from "./modules/File";
+import { ViewService } from "./view.service";
 
 @Component({
   selector: "app-root",
@@ -13,8 +14,9 @@ import File from "./modules/File";
 export class AppComponent {
   svgFiles: File[] = [];
   title="test";
+  viewService!: ViewService;
 
-  constructor(private svgService: SVGService) {}
+  constructor(private svgService: SVGService, private viewServ: ViewService) {}
 
   ngOnInit() {
     this.svgService
@@ -24,5 +26,8 @@ export class AppComponent {
         // display svg files on the page
         this.svgService.displaySVGsOnPage(this.svgFiles, "svg-container");
       });
+
+      this.viewService = this.viewServ;
   }
+  
 }
