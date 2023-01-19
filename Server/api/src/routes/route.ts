@@ -8,6 +8,8 @@ import login from "./auth/login.js";
 import authMiddleware from "../middleware/auth.js";
 import register from "./auth/register.js";
 import getPayload from "../utils/getPayload.js";
+import getBattery from "./battery/getBattery.js";
+import { getBatteryFromDevice } from "../models/battery.js";
 
 export const routes = express.Router();
 
@@ -18,6 +20,9 @@ routes.post("/users", postUser);
 
 routes.get("/data", getData)
 routes.get("/data/:deviceName", getDataFromDevice)
+
+routes.get("/battery", getBattery)
+routes.get("/battery/:deviceName", getBatteryFromDevice)
 
 routes.post("/login", login)
 routes.post("/register", register)
