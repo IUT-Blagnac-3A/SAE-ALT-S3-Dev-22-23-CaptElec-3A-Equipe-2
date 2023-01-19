@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ViewService {
 
-  view="Projects";
+  view="Dashboard";
 
   constructor() { }
 
