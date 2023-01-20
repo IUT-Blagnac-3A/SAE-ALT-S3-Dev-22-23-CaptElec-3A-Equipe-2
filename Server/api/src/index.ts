@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Handle POST requests that come in formatted as JSON
 app.use(express.json());
-app.use("/", routes);
+app.use("/api", routes);
 
 const port = process.env.API_PORT
 app.listen(port, () => {
