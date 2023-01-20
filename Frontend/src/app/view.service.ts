@@ -1,19 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ViewService {
+  view = "Dashboard";
 
-  view="Dashboard";
+  constructor() {}
 
-  constructor() { }
-
-  public setView(viewName: string): void{
+  public setView(viewName: string): void {
     this.view = viewName;
   }
 
-  public getView(): string{
+  public getView(): string {
     return this.view;
   }
 }
