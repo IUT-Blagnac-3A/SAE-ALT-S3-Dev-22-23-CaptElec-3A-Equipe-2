@@ -1,6 +1,4 @@
-<app-header></app-header>
-
-<div id="svg-container"></div>
+<app-header *ngIf="viewService.getView() != 'Log'"></app-header>
 <app-dashboard *ngIf="viewService.getView() === 'Dashboard'"></app-dashboard>
 <app-notifications
   *ngIf="viewService.getView() === 'Notifications'"
@@ -10,6 +8,7 @@
 ></app-administration>
 <app-projects *ngIf="viewService.getView() === 'Projects'"></app-projects>
 <app-helper *ngIf="viewService.getView() === 'Help'"></app-helper>
+<app-logpage *ngIf="viewService.getView() === 'Log'"></app-logpage>
 
 <app-footer></app-footer>
 
