@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
 
 import Project from "./Project";
 import File from "./File";
@@ -20,7 +19,7 @@ export default class SVGService {
   ): Promise<File[]> {
     return new Promise(async (resolve, reject) => {
       let svgFiles: File[] = [];
-      let path = `http://localhost:3000/svgs/${firstname}/${secondname}/${id}/${projectname}/`;
+      let path = `http://localhost:3000/api/svgs/${firstname}/${secondname}/${id}/${projectname}/`;
       let file: File;
 
       const formData = new FormData();
