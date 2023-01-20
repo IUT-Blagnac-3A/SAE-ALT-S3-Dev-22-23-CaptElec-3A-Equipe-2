@@ -6,6 +6,8 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
     CREATE TABLE IF NOT EXISTS mqtt_data
     (
         deviceName VARCHAR(32),
+        projet VARCHAR(32),
+        room VARCHAR(32),
         ts timestamp with time zone NOT NULL,
         activity double precision,
         co2 double precision,
