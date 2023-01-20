@@ -1,55 +1,65 @@
 version: "3"
 
 services:
-  timescaledb:
-    image: timescale/timescaledb:latest-pg14
+  postgres:
+    image: postgres:14
     ports:
-      - 5432:5432
+      - $POSTGRES_PORT:5432
     environment:
-      - POSTGRES_USER=timescale
-      - POSTGRES_PASSWORD=password
+      POSTGRES_USER: $POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
     volumes:
-      - timescaledb-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d
 
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4_container
     restart: always
     ports:
-      - "6081:80"
+      - $PGADMIN_PORT:80
     environment:
-      PGADMIN_DEFAULT_EMAIL: test@example.com
-      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_DEFAULT_EMAIL: $PGADMIN_DEFAULT_EMAIL
+      PGADMIN_DEFAULT_PASSWORD: $PGADMIN_DEFAULT_PASSWORD
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     
   api:
     build: 
-      context: ../server/api
+      context: ../Server/api
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - $API_PORT:$API_PORT
     depends_on:
-      - timescaledb
+      - postgres
+    environment:
+      POSTGRES_HOST: $POSTGRES_HOST
+      POSTGRES_PORT: $POSTGRES_PORT
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USERNAME: $POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      API_PORT: $API_PORT
+      TOKEN_SECRET: $TOKEN_SECRET
   
   mqtt:
     build: 
-      context: ../server/mqtt
+      context: ../Server/mqtt
       dockerfile: Dockerfile
     depends_on:
-      - timescaledb
+      - postgres
 
   portainer:
     image: portainer/portainer-ce
     container_name: portainer_container
     restart: always
     ports:
-      - "9000:9000"
+      - $PORTAINER_PORT:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
 
 volumes:
   portainer_data:
-  timescaledb-data:
+  postgres-data:
   pgadmin-data:
