@@ -1,9 +1,14 @@
 const db = require('./db')
+const room = require('./roomList.json')
+const projet = require('./projetList.json')
 
 function dataCallback(res) {
     const ts_temp = Date.now()
 
-    const datas = {   deviceName:res.deviceName,
+    const datas = {
+        projet:projet[room[res.deviceName]],
+        room:room[res.deviceName],    
+        deviceName:res.deviceName,
         ts:ts_temp,
         activity:res.object.activity,
         co2:res.object.co2,
