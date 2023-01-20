@@ -20,10 +20,12 @@ export default async function getSvgs(req: Request, res: Response) {
     return;
   }
 
-  let parentPath = "./src/database";
+  let parentPath = "/app/src/database";
   let direct = `${firstname[0].toLowerCase()}${lastname[0].toLowerCase()}-${id}/${projectname}`;
   const path = `${parentPath}/${direct}/`;
 
+  console.log(path)
+  
   if (!fs.existsSync(path)) {
     res.status(404).send("Folder not found");
     return;
@@ -36,13 +38,25 @@ export default async function getSvgs(req: Request, res: Response) {
 
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
+
+  console.log(__dirname);
+  
   // __dirname = C:\Users\ericp\Desktop\SAE-ALT-S3-Dev-22-23-CaptElec-3A-Equipe-2\Server\api\src\routes\svgs
   // cut routes and svgs
   let srcDirName = __dirname.split("\\");
-  srcDirName = srcDirName.slice(0, srcDirName.length - 2);
-  let srcFolder = srcDirName.join("/");
+
+  console.log(srcDirName);
+  
+  // srcDirName = srcDirName.slice(0, srcDirName.length - 2);
+
+  // console.log(srcDirName);
+  
+  // let srcFolder = srcDirName.join("/");
+  let srcFolder = "/app"
   // Send the file buffer to the client
 
+  console.log(srcFolder);
+  
   // resultfiles = {"filenameOne": data}
   let resultfiles = {};
   for (let i = 0; i < files.length; i++) {
