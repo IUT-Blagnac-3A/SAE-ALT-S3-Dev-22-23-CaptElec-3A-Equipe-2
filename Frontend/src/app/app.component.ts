@@ -45,27 +45,30 @@ export class AppComponent {
               let gs = group.querySelectorAll("g");
               gs.forEach((group: Node, index: number, parent: NodeList) => {
                 group.addEventListener("mouseenter", (g) => {
+                  console.log("enter");
                   if (group instanceof Element) {
-                    let path = group.querySelector("path");
-                    let currentStyle = path?.getAttribute("style");
-
-                    if (currentStyle != null) {
-                      path?.setAttribute(
-                        "style",
-                        currentStyle.replace("fill:none", "fill:red")
-                      );
+                    let path = group.querySelectorAll("path");
+                    // If the path is already red, we remove the red color
+                    for (let i = 0; i < path.length; i++) {
+                      if (path[i].getAttribute("style")?.includes("fill:red")) {
+                        path[i].setAttribute("style", "fill:none");
+                      } else {
+                        path[i].setAttribute("style", "fill:red");
+                      }
                     }
                   }
                 });
                 group.addEventListener("mouseleave", (g) => {
+                  console.log("enter");
                   if (group instanceof Element) {
-                    let path = group.querySelector("path");
-                    let currentStyle = path?.getAttribute("style");
-                    if (currentStyle != null) {
-                      path?.setAttribute(
-                        "style",
-                        currentStyle.replace("fill:red", "fill:none")
-                      );
+                    let path = group.querySelectorAll("path");
+                    // If the path is already red, we remove the red color
+                    for (let i = 0; i < path.length; i++) {
+                      if (path[i].getAttribute("style")?.includes("fill:red")) {
+                        path[i].setAttribute("style", "fill:none");
+                      } else {
+                        path[i].setAttribute("style", "fill:red");
+                      }
                     }
                   }
                 });

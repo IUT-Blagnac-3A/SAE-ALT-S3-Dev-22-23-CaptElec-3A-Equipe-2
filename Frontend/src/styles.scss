@@ -7,3 +7,23 @@
   width: 80%;
   height: 80%;
 }
+
+#svg-container svg g {
+  fill: none;
+  stroke: rgb(0, 26, 255);
+  fill-opacity: 1;
+  stroke-width: 1px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-opacity: 1;
+  pointer-events: all;
+  transition: fill 1.2s, stroke 1s;
+}
+// svg that have the id flat will have a path with the pointer-events: none
+// call the class
+
+.gZoneFlat {
+  fill: none;
+  stroke: black;
+  pointer-events: all;
+}
