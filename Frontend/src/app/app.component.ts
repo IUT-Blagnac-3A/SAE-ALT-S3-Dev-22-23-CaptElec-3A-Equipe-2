@@ -23,7 +23,7 @@ export class AppComponent {
     this.viewService = this.viewServ;
 
     let values = await this.svgService.getSVGFromClientProject(
-      "Rémy",
+      "Remy",
       "Boulle",
       "0acf456wf",
       "IUT_BLAGNAC"
