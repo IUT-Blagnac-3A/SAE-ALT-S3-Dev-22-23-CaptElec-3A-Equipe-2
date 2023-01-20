@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "serve": "concurrently \"cd Frontend && ng serve\" \"cd Server && npm run serve\"",
+    "serve": "concurrently \"cd Frontend && ng serve\" \"cd Server/api && npm run dev\"",
     "cleanRootWindows": "rd /s /q node_modules",
-    "cleanRootLinux": "rm -rf node_modules Frontend/node_modules Server/node_modules",
+    "cleanRootLinux": "rm -rf node_modules Frontend/node_modules Server/api/node_modules",
     "cleanFrontendWindows": "cd Frontend && rd /s /q node_modules",
     "cleanFrontendLinux": "cd Frontend && rm -rf node_modules",
     "cleanServerWindows": "cd Server/api && rd /s /q node_modules",
