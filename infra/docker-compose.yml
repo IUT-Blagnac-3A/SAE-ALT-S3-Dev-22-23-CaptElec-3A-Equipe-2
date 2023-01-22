@@ -59,6 +59,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
 
+  front:
+    build:
+      context: ../Frontend
+      dockerfile: Dockerfile
+    ports:
+      - $FRONT_PORT:$FRONT_PORT
+    depends_on:
+      - api
+
 volumes:
   portainer_data:
   postgres-data:
