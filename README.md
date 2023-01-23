@@ -26,19 +26,21 @@ This project is a simple web application in the context of the SAE at the IUT of
 
 We use the **Scrum methodology** to manage our project.
 
-**You can find the Scrum board (Product Backlog)** [here](https://github.com/orgs/IUT-Blagnac-3A/projects/1/views/8)
+**You can find the Scrum board (Product Backlog)** [here](https://github.com/orgs/IUT-Blagnac-3A/projects/1/views/8?filterQuery=+-status%3A%2CReady%2C%22In+progress%22%2C%22%E2%9C%85+Done%22%2C%22Ready+%28Closed%29%22)
 
 <img src="https://cdn.discordapp.com/attachments/579303130886569984/1065181858867982367/image.png" style="border-radius:20px">
 
 _We had two sprints of 1 week each. The first sprint was used to create the project and the second sprint was used to implement the features._
 
+**First Release:** [here](https://github.com/IUT-Blagnac-3A/SAE-ALT-S3-Dev-22-23-CaptElec-3A-Equipe-2/releases/tag/v0.1.0-alpha)
+
 **Refinement Sprint 1:** [here](https://www.fichier-pdf.fr/2023/01/23/rafinnementsprint1vers2/preview/page/1/)
 
-**Backlog for the first sprint:** [here](https://github.com/orgs/IUT-Blagnac-3A/projects/1/views/1?filterQuery=+-status%3A%22%F0%9F%93%8B+Backlog%22%2C%22%F0%9F%86%95+New%22%2C%22User+Stories%22)
+**Backlog for the first sprint:** [here](https://github.com/orgs/IUT-Blagnac-3A/projects/1/views/1?filterQuery=+-status%3A%22%F0%9F%93%8B+Backlog%22%2C%22%F0%9F%86%95+New%22%2CReady%2C%22User+Stories%22)
 
 <img src="https://media.discordapp.net/attachments/579303130886569984/1065182122446422096/image.png?width=1360&height=660" style="border-radius:20px">
 
-**Backlog for the second sprint:** **`INCOMING`**
+**Backlog for the second sprint:** [here](https://github.com/orgs/IUT-Blagnac-3A/projects/1/views/9?layout=board&filterQuery=+-status%3A%22Ready+%28Closed%29%22%2C%22User+Stories%22)
 
 # Team
 
