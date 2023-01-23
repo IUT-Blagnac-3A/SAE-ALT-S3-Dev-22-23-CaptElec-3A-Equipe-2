@@ -121,3 +121,20 @@ The database is a PostgreSQL database. You can find the documentation [here](htt
 PostgreSQL is a relational database management system. It is a very powerful tool that allows you to store data in a structured way.
 
 ---
+
+=== retour sprint 3 EP
+
+Attention dans le readme je ne dois avoir que des liens, les documentations (en asciidoc par ex) doivent être implémentées ailleurs.
+
+Les liens vers les backlog de sprint et de produit ne marchent pas.
+
+Backlog produit :  revoir la vidéo pour bien les implémenter dans github avec critères d'acceptabilité, tâches liées et priorité.
+
+Je n'ai pas de cahier de test.
+
+Je n'ai pas de CR ...
+
+Je n'ai pas de lien vers la première release.
+N'hésitez pas à regarder le readme d'une autre équipe ...pour vous aider.
+
+
