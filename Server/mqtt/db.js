@@ -12,15 +12,9 @@ const sql = postgres('postgres://postgres:password@localhost:5432/postgres', {
 
 async function insertData({devEUI, ts, activity, co2, humidity, pressure, temperature }) {
     const res = await sql`
-<<<<<<< HEAD
         INSERT INTO data (devEUI, ts, activity, co2, humidity, pressure, temperature )
         VALUES (${ devEUI }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
         RETURNING devEUI, ts, activity, co2, humidity, pressure, temperature
-=======
-        INSERT INTO project ( name_project )
-        VALUES ( ${ name_project } )
-        RETURNING name_device
->>>>>>> Fix typo on insertDatasToProject
     `
     return res
 }
