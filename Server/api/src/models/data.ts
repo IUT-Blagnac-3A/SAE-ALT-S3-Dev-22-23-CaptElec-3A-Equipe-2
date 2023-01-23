@@ -35,3 +35,15 @@ export async function getDataFromRoom(project: string, room: string) {
 
     return result
 }
+
+export async function getDataFromType(type: string) {
+    console.log("hello");
+    
+    console.log(type)
+
+    const result = await sql<Data[]>`
+        SELECT ${ sql(type) }, deviceName  FROM mqtt_data
+    `
+
+    return result
+}
