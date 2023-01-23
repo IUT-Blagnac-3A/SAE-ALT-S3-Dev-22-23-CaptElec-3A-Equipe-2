@@ -10,11 +10,29 @@ const sql = postgres('postgres://postgres:password@postgres:5432/postgres', {
     password: process.env.POSTGRES_PASSWORD,   // Password of database user
 })
 
-async function insertDatasToDevice({name_device, name_room, ts, activity, co2, humidity, pressure, temperature }) {
+async function insertDatasToProject({ name_project }) {
     const res = await sql`
-        INSERT INTO device (name_device, name_room, ts, activity, co2, humidity, pressure, temperature )
-        VALUES (${ name_device }, ${ name_room }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
-        RETURNING name_device, name_room, ts, activity, co2, humidity, pressure, temperature
+        INSERT INTO battery ( name_project )
+        VALUES ( ${ name_project } )
+        RETURNING name_device
+    `
+    return res
+}
+
+async function insertDatasToRoom({ name_room, name_project }) {
+    const res = await sql`
+        INSERT INTO battery ( name_room, name_project )
+        VALUES ( ${ name_room }, ${ name_project } )
+        RETURNING name_room, name_project
+    `
+    return res
+}
+
+async function insertDatasToDevice({deveui, name_device, name_room, ts, activity, co2, humidity, pressure, temperature }) {
+    const res = await sql`
+        INSERT INTO device (deveui, name_device, name_room, ts, activity, co2, humidity, pressure, temperature )
+        VALUES (${ deveui }, ${ name_device }, ${ name_room }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
+        RETURNING deveui, name_device, name_room, ts, activity, co2, humidity, pressure, temperature
     `
     return res
 }
@@ -42,4 +60,4 @@ async function getDatasFromDevice(name_device) {
     return res
 }
 
-module.exports = {sql, insertDatasToDevice, insertDatasToBattery, getAllData, getDatasFromDevice}
+module.exports = {sql, insertDatasToProject, insertDatasToRoom, insertDatasToDevice, insertDatasToBattery, getAllData, getDatasFromDevice}

@@ -5,6 +5,7 @@ function dataCallback(res) {
     const ts_temp = Date.now()
 
     const datas = {
+        deveui:res.deveui,
         name_device:res.deviceName,
         name_room:room[res.deviceName],    
         ts:ts_temp,
