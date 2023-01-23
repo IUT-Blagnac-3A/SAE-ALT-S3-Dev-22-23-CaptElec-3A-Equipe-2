@@ -21,7 +21,7 @@ async function insertDatasToProject({ name_project }) {
 
 async function insertDatasToRoom({ name_room, name_project }) {
     const res = await sql`
-        INSERT INTO battery ( name_room, name_project )
+        INSERT INTO room ( name_room, name_project )
         VALUES ( ${ name_room }, ${ name_project } )
         RETURNING name_room, name_project
     `
