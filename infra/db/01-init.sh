@@ -31,11 +31,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
     );
     CREATE TABLE IF NOT EXISTS battery
     (
-        name_device VARCHAR(32),
+        deveui VARCHAR(32),
         ts timestamp with time zone NOT NULL,
         battery double precision,
-        PRIMARY KEY (name_device),
-        FOREIGN KEY (name_device) REFERENCES device(name_device)
+        PRIMARY KEY (deveui),
+        FOREIGN KEY (deveui) REFERENCES device(deveui)
     );
     CREATE TABLE IF NOT EXISTS users
     (
