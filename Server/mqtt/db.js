@@ -10,11 +10,11 @@ const sql = postgres('postgres://postgres:password@postgres:5432/postgres', {
     password: process.env.POSTGRES_PASSWORD,   // Password of database user
 })
 
-async function insertDatasToMqttData({ deviceName, ts, activity, co2, humidity, pressure, temperature }) {
+async function insertDatasToMqttData({projet, room, deviceName, ts, activity, co2, humidity, pressure, temperature }) {
     const res = await sql`
-        INSERT INTO mqtt_data ( deviceName, ts, activity, co2, humidity, pressure, temperature )
-        VALUES ( ${ deviceName }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
-        RETURNING deviceName, ts, activity, co2, humidity, pressure, temperature
+        INSERT INTO mqtt_data (projet, room, deviceName, ts, activity, co2, humidity, pressure, temperature )
+        VALUES (${ projet }, ${ room }, ${ deviceName }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
+        RETURNING projet, room, deviceName, ts, activity, co2, humidity, pressure, temperature
     `
     return res
 }
