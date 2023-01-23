@@ -17,7 +17,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
     );
     CREATE TABLE IF NOT EXISTS device
     (
-      devui VARCHAR(32),
+      deveui VARCHAR(32),
       name_device VARCHAR(32),
       name_room VARCHAR(32),
       ts timestamp with time zone NOT NULL,
@@ -26,7 +26,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
       humidity double precision,
       pressure double precision,
       temperature double precision,
-      PRIMARY KEY (devui),
+      PRIMARY KEY (deveui),
       FOREIGN KEY (name_room) REFERENCES room(name_room)
     );
     CREATE TABLE IF NOT EXISTS battery
