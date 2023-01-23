@@ -2,8 +2,8 @@
 const postgres = require('postgres') 
 
 // Connection to database
-const sql = postgres('postgres://postgres:password@postgres:5432/postgres', {
-    host: process.env.POSTGRES_HOST,      // Postgres ip address[s] or domain name[s]
+const sql = postgres('postgres://postgres:password@localhost:5432/postgres', {
+    host: 'localhost',      // Postgres ip address[s] or domain name[s] // process.env.POSTGRES_HOST
     port: process.env.POSTGRES_PORT,             // Postgres server port[s]
     database: process.env.POSTGRES_DB,  // Name of database to connect to
     username: process.env.POSTGRES_USERNAME,  // Username of database user
@@ -12,7 +12,7 @@ const sql = postgres('postgres://postgres:password@postgres:5432/postgres', {
 
 async function insertDatasToProject({ name_project }) {
     const res = await sql`
-        INSERT INTO battery ( name_project )
+        INSERT INTO project ( name_project )
         VALUES ( ${ name_project } )
         RETURNING name_device
     `
