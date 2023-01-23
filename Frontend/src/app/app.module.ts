@@ -11,9 +11,10 @@ import { ProjectsComponent } from './projects/projects.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { HelperComponent } from './helper/helper.component';
+import { LogpageComponent } from './logpage/logpage.component';
 
 @NgModule({
-  declarations: [AppComponent, FooterComponent, HeaderComponent, DashboardComponent, ProjectsComponent, NotificationsComponent, AdministrationComponent, HelperComponent],
+  declarations: [AppComponent, FooterComponent, HeaderComponent, DashboardComponent, ProjectsComponent, NotificationsComponent, AdministrationComponent, HelperComponent, LogpageComponent],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   bootstrap: [AppComponent],
 })

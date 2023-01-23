@@ -1,6 +1,8 @@
 import { sql } from "../config/dbConnection.js"
 
 export type Data = {
+    project: string
+    room: string
     deviceName: string
     ts: Date
     activity: number
@@ -21,6 +23,14 @@ export async function getAllData() {
 export async function getDatasFromDevice(deviceName: string) {
     const result = await sql<Data[]>`
         SELECT * FROM mqtt_data WHERE deviceName = ${ deviceName }
+    `
+
+    return result
+}
+
+export async function getDataFromRoom(project: string, room: string) {
+    const result = await sql<Data[]>`
+        SELECT * FROM mqtt_data WHERE projet = ${ project } AND room = ${ room }
     `
 
     return result
