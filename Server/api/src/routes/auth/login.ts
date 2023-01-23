@@ -14,5 +14,5 @@ export default async function login (req: Request, res: Response) {
 
     const token = jwt.sign(user, process.env.TOKEN_SECRET as string, { expiresIn: '1800s'})
 
-    res.send(token)
+    res.send({ 'token': token })
 }
