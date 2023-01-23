@@ -11,43 +11,44 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
     );
     CREATE TABLE IF NOT EXISTS room
     (
-        id SERIAL PRIMARY KEY,
         name VARCHAR(32) NOT NULL,
         project_name VARCHAR(32) NOT NULL,
+        PRIMARY KEY (name, project_name),
         FOREIGN KEY (project_name) REFERENCES project(name)
     );
     CREATE TABLE IF NOT EXISTS device
     (
-      devEUI VARCHAR(32) PRIMARY KEY,
-      device_name VARCHAR(32) NOT NULL
+      deveui VARCHAR(32) PRIMARY KEY,
+      name VARCHAR(32) NOT NULL
     );
-    CREATE TABLE IF NOT EXISTS room_device
+    CREATE TABLE IF NOT EXISTS room_project_device
     (
-      room_id INTEGER,
-      devEUI VARCHAR(32),
-      PRIMARY KEY (room_id, devEUI),
-      FOREIGN KEY (room_id) REFERENCES room(id),
-      FOREIGN KEY (devEUI) REFERENCES device(devEUI)
+      room_name VARCHAR(32),
+      project_name VARCHAR(32),
+      deveui VARCHAR(32),
+      PRIMARY KEY (room_name, project_name, deveui),
+      FOREIGN KEY (room_name, project_name) REFERENCES room(name, project_name),
+      FOREIGN KEY (deveui) REFERENCES device(deveui)
     );
     CREATE TABLE IF NOT EXISTS data
     (
       id SERIAL PRIMARY KEY,
-      devEUI VARCHAR(32) NOT NULL,
+      deveui VARCHAR(32) NOT NULL,
       ts timestamp with time zone NOT NULL,
       activity double precision,
       co2 double precision,
       humidity double precision,
       pressure double precision,
       temperature double precision,
-      FOREIGN KEY (devEUI) REFERENCES device(devEUI)
+      FOREIGN KEY (deveui) REFERENCES device(deveui)
     );
     CREATE TABLE IF NOT EXISTS battery
     (
         id SERIAL PRIMARY KEY,
-        devEUI VARCHAR(32) NOT NULL,
+        deveui VARCHAR(32) NOT NULL,
         ts timestamp with time zone NOT NULL,
         battery double precision,
-        FOREIGN KEY (devEUI) REFERENCES device(devEUI)
+        FOREIGN KEY (deveui) REFERENCES device(deveui)
     );
     CREATE TABLE IF NOT EXISTS users
     (
@@ -64,5 +65,27 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
       FOREIGN KEY (user_id) REFERENCES users(id),
       FOREIGN KEY (project_id) REFERENCES project(id)
     );
+    COMMIT;
+
+    COPY project(name)
+    FROM '/docker-entrypoint-initdb.d/projects.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
+    COPY room(name, project_name)
+    FROM '/docker-entrypoint-initdb.d/rooms.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
+    COPY device(name, deveui)
+    FROM '/docker-entrypoint-initdb.d/devices.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
+    COPY room_project_device(room_name, project_name, deveui)
+    FROM '/docker-entrypoint-initdb.d/room_project_device.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
     COMMIT;
 EOSQL
