@@ -64,5 +64,12 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
       FOREIGN KEY (user_id) REFERENCES users(id),
       FOREIGN KEY (project_id) REFERENCES project(id)
     );
+    CREATE TABLE IF NOT EXISTS users
+    (
+        id character varying(32) COLLATE pg_catalog."default",
+        username character varying(32) COLLATE pg_catalog."default",
+        email character varying(252) COLLATE pg_catalog."default",
+        password character varying(252) COLLATE pg_catalog."default"
+    );
     COMMIT;
 EOSQL
