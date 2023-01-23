@@ -1,14 +1,12 @@
 const db = require('./db')
 const room = require('./roomList.json')
-const projet = require('./projetList.json')
 
 function dataCallback(res) {
     const ts_temp = Date.now()
 
     const datas = {
-        projet:projet[room[res.deviceName]],
-        room:room[res.deviceName],    
-        deviceName:res.deviceName,
+        name_device:res.name_device,
+        name_room:room[res.name_device],    
         ts:ts_temp,
         activity:res.object.activity,
         co2:res.object.co2,
@@ -17,7 +15,7 @@ function dataCallback(res) {
         temperature:res.object.temperature 
     }
     console.log(datas)
-    db.insertDatasToMqttData(datas)
+    db.insertDatasToDevice(datas)
 }
 
 module.exports = dataCallback

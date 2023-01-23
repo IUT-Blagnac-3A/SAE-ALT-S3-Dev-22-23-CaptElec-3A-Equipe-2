@@ -37,7 +37,7 @@ async function getAllData() {
 
 async function getDatasFromDevice(name_device) {
     const res = await sql`
-        SELECT  * FROM device WHERE name_device = ${ name_device }
+        SELECT * FROM device WHERE name_device = ${ name_device }
     `
     return res
 }
