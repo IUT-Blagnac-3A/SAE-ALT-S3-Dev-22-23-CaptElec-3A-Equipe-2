@@ -5,8 +5,7 @@ function dataCallback(res) {
     const ts_temp = Date.now()
 
     const datas = {
-        name_device:res.deviceName,
-        name_room:room[res.deviceName],    
+        devEUI:res.devEUI,   
         ts:ts_temp,
         activity:res.object.activity,
         co2:res.object.co2,
@@ -15,7 +14,7 @@ function dataCallback(res) {
         temperature:res.object.temperature
     }
     console.log(datas)
-    db.insertDatasToDevice(datas)
+    db.insertData(datas)
 }
 
 module.exports = dataCallback
