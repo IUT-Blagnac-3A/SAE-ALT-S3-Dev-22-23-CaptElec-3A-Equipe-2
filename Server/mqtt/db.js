@@ -10,36 +10,36 @@ const sql = postgres('postgres://postgres:password@postgres:5432/postgres', {
     password: process.env.POSTGRES_PASSWORD,   // Password of database user
 })
 
-async function insertDatasToMqttData({projet, room, deviceName, ts, activity, co2, humidity, pressure, temperature }) {
+async function insertDatasToDevice({name_device, name_room, ts, activity, co2, humidity, pressure, temperature }) {
     const res = await sql`
-        INSERT INTO mqtt_data (projet, room, deviceName, ts, activity, co2, humidity, pressure, temperature )
-        VALUES (${ projet }, ${ room }, ${ deviceName }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
-        RETURNING projet, room, deviceName, ts, activity, co2, humidity, pressure, temperature
+        INSERT INTO device (name_device, name_room, ts, activity, co2, humidity, pressure, temperature )
+        VALUES (${ name_device }, ${ name_room }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
+        RETURNING name_device, name_room, ts, activity, co2, humidity, pressure, temperature
     `
     return res
 }
 
-async function insertDatasToRoom({ projet, room, deviceName, ts, battery }) {
+async function insertDatasToBattery({ name_device, ts, battery }) {
     const res = await sql`
-        INSERT INTO room ( projet, room, deviceName, ts, battery )
-        VALUES ( ${ projet }, ${ room }, ${ deviceName }, ${ ts }, ${ battery } )
-        RETURNING projet, room, deviceName, ts, battery
+        INSERT INTO battery ( name_device, ts, battery )
+        VALUES ( ${ name_device }, ${ ts }, ${ battery } )
+        RETURNING name_device, ts, battery
     `
     return res
 }
 
 async function getAllData() {
     const res = await sql`
-        SELECT * FROM mqtt_data
+        SELECT * FROM device
     `
     return res
 }
 
-async function getDatasFromDevice(deviceName) {
+async function getDatasFromDevice(name_device) {
     const res = await sql`
-        SELECT  * FROM mqtt_data WHERE deviceName = ${ deviceName }
+        SELECT  * FROM device WHERE name_device = ${ name_device }
     `
     return res
 }
 
-module.exports = {sql, insertDatasToMqttData, insertDatasToRoom, getAllData, getDatasFromDevice}
+module.exports = {sql, insertDatasToDevice, insertDatasToBattery, getAllData, getDatasFromDevice}
