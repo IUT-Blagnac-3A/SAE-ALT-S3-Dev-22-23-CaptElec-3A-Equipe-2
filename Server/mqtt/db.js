@@ -14,7 +14,7 @@ async function insertDatasToProject({ name_project }) {
     const res = await sql`
         INSERT INTO project ( name_project )
         VALUES ( ${ name_project } )
-        RETURNING name_device
+        RETURNING name_project
     `
     return res
 }
