@@ -4,12 +4,12 @@ function batteryCallback(res) {
     const ts_temp = Date.now()
 
     const datas = {
-        name_device:res.name_device,
+        devEUI:res.devEUI,
         ts:ts_temp,
-        battery:res.battery 
+        battery:res.batteryLevel 
     }
     console.log(datas)
-    db.insertDatasToBattery(datas)
+    db.insertBattery(datas)
 }
 
 module.exports = batteryCallback

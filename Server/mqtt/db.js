@@ -10,36 +10,36 @@ const sql = postgres('postgres://postgres:password@postgres:5432/postgres', {
     password: process.env.POSTGRES_PASSWORD,   // Password of database user
 })
 
-async function insertDatasToDevice({name_device, name_room, ts, activity, co2, humidity, pressure, temperature }) {
+async function insertData({devEUI, ts, activity, co2, humidity, pressure, temperature }) {
     const res = await sql`
-        INSERT INTO device (name_device, name_room, ts, activity, co2, humidity, pressure, temperature )
-        VALUES (${ name_device }, ${ name_room }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
-        RETURNING name_device, name_room, ts, activity, co2, humidity, pressure, temperature
+        INSERT INTO data (devEUI, ts, activity, co2, humidity, pressure, temperature )
+        VALUES (${ devEUI }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
+        RETURNING devEUI, ts, activity, co2, humidity, pressure, temperature
     `
     return res
 }
 
-async function insertDatasToBattery({ name_device, ts, battery }) {
+async function insertBattery({ devEUI, ts, battery }) {
     const res = await sql`
-        INSERT INTO battery ( name_device, ts, battery )
-        VALUES ( ${ name_device }, ${ ts }, ${ battery } )
-        RETURNING name_device, ts, battery
+        INSERT INTO battery ( devEUI, ts, battery )
+        VALUES ( ${ devEUI }, ${ ts }, ${ battery } )
+        RETURNING devEUI, ts, battery
     `
     return res
 }
 
 async function getAllData() {
     const res = await sql`
-        SELECT * FROM device
+        SELECT * FROM data
     `
     return res
 }
 
-async function getDatasFromDevice(name_device) {
+async function getDatasFromDevice(devEUI) {
     const res = await sql`
-        SELECT * FROM device WHERE name_device = ${ name_device }
+        SELECT * FROM data WHERE devEUI = ${ devEUI }
     `
     return res
 }
 
-module.exports = {sql, insertDatasToDevice, insertDatasToBattery, getAllData, getDatasFromDevice}
+module.exports = {sql, insertData, insertBattery, getAllData, getDatasFromDevice}
