@@ -1,5 +1,5 @@
 const db = require('./db')
-const room = require('./roomList.json')
+const rooms = require('./deviceToRoom.json')
 
 function dataCallback(res) {
     const ts_temp = Date.now()
