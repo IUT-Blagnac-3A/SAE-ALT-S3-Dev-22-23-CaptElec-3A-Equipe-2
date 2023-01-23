@@ -1,10 +1,30 @@
-<div id="svg-container"></div>
+<!-- <div id="svg-container"></div> -->
 <div class="container" style="height: 60vh">
+  <div class="col mt-5 mb-5">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Data from device 
+          <span class="text-danger">{{roomName}}</span>
+          </h3>
+        <div class="card-text">
+          Different informations provided by a MQTT sensor to help you manage your room
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row mt-5 mb-5">
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <div class="card-title">Battery</div>
+          <h5 class="card-title">Battery</h5>
+          <canvas id="batteryChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">CO2</h5>
           <img src="assets/pictures/200.png" alt="" class="card-img" />
           <div class="card-text">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -15,7 +35,7 @@
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <div class="card-title">CO2</div>
+          <h5 class="card-title">Humidity</h5>
           <img src="assets/pictures/200.png" alt="" class="card-img" />
           <div class="card-text">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -26,18 +46,7 @@
     <div class="col">
       <div class="card">
         <div class="card-body">
-          <div class="card-title">Humidity</div>
-          <img src="assets/pictures/200.png" alt="" class="card-img" />
-          <div class="card-text">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-title">Temperature</div>
+          <h5 class="card-title">Temperature</h5>
           <img src="assets/pictures/200.png" alt="" class="card-img" />
           <div class="card-text">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -46,6 +55,7 @@
       </div>
     </div>
   </div>
+
   <div class="row">
     <div class="col-7">
       <div class="card">
@@ -73,12 +83,12 @@
   </div>
 </div>
 
-<!-- <div *ngFor="let room of rooms">
-    <div>{{room.deviceName}}</div>
+<div *ngFor="let room of rooms">
+    <div>{{room.devicename}}</div>
     <div>{{room.activity}}</div>
     <div>{{room.co2}}</div>
     <div>{{room.humidity}}</div>
     <div>{{room.pressure}}</div>
     <div>{{room.temperature}}</div>
     <div>{{room.ts}}</div>
-</div> -->
+</div>

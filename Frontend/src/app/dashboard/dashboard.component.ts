@@ -4,6 +4,11 @@ import SVGService from "../modules/SVG";
 
 import File from "../modules/File";
 import { ViewService } from "../view.service";
+import { RoomService } from "../room.service";
+import { Room } from "../room";
+import { HttpErrorResponse } from "@angular/common/http";
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
 
 @Component({
   selector: "app-dashboard",
@@ -15,11 +20,16 @@ export class DashboardComponent {
 
   svgFiles: File[] = [];
   viewService!: ViewService;
+  roomService!: RoomService;
+  rooms!: Room[];
+  roomName!: string;
 
-  constructor(private svgService: SVGService, private viewServ: ViewService) {}
+  constructor(private svgService: SVGService, private viewServ: ViewService, private roomServ: RoomService) { }
 
   async ngOnInit() {
     this.viewService = this.viewServ;
+    this.roomService = this.roomServ;
+    this.getRoomInformations();
 
     let values = await this.svgService.getSVGFromClientProject(
       "Rémy",
@@ -31,9 +41,12 @@ export class DashboardComponent {
     values.forEach((files: File) => {
       files.displayOnPage();
     });
+    
+    this.renderChart();
   }
 
   ngAfterViewInit() {
+
     let svgContainer = document.getElementById("svg-container");
     let observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -79,5 +92,65 @@ export class DashboardComponent {
     });
     if (!svgContainer) throw new Error("Container not found");
     observer.observe(svgContainer, { childList: true });
+  }
+
+  getRoomInformations(): void {
+    this.roomService.getRoom("AM107-33").subscribe(
+      (result: Room[]) => {
+        this.rooms = result;
+        this.roomName = this.rooms[0].devicename;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+
+      }
+    )
+  }
+
+  renderChart(): void{
+    const batteryChart = new Chart("batteryChart", {
+      type: 'bar',
+      data: {
+        labels: ["labels"],
+        datasets: [
+          {
+            label: 'Dataset 1',
+            data: [15],
+            backgroundColor: "red",
+          },
+          {
+            label: 'Dataset 3',
+            data: [100],
+            backgroundColor: "black",
+          }
+        ]},
+      options: {
+        plugins: {
+          tooltip:{
+            enabled: false
+          },
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: 'Below 15% a notification will be sent to you',
+            position: "bottom"
+          },
+        },
+        responsive: true,
+        scales: {
+          x: {
+            display: false,
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+            min:0,
+            max:100
+          }
+        }
+      }
+  });
   }
 }
