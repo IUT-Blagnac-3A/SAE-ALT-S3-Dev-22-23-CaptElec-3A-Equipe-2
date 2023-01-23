@@ -5,36 +5,64 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
   BEGIN;
     CREATE TABLE IF NOT EXISTS project
     (
-        name_project VARCHAR(32),
-        PRIMARY KEY (name_project)
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(32) NOT NULL,
+        UNIQUE(name)
     );
     CREATE TABLE IF NOT EXISTS room
     (
-        name_room VARCHAR(32),
-        name_project VARCHAR(32),
-        PRIMARY KEY (name_room),
-        FOREIGN KEY (name_project) REFERENCES project(name_project)
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(32) NOT NULL,
+        project_name VARCHAR(32) NOT NULL,
+        FOREIGN KEY (project_name) REFERENCES project(name)
     );
     CREATE TABLE IF NOT EXISTS device
     (
-      name_device VARCHAR(32),
-      name_room VARCHAR(32),
+      devEUI VARCHAR(32) PRIMARY KEY,
+      device_name VARCHAR(32) NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS room_device
+    (
+      room_id INTEGER,
+      devEUI VARCHAR(32),
+      PRIMARY KEY (room_id, devEUI),
+      FOREIGN KEY (room_id) REFERENCES room(id),
+      FOREIGN KEY (devEUI) REFERENCES device(devEUI)
+    );
+    CREATE TABLE IF NOT EXISTS data
+    (
+      id SERIAL PRIMARY KEY,
+      devEUI VARCHAR(32) NOT NULL,
       ts timestamp with time zone NOT NULL,
       activity double precision,
       co2 double precision,
       humidity double precision,
       pressure double precision,
       temperature double precision,
-      PRIMARY KEY (name_device),
-      FOREIGN KEY (name_room) REFERENCES room(name_room)
+      FOREIGN KEY (devEUI) REFERENCES device(devEUI)
     );
     CREATE TABLE IF NOT EXISTS battery
     (
-        name_device VARCHAR(32),
+        id SERIAL PRIMARY KEY,
+        devEUI VARCHAR(32) NOT NULL,
         ts timestamp with time zone NOT NULL,
         battery double precision,
-        PRIMARY KEY (name_device),
-        FOREIGN KEY (name_device) REFERENCES device(name_device)
+        FOREIGN KEY (devEUI) REFERENCES device(devEUI)
+    );
+    CREATE TABLE IF NOT EXISTS users
+    (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(32) UNIQUE NOT NULL,
+        email VARCHAR(252) UNIQUE NOT NULL,
+        password VARCHAR(252) NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS user_project
+    (
+      user_id INTEGER,
+      project_id INTEGER,
+      PRIMARY KEY (user_id, project_id),
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (project_id) REFERENCES project(id)
     );
     COMMIT;
 EOSQL
