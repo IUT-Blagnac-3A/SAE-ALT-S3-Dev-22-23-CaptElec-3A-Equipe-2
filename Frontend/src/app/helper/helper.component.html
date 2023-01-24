@@ -40,20 +40,17 @@
     <br>
     <h1>Contact</h1>
     <form (ngSubmit)="submit">
-        <div class="row">
-            <div class="form-group col">
-                <label for="firstname">Firstname</label><br>
-                <input Required minlength="2" maxlength="50" type="text" name="firstname" class="form-control" placeholder="Enter your firstname" ngModel>
-                <!--<div *ngif="name.touched && name.invalid" class="alert alert-danger">INVALID</div>-->
-            </div>
-            <div class="form-group col">
-                <label for="lastname">Lastname</label><br>
-                <input Required minlength="2" maxlength="50" type="text" name="lastname" class="form-control" placeholder="Enter your lastname"ngModel>
-
-            </div>
+        <div class="form-group col">
+            <label for="firstname" class="form-label">Firstname</label><br>
+            <input Required minlength="2" maxlength="50" type="text" name="firstname" class="form-control" placeholder="Enter your firstname" ngModel>
+            <!--<div *ngif="name.touched && name.invalid" class="alert alert-danger">INVALID</div>-->
         </div>
         <pre></pre>
-        
+        <div class="form-group col">
+            <label for="lastname">Lastname</label><br>
+            <input Required minlength="2" maxlength="50" type="text" name="lastname" class="form-control" placeholder="Enter your lastname" ngModel>
+
+        </div>
         <pre></pre>
         <div class="form-group">
             <label for="email">Email</label><br>
