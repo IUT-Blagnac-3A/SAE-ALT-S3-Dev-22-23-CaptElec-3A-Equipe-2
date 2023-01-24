@@ -102,14 +102,13 @@ export class DashboardComponent {
   }
 
   getRoomInformations(): void {
-    this.roomService.getRoom("AM107-33").subscribe(
+    this.roomService.getRoom("AM107-5").subscribe(
       (result: Room[]) => {
         this.rooms = result;
-        this.roomName = this.rooms[0].devicename;
+        this.roomName = this.rooms[0].name;
       },
       (error: HttpErrorResponse) => {
         console.log(error);
-
       }
     )
   }
