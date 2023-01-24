@@ -1,12 +1,21 @@
 import { Injectable } from "@angular/core";
 
-const views = ["Log", "Dashboard", "Notifications", "Administration", "Projects", "Help", "Create Account"];
+const views = [
+  "Log",
+  "Dashboard",
+  "Notifications",
+  "Administration",
+  "Projects",
+  "Help",
+  "Create Account",
+];
 
 @Injectable({
   providedIn: "root",
 })
 export class ViewService {
-  view = "Log";
+  // view = "Log";
+  view = "Dashboard";
 
   constructor() {}
 
@@ -15,7 +24,7 @@ export class ViewService {
     this.view = viewName;
   }
 
-  public getView(): string {    
+  public getView(): string {
     return this.view;
   }
 }
