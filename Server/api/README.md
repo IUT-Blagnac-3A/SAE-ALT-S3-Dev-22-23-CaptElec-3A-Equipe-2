@@ -16,7 +16,9 @@
     ```
 - Response :
     ```
-    User created
+    {
+        "message": "User created"
+    }
     ```
 
 
@@ -133,3 +135,51 @@
     ```
 
 
+### Comment utiliser l'authentification
+
+#### 1) Créer un utilisateur 
+
+Requête : ``http://localhost:3000/api/auth/register``
+
+Body :
+```json
+    {
+        "username": "exmaple",
+        "email": "example@example.com",
+        "password": "password"
+    }
+```
+
+Response :
+```json
+{
+    "message": "User created"
+}
+```
+
+#### 2) Se connecter
+
+Requête : ``http://localhost:3000/api/auth/login``
+
+Body :
+```json
+    {
+        "username": "exmaple",
+        "password": "password"
+    }
+```
+
+Response :
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6bnVsbCwidXNlcm5hbWUiOiJsb2xvIiwiZW1haWwiOiJsb2xvQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJGFyZ29uMmlkJHY9MTkkbT02NTUzNix0PTMscD00JCtrN0lRZCtBVk1FMGlYU2FZNEE5cmckODNVdFE3Y2R6eDhJazRQdnJtanM1b3BYLytyaDdFKzR5VkRoVzhiUTNHMCIsImlhdCI6MTY3NDQ2NTgyMCwiZXhwIjoxNjc0NDY3NjIwfQ.YdvSgBUCV_0ZmwU_poVakj1FB9segEj_IW6VDaPYKNc"
+}
+```
+
+Stocker le token pour pouvoir le réutiliser plus tard
+
+#### 3) Faire une requête vers une route protégé
+
+Requête : ``http://localhost:3000/apit/auth/protected``
+
+Mettre le token dans le header Authorization Bearer token

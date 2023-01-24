@@ -194,7 +194,7 @@ export class DashboardComponent {
         label: 'Weekly Sales',
         data: [0.4, 1],
         backgroundColor: [
-          '#8338ec',
+          '#3a86ff',
           '#e8e8e8'
         ],
         borderWidth: 0
@@ -221,7 +221,7 @@ export class DashboardComponent {
         label: 'Weekly Sales',
         data: [1.4, 1],
         backgroundColor: [
-          '#3a86ff',
+          '#8338ec',
           '#e8e8e8'
         ],
         borderWidth: 0
