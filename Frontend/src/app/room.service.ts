@@ -9,7 +9,7 @@ import { Room } from "./room";
 export class RoomService {
   constructor(private http: HttpClient) {}
 
-  // public getRooms(): Observable<Room[]>{
-  //   return this.http.get<any>('http://localhost:3000/data');
-  // }
+  public getRoom(roomName: string): Observable<Room[]>{
+    return this.http.get<any>('http://localhost:3000/api/data/'+roomName);
+  }
 }
