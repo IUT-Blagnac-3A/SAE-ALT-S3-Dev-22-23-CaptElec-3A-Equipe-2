@@ -40,27 +40,30 @@
     <br>
     <h1>Contact</h1>
     <form (ngSubmit)="submit">
-        <div class="form-group">
-            <label for="firstname">Firstname</label><br>
-            <input Required minlength="2" maxlength="50" type="text" name="firstname" class="form-control" ngModel>
-            <!--<div *ngif="name.touched && name.invalid" class="alert alert-danger">INVALID</div>-->
+        <div class="row">
+            <div class="form-group col">
+                <label for="firstname">Firstname</label><br>
+                <input Required minlength="2" maxlength="50" type="text" name="firstname" class="form-control" placeholder="Enter your firstname" ngModel>
+                <!--<div *ngif="name.touched && name.invalid" class="alert alert-danger">INVALID</div>-->
+            </div>
+            <div class="form-group col">
+                <label for="lastname">Lastname</label><br>
+                <input Required minlength="2" maxlength="50" type="text" name="lastname" class="form-control" placeholder="Enter your lastname"ngModel>
+
+            </div>
         </div>
         <pre></pre>
-        <div class="form-group">
-            <label for="lastname">Lastname</label><br>
-            <input Required minlength="2" maxlength="50" type="text" name="lastname" class="form-control" ngModel>
-
-        </div>
+        
         <pre></pre>
         <div class="form-group">
             <label for="email">Email</label><br>
-            <input  Required minlength="3" maxlength="320" type="email" name="email" class="form-control" ngModel>
+            <input  Required minlength="3" maxlength="320" type="email" name="email" class="form-control" placeholder="example@domain.com" ngModel>
 
         </div>
         <pre></pre>
         <div class="form-group">
             <label for="message">Message</label><br>
-            <textarea  Required minlength="5" maxlength="1000" type="text" name="message" class="form-control" ngModel></textarea>
+            <textarea  Required minlength="5" maxlength="1000" type="text" name="message" class="form-control" placeholder="Enter your message..." ngModel></textarea>
 
         </div>
         <pre></pre>
