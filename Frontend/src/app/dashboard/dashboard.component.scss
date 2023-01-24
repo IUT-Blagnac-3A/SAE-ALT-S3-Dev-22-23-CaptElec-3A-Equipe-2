@@ -1,4 +1,22 @@
-#batteryChart{
-    height: 400px;
-    width: 100px;
+.battery-container{
+    height: 200px;
+    width: 150px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.co2-container{
+    height: 200px;
+    width: 250px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#gauge{
+    margin-right: auto;
+    margin-left: auto;
 }
