@@ -1,6 +1,6 @@
 export interface Room{
-    deviceName: String;
-    ts: String;
+    devicename: string;
+    ts: string;
     activity: Number;
     co2: Number;
     humidity: Number;
