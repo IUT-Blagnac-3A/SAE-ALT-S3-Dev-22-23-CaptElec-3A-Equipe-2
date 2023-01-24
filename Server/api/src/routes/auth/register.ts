@@ -11,5 +11,5 @@ export default async function register(req:Request, res: Response) {
 
     await addUser(user)
 
-    res.send("User created")
+    res.send({ message: "User created" })
 }

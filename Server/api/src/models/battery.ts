@@ -1,24 +1,22 @@
 import { sql } from '../config/dbConnection.js'
 
 export type Battery = {
-    project: string
-    room: string
-    deviceName: string
+    name_device: string
     ts: Date
     battery: number
 }
 
 export async function getAllBattery() {
     const result = await sql<Battery[]>`
-        SELECT * FROM room
+        SELECT * FROM battery
     `
 
     return result
 }
 
-export async function getBatteryFromDevice(deviceName: string) {
+export async function getBatteryFromDevice(name_device: string) {
     const result = await sql<Battery[]>`
-        SELECT * FROM room WHERE deviceName = ${ deviceName }
+        SELECT * FROM battery WHERE name_device = ${ name_device }
     `
 
     return result

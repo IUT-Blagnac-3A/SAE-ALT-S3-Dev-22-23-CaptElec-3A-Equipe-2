@@ -3,32 +3,89 @@ set -e
 export PGPASSWORD=$POSTGRES_PASSWORD;
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" <<-EOSQL
   BEGIN;
-    CREATE TABLE IF NOT EXISTS mqtt_data
+    CREATE TABLE IF NOT EXISTS project
     (
-        deviceName VARCHAR(32),
-        projet VARCHAR(32),
-        room VARCHAR(32),
-        ts timestamp with time zone NOT NULL,
-        activity double precision,
-        co2 double precision,
-        humidity double precision,
-        pressure double precision,
-        temperature double precision
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(32) NOT NULL,
+        UNIQUE(name)
     );
-	CREATE TABLE IF NOT EXISTS room
+    CREATE TABLE IF NOT EXISTS room
     (
-        projet VARCHAR(32),
-        room VARCHAR(32),
-        deviceName VARCHAR(32),
-        ts TIMESTAMP WITH TIME zone NOT NULL,
-        battery DOUBLE PRECISION
+        name VARCHAR(32) NOT NULL,
+        project_name VARCHAR(32) NOT NULL,
+        PRIMARY KEY (name, project_name),
+        FOREIGN KEY (project_name) REFERENCES project(name)
+    );
+    CREATE TABLE IF NOT EXISTS device
+    (
+      deveui VARCHAR(32) PRIMARY KEY,
+      name VARCHAR(32) NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS room_project_device
+    (
+      room_name VARCHAR(32),
+      project_name VARCHAR(32),
+      deveui VARCHAR(32),
+      PRIMARY KEY (room_name, project_name, deveui),
+      FOREIGN KEY (room_name, project_name) REFERENCES room(name, project_name),
+      FOREIGN KEY (deveui) REFERENCES device(deveui)
+    );
+    CREATE TABLE IF NOT EXISTS data
+    (
+      id SERIAL PRIMARY KEY,
+      deveui VARCHAR(32) NOT NULL,
+      ts timestamp with time zone NOT NULL,
+      activity double precision,
+      co2 double precision,
+      humidity double precision,
+      pressure double precision,
+      temperature double precision,
+      FOREIGN KEY (deveui) REFERENCES device(deveui)
+    );
+    CREATE TABLE IF NOT EXISTS battery
+    (
+        id SERIAL PRIMARY KEY,
+        deveui VARCHAR(32) NOT NULL,
+        ts timestamp with time zone NOT NULL,
+        battery double precision,
+        FOREIGN KEY (deveui) REFERENCES device(deveui)
     );
     CREATE TABLE IF NOT EXISTS users
     (
-        id character varying(32) COLLATE pg_catalog."default",
-        username character varying(32) COLLATE pg_catalog."default",
-        email character varying(252) COLLATE pg_catalog."default",
-        password character varying(252) COLLATE pg_catalog."default"
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(32) UNIQUE NOT NULL,
+        email VARCHAR(252) UNIQUE NOT NULL,
+        password VARCHAR(252) NOT NULL
     );
-  COMMIT;
+    CREATE TABLE IF NOT EXISTS user_project
+    (
+      user_id INTEGER,
+      project_id INTEGER,
+      PRIMARY KEY (user_id, project_id),
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (project_id) REFERENCES project(id)
+    );
+    COMMIT;
+
+    COPY project(name)
+    FROM '/docker-entrypoint-initdb.d/projects.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
+    COPY room(name, project_name)
+    FROM '/docker-entrypoint-initdb.d/rooms.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
+    COPY device(name, deveui)
+    FROM '/docker-entrypoint-initdb.d/devices.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
+    COPY room_project_device(room_name, project_name, deveui)
+    FROM '/docker-entrypoint-initdb.d/room_project_device.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
+    COMMIT;
 EOSQL
