@@ -4,7 +4,7 @@ function batteryCallback(res) {
     const ts_temp = Date.now()
 
     const datas = {
-        devEUI:res.devEUI,
+        deveui:res.devEUI,
         ts:ts_temp,
         battery:res.batteryLevel 
     }
