@@ -7,7 +7,7 @@
     margin-bottom: 20px;
 }
 
-.co2-container{
+.co2-container, .humidity-container, .temperature-container{
     height: 200px;
     width: 250px;
     margin-right: auto;
@@ -16,7 +16,7 @@
     margin-bottom: 20px;
 }
 
-#gauge{
+#co2Chart, #humidityChart, #temperatureChart{
     margin-right: auto;
     margin-left: auto;
 }

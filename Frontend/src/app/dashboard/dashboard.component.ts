@@ -110,7 +110,7 @@ export class DashboardComponent {
 
   renderCharts(): void {
 
-  // render init block
+  // batteryChart
   const batteryChart = new Chart("batteryChart", {
     type: 'bar',
     data: {
@@ -130,6 +130,8 @@ export class DashboardComponent {
     },
     options: {
       plugins: {
+        //@ts-ignore
+        centerText: false,
         tooltip: {
           mode: 'point',
         },
@@ -164,6 +166,7 @@ export class DashboardComponent {
     }
   });
 
+  // custom chartJS plugin
   const centerText = {
     id: 'centerText',
     afterDatasetsDraw(chart: Chart, args: any, pluginOptions: any){
@@ -176,23 +179,23 @@ export class DashboardComponent {
       const y = chart.getDatasetMeta(0).data[0].y;
 
       ctx.textAlign = 'center';
-      ctx.font = "20pt sans-serif";
+      ctx.font = "30pt Roboto";
 
-      ctx.fillText(text,x,y-11)
+      ctx.fillText(text,x,y+10)
     }
   }
 
-  //co2
-  const co2Chart = new Chart("gauge", {
+  // co2 chart
+  const co2Chart = new Chart("co2Chart", {
     type: 'doughnut',
     data: {
       labels: ['Mon', 'Tue'],
       datasets: [{
         label: 'Weekly Sales',
-        data: [18, 15],
+        data: [0.4, 1],
         backgroundColor: [
-          'rgba(255, 26, 104, 0.2)',
-          'rgba(54, 162, 235, 0.2)'
+          '#8338ec',
+          '#e8e8e8'
         ],
         borderWidth: 0
       }]
@@ -203,8 +206,62 @@ export class DashboardComponent {
           display: false
         }
       },
-      circumference: 180,
-      rotation: -90,
+      circumference: 270,
+      rotation: -135,
+      cutout: 60,
+    }
+  });
+
+  // humidity chart
+  const humidityChart = new Chart("humidityChart", {
+    type: 'doughnut',
+    data: {
+      labels: ['Mon', 'Tue'],
+      datasets: [{
+        label: 'Weekly Sales',
+        data: [1.4, 1],
+        backgroundColor: [
+          '#3a86ff',
+          '#e8e8e8'
+        ],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      plugins:{
+        legend: {
+          display: false
+        }
+      },
+      circumference: 270,
+      rotation: -135,
+      cutout: 60,
+    }
+  });
+
+  // temperature chart
+  const temperatureChart = new Chart("temperatureChart", {
+    type: 'doughnut',
+    data: {
+      labels: ['Mon', 'Tue'],
+      datasets: [{
+        label: 'Weekly Sales',
+        data: [4, 1],
+        backgroundColor: [
+          '#e63946',
+          '#e8e8e8'
+        ],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      plugins:{
+        legend: {
+          display: false
+        }
+      },
+      circumference: 270,
+      rotation: -135,
       cutout: 60,
     }
   });
