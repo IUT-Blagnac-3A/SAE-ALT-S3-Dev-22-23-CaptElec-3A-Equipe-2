@@ -45,13 +45,20 @@ export async function getDataFromRoomProject(name_project: string, name_room: st
 }
 
 export async function getDataFromType(type: string) {
-    console.log("hello");
-    
-    console.log(type)
-
     const result = await sql<Data[]>`
         SELECT da.${ sql(type) }, de.name FROM device de, data da 
         WHERE de.deveui = da.deveui 
+    `
+
+    return result
+}
+
+export async function getDataFromProjectType(project: string, type: string) {
+    const result = await sql<Data[]>`
+        SELECT da.${ sql(type) }, de.name FROM device de, data da, room_project_device rpd
+        WHERE de.deveui = da.deveui 
+        AND de.deveui = rpd.deveui
+        AND rpd.project_name = ${ project }
     `
 
     return result
