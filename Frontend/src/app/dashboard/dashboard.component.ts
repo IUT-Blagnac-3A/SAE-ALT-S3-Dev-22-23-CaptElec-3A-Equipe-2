@@ -8,6 +8,7 @@ import { RoomService } from "../room.service";
 import { Room } from "../room";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Chart, registerables } from "chart.js";
+import { Gauge } from "../gauge/gauge.model";
 
 Chart.register(...registerables);
 
@@ -24,10 +25,17 @@ export class DashboardComponent {
   roomService!: RoomService;
   rooms!: Room[];
   roomName!: string;
+  co2Chart!: Gauge;
+  humidityChart!: Gauge;
+  temperatureChart!: Gauge;
 
   constructor(private svgService: SVGService, private viewServ: ViewService, private roomServ: RoomService) { }
 
   async ngOnInit() {
+    this.co2Chart = new Gauge("co2Chart","#3f1ee6");
+    this.humidityChart = new Gauge("humidityChart", "#8338ec");
+    this.temperatureChart = new Gauge("temperatureChart", "#e63946");
+
     this.viewService = this.viewServ;
     this.roomService = this.roomServ;
     this.getRoomInformations();
@@ -42,8 +50,6 @@ export class DashboardComponent {
     values.forEach((files: File) => {
       files.displayOnPage();
     });
-
-    this.renderCharts();
   }
 
   ngAfterViewInit() {
@@ -108,108 +114,4 @@ export class DashboardComponent {
     )
   }
 
-  renderCharts(): void {
-
-  // custom chartJS plugin
-  const centerText = {
-    id: 'centerText',
-    afterDatasetsDraw(chart: Chart, args: any, pluginOptions: any){
-      const {ctx} = chart;
-
-      const text = "60";
-
-      ctx.save()
-      const x = chart.getDatasetMeta(0).data[0].x;
-      const y = chart.getDatasetMeta(0).data[0].y;
-
-      ctx.textAlign = 'center';
-      ctx.font = "30pt Roboto";
-
-      ctx.fillText(text,x,y+10)
-    }
-  }
-
-  // co2 chart
-  const co2Chart = new Chart("co2Chart", {
-    type: 'doughnut',
-    data: {
-      labels: ['Mon', 'Tue'],
-      datasets: [{
-        label: 'Weekly Sales',
-        data: [0.4, 1],
-        backgroundColor: [
-          '#3a86ff',
-          '#e8e8e8'
-        ],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      plugins:{
-        legend: {
-          display: false
-        }
-      },
-      circumference: 270,
-      rotation: -135,
-      cutout: 60,
-    }
-  });
-
-  // humidity chart
-  const humidityChart = new Chart("humidityChart", {
-    type: 'doughnut',
-    data: {
-      labels: ['Mon', 'Tue'],
-      datasets: [{
-        label: 'Weekly Sales',
-        data: [1.4, 1],
-        backgroundColor: [
-          '#8338ec',
-          '#e8e8e8'
-        ],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      plugins:{
-        legend: {
-          display: false
-        }
-      },
-      circumference: 270,
-      rotation: -135,
-      cutout: 60,
-    }
-  });
-
-  // temperature chart
-  const temperatureChart = new Chart("temperatureChart", {
-    type: 'doughnut',
-    data: {
-      labels: ['Mon', 'Tue'],
-      datasets: [{
-        label: 'Weekly Sales',
-        data: [4, 1],
-        backgroundColor: [
-          '#e63946',
-          '#e8e8e8'
-        ],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      plugins:{
-        legend: {
-          display: false
-        }
-      },
-      circumference: 270,
-      rotation: -135,
-      cutout: 60,
-    }
-  });
-
-  Chart.register(centerText);
-}
 }

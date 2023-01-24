@@ -28,9 +28,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">CO2</h5>
-          <div class="co2-container">
-            <canvas id="co2Chart"></canvas>
-          </div>
+            <app-gauge [gauge]="co2Chart"></app-gauge>
           <h6 class="card-text text-muted">
             Below 15% a notification will be sent to you automatically
           </h6>
@@ -41,9 +39,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Humidity</h5>
-          <div class="humidity-container">
-            <canvas id="humidityChart"></canvas>
-          </div>
+          <app-gauge [gauge]="humidityChart"></app-gauge>
           <h6 class="card-text text-muted">
             Below 15% a notification will be sent to you automatically
           </h6>
@@ -54,9 +50,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Temperature</h5>
-          <div class="temperature-container">
-            <canvas id="temperatureChart"></canvas>
-          </div>
+            <app-gauge [gauge]="temperatureChart"></app-gauge>
           <h6 class="card-text text-muted">
             Below 15% a notification will be sent to you automatically
           </h6>
@@ -91,13 +85,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div *ngFor="let room of rooms">
-    <div>{{room.devicename}}</div>
-    <div>{{room.activity}}</div>
-    <div>{{room.co2}}</div>
-    <div>{{room.humidity}}</div>
-    <div>{{room.pressure}}</div>
-    <div>{{room.temperature}}</div>
-    <div>{{room.ts}}</div>
-</div> -->
