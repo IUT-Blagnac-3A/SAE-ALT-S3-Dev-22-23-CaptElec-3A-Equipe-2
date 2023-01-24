@@ -3,21 +3,30 @@ import { Component } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { SessionService } from "../session.service";
 import { ViewService } from "../view.service";
+import { forbiddenPasswordValidator } from "./create-account.directive";
 
 @Component({
-  selector: "app-logpage",
-  templateUrl: "./logpage.component.html",
-  styleUrls: ["./logpage.component.scss"],
+  selector: "app-create-account",
+  templateUrl: "./create-account.component.html",
+  styleUrls: ["./create-account.component.scss"],
 })
-export class LogpageComponent {
+export class CreateAccountComponent {
   session: SessionService;
-  incorrectPassword = false;
   loginForm = new FormGroup({
+    email: new FormControl("", [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.email,
+    ]),
     username: new FormControl("", [
       Validators.required,
       Validators.minLength(3),
     ]),
-    password: new FormControl("", [Validators.required]),
+    password: new FormControl("", [
+      Validators.required,
+      Validators.minLength(8),
+      forbiddenPasswordValidator(),
+    ]),
   });
 
   constructor(
@@ -26,6 +35,10 @@ export class LogpageComponent {
     private sessionService: SessionService
   ) {
     this.session = new SessionService(http);
+  }
+
+  get email() {
+    return this.loginForm.get("email");
   }
 
   get username() {
@@ -44,7 +57,7 @@ export class LogpageComponent {
     )
       return;
     // this.session.login(this.loginForm.value.username as string, this.loginForm.value.password as string)
-    if (false) {
+    if (true) {
       this.sessionService.setSession(
         this.loginForm.value.username as string,
         "token",
@@ -53,12 +66,10 @@ export class LogpageComponent {
         "lastname"
       );
       this.viewService.setView("Dashboard");
-    } else {
-      this.incorrectPassword = true;
     }
   }
 
   onRegister() {
-    this.viewService.setView("Create Account");
+    this.viewService.setView("Log");
   }
 }

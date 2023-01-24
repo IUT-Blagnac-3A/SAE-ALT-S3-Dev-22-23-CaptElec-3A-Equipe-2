@@ -1,5 +1,6 @@
-<app-header *ngIf="viewService.getView() != 'Log'"></app-header>
+<app-header *ngIf="viewService.getView() != 'Log' && viewService.getView() != 'Create Account'"></app-header>
 <app-dashboard *ngIf="viewService.getView() === 'Dashboard'"></app-dashboard>
+<app-create-account *ngIf="viewService.getView() === 'Create Account'"></app-create-account>
 <app-notifications
   *ngIf="viewService.getView() === 'Notifications'"
 ></app-notifications>
