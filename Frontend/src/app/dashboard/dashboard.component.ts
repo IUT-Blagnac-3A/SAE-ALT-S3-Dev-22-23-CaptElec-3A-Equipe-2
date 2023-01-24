@@ -25,6 +25,9 @@ export class DashboardComponent {
   roomService!: RoomService;
   rooms!: Room[];
   roomName!: string;
+  roomCO2!: Number;
+  roomHumidity!: Number;
+  roomTemperature!: Number;
   co2Chart!: Gauge;
   humidityChart!: Gauge;
   temperatureChart!: Gauge;
@@ -32,10 +35,6 @@ export class DashboardComponent {
   constructor(private svgService: SVGService, private viewServ: ViewService, private roomServ: RoomService) { }
 
   async ngOnInit() {
-    this.co2Chart = new Gauge("co2Chart","#3f1ee6");
-    this.humidityChart = new Gauge("humidityChart", "#8338ec");
-    this.temperatureChart = new Gauge("temperatureChart", "#e63946");
-
     this.viewService = this.viewServ;
     this.roomService = this.roomServ;
     this.getRoomInformations();
@@ -102,10 +101,16 @@ export class DashboardComponent {
   }
 
   getRoomInformations(): void {
-    this.roomService.getRoom("AM107-5").subscribe(
+    this.roomService.getRoom("AM107-9").subscribe(
       (result: Room[]) => {
         this.rooms = result;
         this.roomName = this.rooms[0].name;
+        this.roomHumidity = this.rooms[0].humidity;
+        this.roomTemperature = this.rooms[0].temperature;
+
+        this.co2Chart = new Gauge("co2Chart","#3f1ee6",this.rooms[0].co2);
+        this.humidityChart = new Gauge("humidityChart","#8338ec", this.rooms[0].humidity);
+        this.temperatureChart = new Gauge("temperatureChart","#e63946",this.rooms[0].temperature);
       },
       (error: HttpErrorResponse) => {
         console.log(error);

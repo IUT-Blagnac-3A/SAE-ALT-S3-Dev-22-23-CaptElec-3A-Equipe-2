@@ -16,13 +16,42 @@ export class GaugeComponent implements AfterViewInit{
   }
 
   renderChart(): void {
+    let value = this.gauge.value;
+
+    //bypass chartJS plugin bug
+    let pluginId = "centerText";
+    let chartConf = {};
+
+    if(this.gauge.id==="co2Chart"){
+      pluginId = "centerTextCO2";
+      chartConf = {
+        centerTextTemperature: false,
+        centerTextHumidity: false,
+        legend: {display: false}
+      };
+    }else if(this.gauge.id==="temperatureChart"){
+      chartConf = {
+        centerTextCO2: false,
+        centerTextHumidity: false,
+        legend: {display: false}
+      };
+      pluginId = "centerTextTemperature";
+    }else if(this.gauge.id==="humidityChart"){
+      chartConf = {
+        centerTextTemperature: false,
+        centerTextCO2: false,
+        legend: {display: false}
+      };
+      pluginId = "centerTextHumidity";
+    }
+
     // custom chartJS plugin
     const centerText = {
-      id: 'centerText',
+      id: pluginId,
       afterDatasetsDraw(chart: Chart, args: any, pluginOptions: any) {
         const { ctx } = chart;
 
-        const text = "60";
+        const text = ""+value;
 
         ctx.save()
         const x = chart.getDatasetMeta(0).data[0].x;
@@ -34,8 +63,6 @@ export class GaugeComponent implements AfterViewInit{
         ctx.fillText(text, x, y + 10)
       }
     }
-
-    Chart.register(centerText);
 
     const gaugeChart = new Chart(this.gauge.id, {
       type: 'doughnut',
@@ -52,17 +79,14 @@ export class GaugeComponent implements AfterViewInit{
         }]
       },
       options: {
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
+        plugins: chartConf,
         circumference: 270,
         rotation: -135,
         cutout: 60,
       }
     });
 
+    Chart.register(centerText);
   }
 
 }

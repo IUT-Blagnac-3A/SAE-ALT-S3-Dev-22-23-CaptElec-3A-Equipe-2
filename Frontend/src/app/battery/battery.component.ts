@@ -35,6 +35,12 @@ export class BatteryComponent implements OnInit{
         plugins: {
           //@ts-ignore
           centerText: false,
+          //@ts-ignore
+          centerTextCO2: false,
+          //@ts-ignore
+          centerTextHumidity: false,
+          //@ts-ignore
+          centerTextTemperature: false,
           tooltip: {
             mode: 'point',
           },
