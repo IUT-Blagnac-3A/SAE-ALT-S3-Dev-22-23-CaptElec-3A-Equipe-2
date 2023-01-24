@@ -1,8 +1,8 @@
 import { sql } from "../config/dbConnection.js"
 
 export type Data = {
-    name_device: string
-    name_room: string
+    id: number
+    deveui: string
     ts: Date
     activity: number
     co2: number
@@ -13,7 +13,9 @@ export type Data = {
 
 export async function getAllData() {
     const result = await sql<Data[]>`
-        SELECT * FROM device
+        SELECT * FROM data da, device de, room_project_device rpd
+        WHERE da.deveui = de.deveui
+        AND de.deveui = rpd.deveui
     `
 
     return result
@@ -21,7 +23,10 @@ export async function getAllData() {
 
 export async function getDatasFromDevice(name_device: string) {
     const result = await sql<Data[]>`
-        SELECT * FROM device WHERE name_device = ${ name_device }
+        SELECT * FROM device de, data da, room_project_device rpd
+        WHERE de.deveui = da.deveui 
+        AND de.deveui = rpd.deveui
+        AND de.name  = ${ name_device }
     `
 
     return result
@@ -29,11 +34,11 @@ export async function getDatasFromDevice(name_device: string) {
 
 export async function getDataFromRoomProject(name_project: string, name_room: string) {
     const result = await sql<Data[]>`
-        SELECT * FROM device D, room R, project P 
-        WHERE P.name_project = ${ name_project } 
-        AND R.name_room = ${ name_room } 
-        AND D.name_room = R.name_room 
-        AND R.name_project = P.name_project
+        SELECT * FROM data Da, device D, room_project_device RPD
+        WHERE RPD.project_name = ${ name_project } 
+        AND RPD.room_name = ${ name_room } 
+        AND RPD.deveui = D.deveui 
+        AND D.deveui = Da.deveui
     `
 
     return result
@@ -45,7 +50,8 @@ export async function getDataFromType(type: string) {
     console.log(type)
 
     const result = await sql<Data[]>`
-        SELECT ${ sql(type) }, deviceName  FROM mqtt_data
+        SELECT da.${ sql(type) }, de.name FROM device de, data da 
+        WHERE de.deveui = da.deveui 
     `
 
     return result
