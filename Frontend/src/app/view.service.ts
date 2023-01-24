@@ -1,14 +1,17 @@
 import { Injectable } from "@angular/core";
 
+const views = ["Log", "Dashboard", "Notifications", "Administration", "Projects", "Help"];
+
 @Injectable({
   providedIn: "root",
 })
 export class ViewService {
-  view = "Dashboard";
+  view = "Log";
 
   constructor() {}
 
   public setView(viewName: string): void {
+    if (!views.includes(viewName)) throw new Error("Invalid view name");
     this.view = viewName;
   }
 
