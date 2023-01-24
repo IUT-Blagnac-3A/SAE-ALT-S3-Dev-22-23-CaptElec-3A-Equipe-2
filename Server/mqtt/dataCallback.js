@@ -5,7 +5,7 @@ function dataCallback(res) {
     const ts_temp = Date.now()
 
     const datas = {
-        devEUI:res.devEUI,   
+        deveui:res.devEUI,   
         ts:ts_temp,
         activity:res.object.activity,
         co2:res.object.co2,
