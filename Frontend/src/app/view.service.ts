@@ -15,7 +15,7 @@ const views = [
 })
 export class ViewService {
   // view = "Log";
-  view = "Dashboard";
+  view = "Log";
 
   constructor() {}
 
