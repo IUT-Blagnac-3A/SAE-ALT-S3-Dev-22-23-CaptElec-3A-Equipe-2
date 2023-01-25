@@ -3,13 +3,16 @@ import { addUser, User } from "../../models/user.js";
 
 export default async function register(req:Request, res: Response) {
     const user: User = {
-        id: "fjksqdfq",
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password, 
+        password: req.body.password,
     }
 
-    await addUser(user)
-
-    res.send({ message: "User created" })
+    await addUser(user).then(() => {
+        res.send({ message: "User created" })    
+    })
+    .catch((e) => {
+        console.log('error in handler : ', e)
+        res.status(500).send({ "error" : '' + e})
+    });
 }
