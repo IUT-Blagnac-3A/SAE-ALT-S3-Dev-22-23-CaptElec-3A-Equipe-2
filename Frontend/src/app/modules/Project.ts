@@ -1,5 +1,5 @@
 import SVGFile from "./SVGFile";
-import SVGService from "./SVG";
+import SVGService, { SVGData } from "./SVG";
 
 const types = ["activity", "co2", "humidity", "pressure", "temperature"];
 
@@ -14,6 +14,7 @@ export default class Project {
   currentDepth: number = 0;
   currentIndex: number = 0;
   maxDepth: number = 0;
+  values: SVGData[] | undefined;
   currentTypeSearched = "temperature";
   history: Array<{ depth: number; index: number }> = [];
 
@@ -41,8 +42,12 @@ export default class Project {
       this.currentIndex
     ].displayOnPage();
 
-    if (this.currentDepth == this.maxDepth) this.colorLastDepth();
-    this.launchInteraction();
+    if (this.currentDepth == this.maxDepth) {
+      this.colorLastDepth();
+      this.launchOnClick();
+    } else {
+      this.launchInteraction();
+    }
 
     if (this.currentDepth < this.maxDepth) this.fillAccessibleZones();
     else return;
@@ -119,6 +124,7 @@ export default class Project {
       this.currentTypeSearched,
       this.name
     );
+    this.values = roomValues;
     this.svgService.fillSVGs(roomValues, this.currentTypeSearched);
   }
 
@@ -172,5 +178,27 @@ export default class Project {
       this.displayOnPage();
     });
     container.appendChild(returnButton);
+  }
+
+  launchOnClick() {
+    let svgContainer = document.getElementById("svg-container");
+    if (svgContainer == null) throw new Error("Container not found");
+    let svg = svgContainer.querySelector("svg");
+    if (svg == null) throw new Error("Svg not found");
+    let gs = svg.querySelectorAll("g");
+    gs.forEach((group: Node, index: number, parent: NodeList) => {
+      if (group instanceof Element) {
+        group.addEventListener("click", (event) => {
+          let elementClickedBis = event.target as HTMLElement;
+          let elementClicked = elementClickedBis.parentElement;
+          if (elementClicked == null) throw new Error("Element not found");
+          console.log(elementClicked);
+          let id = elementClicked.getAttribute("id")?.toUpperCase();
+          if (id == null) throw new Error("Id not found");
+          let device = this.svgService.findDeviceLinkedToRoom(id);
+          console.log(device);
+        });
+      }
+    });
   }
 }
