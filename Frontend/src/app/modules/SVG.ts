@@ -1,8 +1,18 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import Project from "./Project";
-import File from "./File";
+import ENV from "../environments/environment";
+import File from "./SVGFile";
+
+const types = ["activity", "co2", "humidity", "pressure", "temperature"];
+
+import DefineEnvironnementType from "./type.environnement";
+
+interface SVGData {
+  value: number;
+  device: string;
+  room: string;
+}
 
 @Injectable({
   providedIn: "root",
@@ -11,50 +21,133 @@ export default class SVGService {
   constructor(private http: HttpClient) {}
 
   async getSVGFromClientProject(
-    firstname: string,
-    secondname: string,
+    username: string,
     id: string,
-    projectname: string,
-    index: number = 0
+    projectname: string
   ): Promise<File[]> {
     return new Promise(async (resolve, reject) => {
       let svgFiles: File[] = [];
-      let path = `http://localhost:3000/api/svgs/${firstname}/${secondname}/${id}/${projectname}/`;
+      let path = `${ENV.SERVER_ADRESS_A}/svgs/${username}/${id}/${projectname}/`;
       let file: File;
 
       const formData = new FormData();
-      formData.append("firstname", firstname);
-      formData.append("lastname", secondname);
+      formData.append("username", username);
       formData.append("id", id);
       formData.append("projectname", projectname);
 
       await this.http
         .post(`${path}`, formData, { responseType: "json" })
         .subscribe((data: any) => {
-          // {"1et.svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><path d=\"M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 90C27.5 90 10 72.5 10 50S27.5 10 50 10s40 17.5 40 40-17.5 40-40 40z\"/></svg>"}
           for (let key in data) {
             file = new File(key, path, data[key]);
             svgFiles.push(file);
           }
+
           resolve(svgFiles);
         });
     });
   }
-
   /**
-   * Method that displays the SVGs files in the html page in a given container
-   * @param svgFiles
+   *
    */
-  displaySVGsOnPage(svgFiles: File[], containerId: string): void {
-    if (svgFiles.length == 0) throw new Error("No SVG files found");
-    let container = document.getElementById(containerId);
-    console.log(container);
+  displaySvgWithIndex(svgFiles: File[], index: string) {
+    // Find the svg with the index, the index is the name of the svg
+    console.log(svgFiles);
 
+    let svg = svgFiles.find((svg) => svg.name == index);
+    if (svg == null) throw new Error("SVG not found");
+    let container = document.getElementById("svg-container");
     if (container == null) throw new Error("Container not found");
-    svgFiles.forEach((file: any) => {
-      let img = document.createElement("img");
-      img.src = file.path + "/" + file.name;
-      container?.appendChild(img);
+    svg.displayOnPage();
+  }
+  /**
+   * get the couple rooms values
+   */
+  async getRoomsValues(type: string, project: string): Promise<Array<SVGData>> {
+    if (!types.includes(type)) throw new Error("Type not found");
+    let path = `${ENV.SERVER_ADRESS_A}/data/project/${project}/type/${type}`;
+    const formData = new FormData();
+    formData.append("project", project);
+    formData.append("type", type);
+
+    return new Promise(async (res, rej) => {
+      await this.http
+        .get(path, { responseType: "json" })
+        .subscribe((data: any) => {
+          res(data);
+        });
     });
+  }
+  /**
+   * Fill the svgs
+   * We start with an array of objects like this
+   */
+  async fillSVGs(values: Array<SVGData>, type: string) {
+    if (!types.includes(type)) throw new Error("Type not found");
+    let environment = DefineEnvironnementType(type);
+
+    values.forEach(async (value: SVGData) => {
+      let svg = document.getElementById(value.room.toLowerCase());
+
+      if (svg == null) return;
+      let paths = svg?.getElementsByTagName("path");
+      if (paths == null) return;
+      let color = await SVGService.findColorNuance(
+        environment.min,
+        environment.max,
+        environment.minColor,
+        environment.maxColor,
+        value.value
+      );
+      for (let i = 0; i < paths?.length; i++) {
+        paths[i].setAttribute("fill", color);
+      }
+      // Change the title of the svg currently only the title is displayed so we put title + values + unit
+      let title = svg?.getElementsByTagName("title");
+      if (title == null) return;
+      title[0].innerHTML = `${value.room} : ${value.value} ${environment.unit}`;
+    });
+  }
+
+  static async findColorNuance(
+    min: number,
+    max: number,
+    minColor: string,
+    maxColor: string,
+    value: number
+  ): Promise<string> {
+    let minColorRGB = SVGService.hexToRgb(minColor);
+    let maxColorRGB = SVGService.hexToRgb(maxColor);
+    let color = {
+      r: 0,
+      g: 0,
+      b: 0,
+    };
+    let nuance = (value - min) / (max - min);
+    color.r = Math.floor(
+      minColorRGB.r + nuance * (maxColorRGB.r - minColorRGB.r)
+    );
+    color.g = Math.floor(
+      minColorRGB.g + nuance * (maxColorRGB.g - minColorRGB.g)
+    );
+    color.b = Math.floor(
+      minColorRGB.b + nuance * (maxColorRGB.b - minColorRGB.b)
+    );
+    return SVGService.rgbToHex(color.r, color.g, color.b);
+  }
+
+  static hexToRgb(hex: string): any {
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16),
+        }
+      : null;
+  }
+
+  static rgbToHex(r: number, g: number, b: number): string {
+    return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
   }
 }

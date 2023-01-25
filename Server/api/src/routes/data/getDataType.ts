@@ -14,6 +14,13 @@ export default async function getDataFromTypeHandler(req: Request, res: Response
         return;
     }
 
-    const result = await getDataFromType(dataType);
-    res.send(result);
+    await getDataFromType(dataType)
+    .then(result => {
+        console.log(result)
+        res.send(result)
+    })
+    .catch((e) => {
+        console.log('error in handler : ', e)
+        res.status(500).send({ "error" : '' + e})
+    });
 }

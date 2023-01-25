@@ -1,0 +1,38 @@
+.background img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  
+  form {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background: #f4f4f429;
+    border-radius: 10px;
+    border-color: #9c9c9c;
+    border-width: 1px;
+    color: #fff;
+  }
+  
+  #emailHelp {
+    color: #fff !important;
+  }
+  
+  // margin top between each element
+  .form-group {
+    margin-top: 20px;
+  }
+  
+  button {
+    margin-top: 20px;
+    width: 100%;
+  }
+  

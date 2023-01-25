@@ -12,10 +12,14 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { AdministrationComponent } from './administration/administration.component';
 import { HelperComponent } from './helper/helper.component';
 import { LogpageModule } from './logpage/logpage.module';
+import { CreateAccountComponent } from './create-account/create-account.component';
+import { CreateAccountModule } from './create-account/create-account.module';
+import { BatteryComponent } from './battery/battery.component';
+import { GaugeComponent } from './gauge/gauge.component';
 
 @NgModule({
-  declarations: [AppComponent, FooterComponent, HeaderComponent, DashboardComponent, ProjectsComponent, NotificationsComponent, AdministrationComponent, HelperComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, LogpageModule],
+  declarations: [AppComponent, FooterComponent, HeaderComponent, DashboardComponent, ProjectsComponent, NotificationsComponent, AdministrationComponent, HelperComponent, BatteryComponent, GaugeComponent],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule, LogpageModule, CreateAccountModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

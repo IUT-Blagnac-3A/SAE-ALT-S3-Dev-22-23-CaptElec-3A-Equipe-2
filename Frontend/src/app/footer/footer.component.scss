@@ -1,8 +1,62 @@
 footer {
-  // Footer has to be glued to the bottom of the page
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  // Height of footer
-  background-color: #434343;
+	padding: 5em 0;
+}
+
+footer .footer-heading {
+	font-size: 25px;
+	color: #fff;
+	font-weight: 500;
+	margin-bottom: 30px;
+}
+
+a {
+	color: #ffffff;
+	text-decoration: none;
+	background-color: transparent;
+}
+
+footer .menu a {
+	color: rgba(255, 255, 255, 0.6);
+	margin: 0 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+footer p {
+	color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-social li a span {
+	position: absolute;
+	font-size: 20px;
+	top: 40%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+footer .footer-social li a {
+	background: transparent;
+	border: 1px solid #1dbcbf;
+}
+
+.footer-social li a {
+	height: 40px;
+	width: 40px;
+	display: block;
+	background: rgba(0, 0, 0, 0.05);
+	border-radius: 50%;
+	position: relative;
+}
+
+
+footer li {
+	list-style: none;
+	margin: 0 10px 0 0;
+	display: inline-block;
+}
+
+footer .menu {
+	margin-bottom: 30px;
 }
