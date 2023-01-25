@@ -10,7 +10,13 @@ export default async function getDataFromProjectTypeHandler (req: Request, res: 
         res.status(400).send("Invalid data type");
         return;
     }
-    const result = await getDataFromProjectType(project, type);
-    console.log(result)
-    res.send(result)
+    await getDataFromProjectType(project, type)
+    .then(result => {
+        console.log(result)
+        res.send(result)
+    })
+    .catch((e) => {
+        console.log('error in handler : ', e)
+        res.status(500).send({ "error" : '' + e})
+    });
 }

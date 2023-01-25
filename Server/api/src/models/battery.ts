@@ -13,7 +13,10 @@ export async function getAllBattery() {
         SELECT * FROM battery b, device d, room_project_device rpd
         WHERE b.deveui = d.deveui
         AND d.deveui = rpd.deveui
-    `
+    `.catch((e) => {
+        console.log('error : ', e)
+        throw new Error(e)
+    })
 
     return result
 }
@@ -24,7 +27,10 @@ export async function getBatteryFromDevice(name_device: string) {
         WHERE d.name = ${ name_device }
         AND b.deveui = d.deveui
         AND d.deveui = rpd.deveui
-    `
+    `.catch((e) => {
+        console.log('error : ', e)
+        throw new Error(e)
+    })
 
     return result
 }

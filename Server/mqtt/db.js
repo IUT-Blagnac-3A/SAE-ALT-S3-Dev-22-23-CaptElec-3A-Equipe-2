@@ -11,22 +11,29 @@ const sql = postgres('postgres://postgres:password@postgres:5432/postgres', {
 })
 
 async function insertData({deveui, ts, activity, co2, humidity, pressure, temperature }) {
-    const res = await sql`
+    try {
+        const res = await sql`
         INSERT INTO data (deveui, ts, activity, co2, humidity, pressure, temperature )
         VALUES (${ deveui }, ${ ts }, ${ activity }, ${ co2 }, ${ humidity }, ${ pressure }, ${ temperature } )
         RETURNING deveui, ts, activity, co2, humidity, pressure, temperature
-    `
-
-    return res
+        `
+        return res
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function insertBattery({ deveui, ts, battery }) {
-    const res = await sql`
-        INSERT INTO battery ( deveui, ts, battery )
-        VALUES ( ${ deveui }, ${ ts }, ${ battery } )
-        RETURNING deveui, ts, battery
-    `
-    return res
+    try {
+        const res = await sql`
+            INSERT INTO battery ( deveui, ts, battery )
+            VALUES ( ${ deveui }, ${ ts }, ${ battery } )
+            RETURNING deveui, ts, battery
+        `
+        return res
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 module.exports = {sql, insertData, insertBattery}
