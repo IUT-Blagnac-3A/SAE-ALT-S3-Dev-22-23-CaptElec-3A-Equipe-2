@@ -20,12 +20,12 @@ export const routes = express.Router();
 
 routes.get("/", (req, res) => res.send({ hello: "world" }));
 
-routes.use('/data', dataRouter)
-routes.use('/battery', batteryRouter)
+routes.use("/data", dataRouter);
+routes.use("/battery", batteryRouter);
 
-routes.use('/auth', authRouter)
+routes.use("/auth", authRouter);
 
-routes.post("/svgs/:firstname/:lastname/:id/:projectname", getSvgs);
+routes.post("/svgs/:username/:id/:projectname", getSvgs);
 
 routes.get("*", (req, res) => {
   res.send({ error: "404 No page found" });

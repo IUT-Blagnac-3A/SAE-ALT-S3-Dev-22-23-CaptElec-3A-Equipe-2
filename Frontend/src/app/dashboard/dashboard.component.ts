@@ -2,12 +2,13 @@ import { Component, ViewChild, QueryList, ElementRef, Input } from "@angular/cor
 
 import SVGService from "../modules/SVG";
 
-import File from "../modules/File";
+import File from "../modules/SVGFile";
 import { ViewService } from "../view.service";
 import { RoomService } from "../room.service";
 import { Room } from "../room";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Chart, registerables } from "chart.js";
+import Project from "../modules/Project";
 import { Gauge } from "../gauge/gauge.model";
 import DefautDico from "../modules/default.dico";
 
@@ -38,7 +39,11 @@ export class DashboardComponent {
   criticalRateHumidity!: number;
   criticalRateTemperature!: number;
 
-  constructor(private svgService: SVGService, private viewServ: ViewService, private roomServ: RoomService) { }
+  constructor(
+    private svgService: SVGService,
+    private viewServ: ViewService,
+    private roomServ: RoomService
+  ) {}
 
   async ngOnInit() {
     this.criticalRateBattery = DefautDico.CRITICAL_BATTERY();
@@ -51,69 +56,21 @@ export class DashboardComponent {
     this.getRoomInformations();
 
     let values = await this.svgService.getSVGFromClientProject(
-      "Rémy",
-      "Boulle",
+      "remiboulle",
       "0acf456wf",
-      "IUT_BLAGNAC"
+      "IUT-BLAGNAC"
     );
 
-    values.forEach((files: File) => {
-      files.displayOnPage();
-    });
-  }
+    let newProject = new Project("IUT-BLAGNAC", values, this.svgService);
+    newProject.displayOnPage();
 
-  ngAfterViewInit() {
-
-    let svgContainer = document.getElementById("svg-container");
-    let observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === "childList") {
-          let groups = mutation.addedNodes;
-          groups.forEach((group: Node, index: number, parent: NodeList) => {
-            if (group instanceof Element && group.tagName === "DIV") {
-              let gs = group.querySelectorAll("g");
-              gs.forEach((group: Node, index: number, parent: NodeList) => {
-                group.addEventListener("mouseenter", (g) => {
-                  console.log("enter");
-                  if (group instanceof Element) {
-                    let path = group.querySelectorAll("path");
-                    // If the path is already red, we remove the red color
-                    for (let i = 0; i < path.length; i++) {
-                      if (path[i].getAttribute("style")?.includes("fill:red")) {
-                        path[i].setAttribute("style", "fill:none");
-                      } else {
-                        path[i].setAttribute("style", "fill:red");
-                      }
-                    }
-                  }
-                });
-                group.addEventListener("mouseleave", (g) => {
-                  console.log("enter");
-                  if (group instanceof Element) {
-                    let path = group.querySelectorAll("path");
-                    // If the path is already red, we remove the red color
-                    for (let i = 0; i < path.length; i++) {
-                      if (path[i].getAttribute("style")?.includes("fill:red")) {
-                        path[i].setAttribute("style", "fill:none");
-                      } else {
-                        path[i].setAttribute("style", "fill:red");
-                      }
-                    }
-                  }
-                });
-              });
-            }
-          });
-        }
-      });
-    });
-    if (!svgContainer) throw new Error("Container not found");
-    observer.observe(svgContainer, { childList: true });
+    this.renderCharts();
   }
 
   getRoomInformations(): void {
     this.roomService.getRoom(this.inputSensorID).subscribe(
       (result: Room[]) => {
+
         let informationNumber = 0;
         for(let i=0 ; i<result.length ; i++){
           informationNumber = i;
@@ -153,5 +110,4 @@ export class DashboardComponent {
       }
     )
   }
-
 }
