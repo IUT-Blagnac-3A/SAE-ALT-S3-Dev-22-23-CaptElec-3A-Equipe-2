@@ -1,6 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import DefaultDico from '../modules/default.dico';
+import { RoomService } from '../room.service';
+import { RoomBattery } from '../roomBattery';
 Chart.register(...registerables);
 
 @Component({
@@ -10,11 +13,37 @@ Chart.register(...registerables);
 })
 export class BatteryComponent implements OnInit{
   ngOnInit(): void {
-    this.renderChart();
+    this.getBatteryInformations();
   }
 
-  renderChart(): void{
+  constructor(private roomService: RoomService){}
+
+  getBatteryInformations(): void {
+    this.roomService.getRoomBattery("AM107-9").subscribe(
+      (result: RoomBattery[]) => {
+        let informationNumber = 0;
+        for(let i=0 ; i<result.length ; i++){
+          informationNumber = i;
+        }
+
+        this.renderChart(result[informationNumber].battery);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    )
+  }
+
+  renderChart(value: Number): void{
     // batteryChart
+    let batteryColor = "";
+
+    if(value>DefaultDico.CRITICAL_BATTERY()){
+      batteryColor = "#60992D";
+    }else{
+      batteryColor = "#B3001B";
+    }
+
     const batteryChart = new Chart("batteryChart", {
       type: 'bar',
       data: {
@@ -22,8 +51,8 @@ export class BatteryComponent implements OnInit{
         datasets: [
           {
             label: 'Actual battery',
-            data: [15],
-            backgroundColor: "#dc3545",
+            data: [value],
+            backgroundColor: batteryColor,
           },
           {
             label: 'Maximum battery',

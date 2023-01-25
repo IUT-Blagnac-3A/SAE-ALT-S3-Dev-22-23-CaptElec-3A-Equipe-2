@@ -29,20 +29,29 @@ export class GaugeComponent implements AfterViewInit{
       chartConf = {
         centerTextTemperature: false,
         centerTextHumidity: false,
-        legend: {display: false}
+        legend: {display: false},
+        tooltip: {
+          enabled: false,
+        }
       };
     }else if(this.gauge.id==="temperatureChart"){
       chartConf = {
         centerTextCO2: false,
         centerTextHumidity: false,
-        legend: {display: false}
+        legend: {display: false},
+        tooltip: {
+          enabled: false,
+        }
       };
       pluginId = "centerTextTemperature";
     }else if(this.gauge.id==="humidityChart"){
       chartConf = {
         centerTextTemperature: false,
         centerTextCO2: false,
-        legend: {display: false}
+        legend: {display: false},
+        tooltip: {
+          enabled: false,
+        }
       };
       pluginId = "centerTextHumidity";
     }
@@ -83,11 +92,15 @@ export class GaugeComponent implements AfterViewInit{
     const gaugeChart = new Chart(this.gauge.id, {
       type: 'doughnut',
       data: {
-        labels: ['Mon', 'Tue'],
+        labels: ['Actual value', 'Tue'],
         datasets: [{
-          label: 'Weekly Sales',
+          label: '',
           data: [this.gauge.value, this.gauge.maxValue],
           backgroundColor: [
+            this.gauge.color,
+            '#e8e8e8'
+          ],
+          hoverBackgroundColor: [
             this.gauge.color,
             '#e8e8e8'
           ],
