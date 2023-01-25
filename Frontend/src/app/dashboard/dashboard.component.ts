@@ -1,4 +1,4 @@
-import { Component, ViewChild, QueryList, ElementRef } from "@angular/core";
+import { Component, ViewChild, QueryList, ElementRef, Input } from "@angular/core";
 
 import SVGService from "../modules/SVG";
 
@@ -20,7 +20,7 @@ Chart.register(...registerables);
 })
 export class DashboardComponent {
   @ViewChild("svg") svg: ElementRef | null = null;
-
+  @Input() inputSensorID!: string;
   svgFiles: File[] = [];
   viewService!: ViewService;
   roomService!: RoomService;
@@ -112,7 +112,7 @@ export class DashboardComponent {
   }
 
   getRoomInformations(): void {
-    this.roomService.getRoom("AM107-9").subscribe(
+    this.roomService.getRoom(this.inputSensorID).subscribe(
       (result: Room[]) => {
         let informationNumber = 0;
         for(let i=0 ; i<result.length ; i++){
