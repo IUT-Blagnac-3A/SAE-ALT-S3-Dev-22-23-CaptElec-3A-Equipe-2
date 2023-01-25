@@ -52,6 +52,7 @@ export class DashboardComponent {
   ) {}
 
   async ngOnInit() {
+    const D = new DefaultDico();
     this.criticalRateBattery = D.CRITICAL_BATTERY;
     this.criticalRateCO2 = D.CRITICAL_CO2;
     this.criticalRateHumidity = D.CRITICAL_HUMIDITY;
