@@ -62,8 +62,8 @@ export class GaugeComponent implements AfterViewInit{
       afterDatasetsDraw(chart: Chart, args: any, pluginOptions: any) {
         const { ctx } = chart;
 
-        const text = ""+value;
-        const unitText = ""+unit;
+        let text = ""+value;
+        let unitText = unit;
 
         ctx.save()
         const x = chart.getDatasetMeta(0).data[0].x;
@@ -74,17 +74,13 @@ export class GaugeComponent implements AfterViewInit{
 
         if(unit.length>2){
           ctx.fillText(text, x, y)
-        }else{
-          ctx.fillText(text, x-10, y+10)
-        }
-        
-        ctx.font = "14pt Roboto";
-        if(unit.length>2){
+          ctx.font = "14pt Roboto";
           ctx.fillText(unitText, x, y+20)
         }else{
-          ctx.font = "18pt Roboto";
-          ctx.fillText(unitText, x+35, y+8)
+          text+=unit;
+          ctx.fillText(text, x, y+10)
         }
+        
         
       }
     }
