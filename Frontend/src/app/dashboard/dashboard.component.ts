@@ -32,10 +32,20 @@ export class DashboardComponent {
   co2Chart!: Gauge;
   humidityChart!: Gauge;
   temperatureChart!: Gauge;
+  cardText!: string;
+  criticalRateBattery!: number;
+  criticalRateCO2!: number;
+  criticalRateHumidity!: number;
+  criticalRateTemperature!: number;
 
   constructor(private svgService: SVGService, private viewServ: ViewService, private roomServ: RoomService) { }
 
   async ngOnInit() {
+    this.criticalRateBattery = DefautDico.CRITICAL_BATTERY();
+    this.criticalRateCO2 = DefautDico.CRITICAL_CO2();
+    this.criticalRateHumidity = DefautDico.CRITICAL_HUMIDITY();
+    this.criticalRateTemperature = DefautDico.CRITICAL_TEMPERATURE();
+    this.cardText = "Critical limit before sending a notification : ";
     this.viewService = this.viewServ;
     this.roomService = this.roomServ;
     this.getRoomInformations();

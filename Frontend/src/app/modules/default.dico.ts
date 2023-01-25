@@ -1,4 +1,7 @@
 export default class DefaultDico {
+  static BATTERY_UNIT() {
+    return "%";
+  }
   static CO2_UNIT() {
     return "ppm";
   }
@@ -14,6 +17,9 @@ export default class DefaultDico {
   static ACTIVITY_UNIT() {
     return "µg/m³";
   }
+  static CRITICAL_BATTERY(){
+    return 15;
+  }
   static CRITICAL_CO2(){
     return 1000;
   }
@@ -22,6 +28,9 @@ export default class DefaultDico {
   }
   static CRITICAL_TEMPERATURE(){
     return 40;
+  }
+  static MAX_BATTERY(){
+    return 100;
   }
   static MAX_CO2(){
     return 5000;

@@ -3,7 +3,7 @@
   <div class="col mb-5">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Data from device 
+        <h3 class="card-title">Dashboard for device 
           <span class="text-danger">{{roomName}}</span>
           </h3>
         <div class="card-text">
@@ -19,7 +19,7 @@
           <h5 class="card-title">Battery</h5>
           <app-battery></app-battery>
           <h6 class="card-text text-muted">
-            Below 15% a notification will be sent to you automatically
+            {{cardText}}{{criticalRateBattery}}
           </h6>
         </div>
       </div>
@@ -30,7 +30,7 @@
           <h5 class="card-title">CO2</h5>
             <app-gauge [gauge]="co2Chart"></app-gauge>
           <h6 class="card-text text-muted">
-            Below 15% a notification will be sent to you automatically
+            {{cardText}}{{criticalRateCO2}}
           </h6>
         </div>
       </div>
@@ -41,7 +41,7 @@
           <h5 class="card-title">Humidity</h5>
           <app-gauge [gauge]="humidityChart"></app-gauge>
           <h6 class="card-text text-muted">
-            Below 15% a notification will be sent to you automatically
+            {{cardText}}{{criticalRateHumidity}}
           </h6>
         </div>
       </div>
@@ -52,7 +52,7 @@
           <h5 class="card-title">Temperature</h5>
             <app-gauge [gauge]="temperatureChart"></app-gauge>
           <h6 class="card-text text-muted">
-            Below 15% a notification will be sent to you automatically
+            {{cardText}}{{criticalRateTemperature}}
           </h6>
         </div>
       </div>

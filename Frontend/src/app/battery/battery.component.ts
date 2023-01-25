@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import DefaultDico from '../modules/default.dico';
 Chart.register(...registerables);
 
 @Component({
@@ -26,7 +27,7 @@ export class BatteryComponent implements OnInit{
           },
           {
             label: 'Maximum battery',
-            data: [100],
+            data: [DefaultDico.MAX_BATTERY()],
             backgroundColor: "#212529",
           }
         ]
