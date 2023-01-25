@@ -1,4 +1,4 @@
-export default class File {
+export default class SVGFile {
   _name: string;
   _path: string;
   _content: string | undefined;
@@ -8,17 +8,15 @@ export default class File {
     this._path = path;
     this._content = content;
   }
-
   /**
    * We're working with a xml svg file, so we need to parse it to be able to use it
    */
   async displayOnPage() {
-    let container = document.getElementById("svg-container");
-    if (container == null) throw new Error("Container not found");
-    let element = await document.createElement("div");
-    element.className = "svg-file";
-    element.innerHTML = (await this._content) as string;
-    await container.appendChild(element);
+    let svgContainer = document.getElementById("svg-container");
+    if (svgContainer == null) throw new Error("Container not found");
+    svgContainer.insertAdjacentHTML("beforeend", this._content as string);
+
+    //
   }
 
   get name() {
