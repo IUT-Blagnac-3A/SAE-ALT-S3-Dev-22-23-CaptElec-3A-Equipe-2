@@ -2,7 +2,7 @@ import { Component, ViewChild, QueryList, ElementRef } from "@angular/core";
 
 import SVGService from "./modules/SVG";
 
-import File from "./modules/File";
+import File from "./modules/SVGFile";
 import { ViewService } from "./view.service";
 
 @Component({

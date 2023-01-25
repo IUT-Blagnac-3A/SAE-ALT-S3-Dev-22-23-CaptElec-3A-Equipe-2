@@ -1,4 +1,6 @@
-<svg viewBox="50 250 990 320">
+<h3>Plan du RDC</h3>
+
+<svg viewBox="50 250 990 320" class="2">
         <g id="rgt" class="gZoneFlat">
             <title>RGT</title>
             <path id="path4163" d="m 608.19842,259.42256 21.57668,0.55555 -6.3626,88.06307 -19.02962,-0.27646 z"></path>
