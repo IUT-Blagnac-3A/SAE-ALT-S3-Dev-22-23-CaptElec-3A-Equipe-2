@@ -23,7 +23,7 @@ export class DashboardComponent {
   svgFiles: File[] = [];
   viewService!: ViewService;
   roomService!: RoomService;
-  rooms!: Room[];
+  roomInformations!: Room[];
   roomName!: string;
   roomCO2!: Number;
   roomHumidity!: Number;
@@ -103,14 +103,17 @@ export class DashboardComponent {
   getRoomInformations(): void {
     this.roomService.getRoom("AM107-9").subscribe(
       (result: Room[]) => {
-        this.rooms = result;
-        this.roomName = this.rooms[0].name;
-        this.roomHumidity = this.rooms[0].humidity;
-        this.roomTemperature = this.rooms[0].temperature;
+        let informationNumber = 0;
+        for(let i=0 ; i<result.length ; i++){
+          informationNumber = i;
+        }
 
-        this.co2Chart = new Gauge("co2Chart","#3f1ee6",this.rooms[0].co2);
-        this.humidityChart = new Gauge("humidityChart","#8338ec", this.rooms[0].humidity);
-        this.temperatureChart = new Gauge("temperatureChart","#e63946",this.rooms[0].temperature);
+        this.roomInformations = result;
+        this.roomName = this.roomInformations[0].name;
+
+        this.co2Chart = new Gauge("co2Chart","#3f1ee6",this.roomInformations[informationNumber].co2);
+        this.humidityChart = new Gauge("humidityChart","#8338ec", this.roomInformations[informationNumber].humidity);
+        this.temperatureChart = new Gauge("temperatureChart","#e63946",this.roomInformations[informationNumber].temperature);
       },
       (error: HttpErrorResponse) => {
         console.log(error);
