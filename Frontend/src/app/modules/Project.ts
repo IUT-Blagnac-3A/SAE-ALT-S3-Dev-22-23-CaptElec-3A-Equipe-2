@@ -136,6 +136,8 @@ export default class Project {
         if (direction != null) {
           group.addEventListener("click", (event) => {
             // @ts-ignore
+            if (event.path == null) return;
+            // @ts-ignore
             let elementClicked = event.path[1];
             if (elementClicked == null) throw new Error("Element not found");
             // Get the direction
