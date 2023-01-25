@@ -8,8 +8,13 @@ function batteryCallback(res) {
         ts:ts_temp,
         battery:res.batteryLevel 
     }
-    console.log(datas)
-    db.insertBattery(datas)
+
+    try {
+        console.log(datas)
+        db.insertBattery(datas)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 module.exports = batteryCallback
