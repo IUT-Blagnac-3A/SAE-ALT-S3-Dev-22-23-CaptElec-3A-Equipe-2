@@ -1,4 +1,10 @@
-import { Component, ViewChild, QueryList, ElementRef, Input } from "@angular/core";
+import {
+  Component,
+  ViewChild,
+  QueryList,
+  ElementRef,
+  Input,
+} from "@angular/core";
 
 import SVGService from "../modules/SVG";
 
@@ -10,7 +16,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Chart, registerables } from "chart.js";
 import Project from "../modules/Project";
 import { Gauge } from "../gauge/gauge.model";
-import DefautDico from "../modules/default.dico";
+import DefaultDico from "../modules/default.dico";
 
 Chart.register(...registerables);
 
@@ -46,10 +52,11 @@ export class DashboardComponent {
   ) {}
 
   async ngOnInit() {
-    this.criticalRateBattery = DefautDico.CRITICAL_BATTERY();
-    this.criticalRateCO2 = DefautDico.CRITICAL_CO2();
-    this.criticalRateHumidity = DefautDico.CRITICAL_HUMIDITY();
-    this.criticalRateTemperature = DefautDico.CRITICAL_TEMPERATURE();
+    const D = new DefaultDico();
+    this.criticalRateBattery = D.CRITICAL_BATTERY;
+    this.criticalRateCO2 = D.CRITICAL_CO2;
+    this.criticalRateHumidity = D.CRITICAL_HUMIDITY;
+    this.criticalRateTemperature = D.CRITICAL_TEMPERATURE;
     this.cardText = "Critical limit before sending a notification : ";
     this.viewService = this.viewServ;
     this.roomService = this.roomServ;
@@ -64,15 +71,15 @@ export class DashboardComponent {
     let newProject = new Project("IUT-BLAGNAC", values, this.svgService);
     newProject.displayOnPage();
 
-    this.renderCharts();
+    // this.renderCharts();
   }
 
   getRoomInformations(): void {
+    const D = new DefaultDico();
     this.roomService.getRoom(this.inputSensorID).subscribe(
       (result: Room[]) => {
-
         let informationNumber = 0;
-        for(let i=0 ; i<result.length ; i++){
+        for (let i = 0; i < result.length; i++) {
           informationNumber = i;
         }
 
@@ -83,31 +90,55 @@ export class DashboardComponent {
         let humidityColor = "";
         let temperatureColor = "";
 
-        if(this.roomInformations[informationNumber].co2 < DefautDico.CRITICAL_CO2()){
+        if (this.roomInformations[informationNumber].co2 < D.CRITICAL_CO2) {
           co2Color = "#60992D";
-        }else{
+        } else {
           co2Color = "#B3001B";
         }
 
-        if(this.roomInformations[informationNumber].humidity < DefautDico.CRITICAL_HUMIDITY()){
+        if (
+          this.roomInformations[informationNumber].humidity <
+          D.CRITICAL_HUMIDITY
+        ) {
           humidityColor = "#60992D";
-        }else{
+        } else {
           humidityColor = "#B3001B";
         }
 
-        if(this.roomInformations[informationNumber].temperature < DefautDico.CRITICAL_TEMPERATURE()){
+        if (
+          this.roomInformations[informationNumber].temperature <
+          D.CRITICAL_TEMPERATURE
+        ) {
           temperatureColor = "#60992D";
-        }else{
+        } else {
           temperatureColor = "#B3001B";
         }
 
-        this.co2Chart = new Gauge("co2Chart",co2Color,this.roomInformations[informationNumber].co2, DefautDico.MAX_CO2(), " "+DefautDico.CO2_UNIT());
-        this.humidityChart = new Gauge("humidityChart",humidityColor, this.roomInformations[informationNumber].humidity, DefautDico.MAX_HUMIDITY(), DefautDico.HUMIDITY_UNIT());
-        this.temperatureChart = new Gauge("temperatureChart",temperatureColor,this.roomInformations[informationNumber].temperature, DefautDico.MAX_TEMPERATURE(), DefautDico.TEMPERATURE_UNIT());
+        this.co2Chart = new Gauge(
+          "co2Chart",
+          co2Color,
+          this.roomInformations[informationNumber].co2,
+          D.MAX_CO2,
+          " " + D.CO2_UNIT
+        );
+        this.humidityChart = new Gauge(
+          "humidityChart",
+          humidityColor,
+          this.roomInformations[informationNumber].humidity,
+          D.MAX_HUMIDITY,
+          D.HUMIDITY_UNIT
+        );
+        this.temperatureChart = new Gauge(
+          "temperatureChart",
+          temperatureColor,
+          this.roomInformations[informationNumber].temperature,
+          D.MAX_TEMPERATURE,
+          D.TEMPERATURE_UNIT
+        );
       },
       (error: HttpErrorResponse) => {
         console.log(error);
       }
-    )
+    );
   }
 }

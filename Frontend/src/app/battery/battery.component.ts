@@ -1,28 +1,28 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
-import DefaultDico from '../modules/default.dico';
-import { RoomService } from '../room.service';
-import { RoomBattery } from '../roomBattery';
+import { HttpErrorResponse } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { Chart, registerables } from "chart.js";
+import DefaultDico from "../modules/default.dico";
+import { RoomService } from "../room.service";
+import { RoomBattery } from "../roomBattery";
 Chart.register(...registerables);
 
 @Component({
-  selector: 'app-battery',
-  templateUrl: './battery.component.html',
-  styleUrls: ['./battery.component.scss']
+  selector: "app-battery",
+  templateUrl: "./battery.component.html",
+  styleUrls: ["./battery.component.scss"],
 })
-export class BatteryComponent implements OnInit{
+export class BatteryComponent implements OnInit {
   ngOnInit(): void {
     this.getBatteryInformations();
   }
 
-  constructor(private roomService: RoomService){}
+  constructor(private roomService: RoomService) {}
 
   getBatteryInformations(): void {
     this.roomService.getRoomBattery("AM107-9").subscribe(
       (result: RoomBattery[]) => {
         let informationNumber = 0;
-        for(let i=0 ; i<result.length ; i++){
+        for (let i = 0; i < result.length; i++) {
           informationNumber = i;
         }
 
@@ -31,35 +31,36 @@ export class BatteryComponent implements OnInit{
       (error: HttpErrorResponse) => {
         console.log(error);
       }
-    )
+    );
   }
 
-  renderChart(value: Number): void{
+  renderChart(value: Number): void {
     // batteryChart
     let batteryColor = "";
+    let D = new DefaultDico();
 
-    if(value>DefaultDico.CRITICAL_BATTERY()){
+    if (value > D.CRITICAL_BATTERY) {
       batteryColor = "#60992D";
-    }else{
+    } else {
       batteryColor = "#B3001B";
     }
 
     const batteryChart = new Chart("batteryChart", {
-      type: 'bar',
+      type: "bar",
       data: {
         labels: [""],
         datasets: [
           {
-            label: 'Actual battery',
+            label: "Actual battery",
             data: [value],
             backgroundColor: batteryColor,
           },
           {
-            label: 'Maximum battery',
-            data: [DefaultDico.MAX_BATTERY()],
+            label: "Maximum battery",
+            data: [D.MAX_BATTERY],
             backgroundColor: "#212529",
-          }
-        ]
+          },
+        ],
       },
       options: {
         plugins: {
@@ -72,15 +73,15 @@ export class BatteryComponent implements OnInit{
           //@ts-ignore
           centerTextTemperature: false,
           tooltip: {
-            mode: 'point',
+            mode: "point",
           },
           legend: {
-            display: false
+            display: false,
           },
           title: {
             display: false,
-            text: 'Below 15% a notification will be sent',
-            position: "bottom"
+            text: "Below 15% a notification will be sent",
+            position: "bottom",
           },
         },
         responsive: true,
@@ -95,15 +96,14 @@ export class BatteryComponent implements OnInit{
             min: 0,
             max: 100,
             grid: {
-              display: false
+              display: false,
             },
             ticks: {
-              maxTicksLimit: 6
-            }
-          }
+              maxTicksLimit: 6,
+            },
+          },
         },
-      }
+      },
     });
   }
-
 }

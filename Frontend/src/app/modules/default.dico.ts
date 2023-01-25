@@ -1,23 +1,23 @@
 export default class DefaultDico {
-  static BATTERY_UNIT() {
+  get BATTERY_UNIT() {
     return "%";
   }
-  static CO2_UNIT() {
+  get CO2_UNIT() {
     return "ppm";
   }
-  static HUMIDITY_UNIT() {
+  get HUMIDITY_UNIT() {
     return "%";
   }
-  static TEMPERATURE_UNIT() {
+  get TEMPERATURE_UNIT() {
     return "°C";
   }
-  static PRESSURE_UNIT() {
+  get PRESSURE_UNIT() {
     return "hPa";
   }
-  static ACTIVITY_UNIT() {
+  get ACTIVITY_UNIT() {
     return "µg/m³";
   }
-  
+
   get CO2_MIN() {
     return 0;
   }
@@ -98,29 +98,29 @@ export default class DefaultDico {
   get ACTIVITY_MAX_COLOR() {
     return "#ff0000";
   }
-}
-  static CRITICAL_BATTERY(){
+
+  get CRITICAL_BATTERY() {
     return 15;
   }
-  static CRITICAL_CO2(){
+  get CRITICAL_CO2() {
     return 1000;
   }
-  static CRITICAL_HUMIDITY(){
+  get CRITICAL_HUMIDITY() {
     return 70;
   }
-  static CRITICAL_TEMPERATURE(){
+  get CRITICAL_TEMPERATURE() {
     return 40;
   }
-  static MAX_BATTERY(){
+  get MAX_BATTERY() {
     return 100;
   }
-  static MAX_CO2(){
+  get MAX_CO2() {
     return 5000;
   }
-  static MAX_HUMIDITY(){
+  get MAX_HUMIDITY() {
     return 100;
   }
-  static MAX_TEMPERATURE(){
+  get MAX_TEMPERATURE() {
     return 50;
   }
-};
+}
