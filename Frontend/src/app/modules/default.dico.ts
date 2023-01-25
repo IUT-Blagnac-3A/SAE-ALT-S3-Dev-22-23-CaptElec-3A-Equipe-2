@@ -1,35 +1,35 @@
-module.exports = class DefaultDico {
-  get CO2_UNIT() {
+export default class DefaultDico {
+  static CO2_UNIT() {
     return "ppm";
   }
-  get HUMIDITY_UNIT() {
+  static HUMIDITY_UNIT() {
     return "%";
   }
-  get TEMPERATURE_UNIT() {
+  static TEMPERATURE_UNIT() {
     return "°C";
   }
-  get PRESSURE_UNIT() {
+  static PRESSURE_UNIT() {
     return "hPa";
   }
-  get ACTIVITY_UNIT() {
+  static ACTIVITY_UNIT() {
     return "µg/m³";
   }
-  get CRITICAL_CO2(){
+  static CRITICAL_CO2(){
     return 1000;
   }
-  get CRITICAL_HUMIDITY(){
+  static CRITICAL_HUMIDITY(){
     return 70;
   }
-  get CRITICAL_TEMPERATURE(){
+  static CRITICAL_TEMPERATURE(){
     return 40;
   }
-  get MAX_CO2(){
+  static MAX_CO2(){
     return 5000;
   }
-  get MAX_HUMIDITY(){
+  static MAX_HUMIDITY(){
     return 100;
   }
-  get MAX_TEMPERATURE(){
+  static MAX_TEMPERATURE(){
     return 50;
   }
 };

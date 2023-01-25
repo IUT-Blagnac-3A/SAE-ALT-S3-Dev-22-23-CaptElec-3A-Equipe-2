@@ -9,6 +9,7 @@ import { Room } from "../room";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Chart, registerables } from "chart.js";
 import { Gauge } from "../gauge/gauge.model";
+import DefautDico from "../modules/default.dico";
 
 Chart.register(...registerables);
 
@@ -111,9 +112,31 @@ export class DashboardComponent {
         this.roomInformations = result;
         this.roomName = this.roomInformations[0].name;
 
-        this.co2Chart = new Gauge("co2Chart","#3f1ee6",this.roomInformations[informationNumber].co2);
-        this.humidityChart = new Gauge("humidityChart","#8338ec", this.roomInformations[informationNumber].humidity);
-        this.temperatureChart = new Gauge("temperatureChart","#e63946",this.roomInformations[informationNumber].temperature);
+        let co2Color = "";
+        let humidityColor = "";
+        let temperatureColor = "";
+
+        if(this.roomInformations[informationNumber].co2 < DefautDico.CRITICAL_CO2()){
+          co2Color = "#60992D";
+        }else{
+          co2Color = "#B3001B";
+        }
+
+        if(this.roomInformations[informationNumber].humidity < DefautDico.CRITICAL_HUMIDITY()){
+          humidityColor = "#60992D";
+        }else{
+          humidityColor = "#B3001B";
+        }
+
+        if(this.roomInformations[informationNumber].temperature < DefautDico.CRITICAL_TEMPERATURE()){
+          temperatureColor = "#60992D";
+        }else{
+          temperatureColor = "#B3001B";
+        }
+
+        this.co2Chart = new Gauge("co2Chart",co2Color,this.roomInformations[informationNumber].co2, DefautDico.MAX_CO2(), " "+DefautDico.CO2_UNIT());
+        this.humidityChart = new Gauge("humidityChart",humidityColor, this.roomInformations[informationNumber].humidity, DefautDico.MAX_HUMIDITY(), DefautDico.HUMIDITY_UNIT());
+        this.temperatureChart = new Gauge("temperatureChart",temperatureColor,this.roomInformations[informationNumber].temperature, DefautDico.MAX_TEMPERATURE(), DefautDico.TEMPERATURE_UNIT());
       },
       (error: HttpErrorResponse) => {
         console.log(error);

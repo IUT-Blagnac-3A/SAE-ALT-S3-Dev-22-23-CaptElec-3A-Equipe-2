@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Gauge } from './gauge.model';
+import DefaultDico from '../modules/default.dico';
 Chart.register(...registerables);
 
 @Component({
@@ -17,6 +18,7 @@ export class GaugeComponent implements AfterViewInit{
 
   renderChart(): void {
     let value = this.gauge.value;
+    let unit = this.gauge.unit;
 
     //bypass chartJS plugin bug
     let pluginId = "centerText";
@@ -52,15 +54,29 @@ export class GaugeComponent implements AfterViewInit{
         const { ctx } = chart;
 
         const text = ""+value;
+        const unitText = ""+unit;
 
         ctx.save()
         const x = chart.getDatasetMeta(0).data[0].x;
         const y = chart.getDatasetMeta(0).data[0].y;
 
         ctx.textAlign = 'center';
-        ctx.font = "30pt Roboto";
+        ctx.font = "23pt Roboto";
 
-        ctx.fillText(text, x, y + 10)
+        if(unit.length>2){
+          ctx.fillText(text, x, y)
+        }else{
+          ctx.fillText(text, x-10, y+10)
+        }
+        
+        ctx.font = "14pt Roboto";
+        if(unit.length>2){
+          ctx.fillText(unitText, x, y+20)
+        }else{
+          ctx.font = "18pt Roboto";
+          ctx.fillText(unitText, x+35, y+8)
+        }
+        
       }
     }
 
@@ -70,7 +86,7 @@ export class GaugeComponent implements AfterViewInit{
         labels: ['Mon', 'Tue'],
         datasets: [{
           label: 'Weekly Sales',
-          data: [0.4, 1],
+          data: [this.gauge.value, this.gauge.maxValue],
           backgroundColor: [
             this.gauge.color,
             '#e8e8e8'
