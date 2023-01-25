@@ -13,8 +13,13 @@ function dataCallback(res) {
         pressure:res.object.pressure,
         temperature:res.object.temperature
     }
-    console.log(datas)
-    db.insertData(datas)
+
+    try {
+        console.log(datas)
+        db.insertData(datas)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 module.exports = dataCallback
