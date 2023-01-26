@@ -1,4 +1,4 @@
-import { checkPassword, getUserByUsername } from "../../models/user.js"
+import { checkPassword, getUserByUsername } from "../../../models/user.js"
 import { Response, Request } from "express"
 import jwt from 'jsonwebtoken'
 

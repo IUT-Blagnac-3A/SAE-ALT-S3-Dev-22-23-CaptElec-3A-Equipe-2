@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getDataFromRoomProject } from "../../models/data.js";
+import { getDataFromRoomProject } from "../../../models/data.js";
 
 export default async function getDataByRoom(req: Request, res: Response) {
     const project: string = req.params.project

@@ -32,6 +32,23 @@ export async function getUserByUsername(username: string) {
     return user
 }
 
+export async function checkUserProject(username: string, project: string) {
+    const result = await sql<User[]>`
+        SELECT * FROM user u, project p, user_project up
+        WHERE u.id = up.user_id
+        AND p.id = up.project_id
+        AND u.username = ${ username }
+        AND p.name = ${ project }
+    `.catch(e => {
+        console.log('error : ', e);
+        throw new Error(e)
+    })
+
+    if (result.length != 0) return false
+
+    return true
+}
+
 export async function hashPassword(password: string) {
     const hash = await argon2.hash(password)
     return hash

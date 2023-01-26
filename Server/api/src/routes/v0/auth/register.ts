@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addUser, User } from "../../models/user.js";
+import { addUser, User } from "../../../models/user.js";
 
 export default async function register(req:Request, res: Response) {
     const user: User = {
