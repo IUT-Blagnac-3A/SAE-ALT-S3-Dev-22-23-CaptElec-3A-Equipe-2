@@ -8,7 +8,7 @@ const types = ["activity", "co2", "humidity", "pressure", "temperature"];
 
 import DefineEnvironnementType from "./type.environnement";
 
-interface SVGData {
+export interface SVGData {
   value: number;
   device: string;
   room: string;
@@ -18,6 +18,7 @@ interface SVGData {
   providedIn: "root",
 })
 export default class SVGService {
+  data: Array<SVGData> | undefined;
   constructor(private http: HttpClient) {}
 
   async getSVGFromClientProject(
@@ -47,6 +48,12 @@ export default class SVGService {
         });
     });
   }
+
+  findDeviceLinkedToRoom(room: string) {
+    let device = this.data?.find((data) => data.room == room);
+    if (device == null) return undefined;
+    return device.device;
+  }
   /**
    *
    */
@@ -74,6 +81,7 @@ export default class SVGService {
       await this.http
         .get(path, { responseType: "json" })
         .subscribe((data: any) => {
+          this.data = data;
           res(data);
         });
     });
