@@ -17,12 +17,16 @@ export class ViewService {
   // view = "Log";
   view = "Dashboard";
   dashboardId = "";
+  isDashboardActive = false;
 
   constructor() {}
 
   public setView(viewName: string): void {
     if (!views.includes(viewName)) throw new Error("Invalid view name");
     this.view = viewName;
+    if(this.getView()==='Dashboard' && viewName==='Dashboard'){
+      window.location.reload();
+    }
   }
 
   public getView(): string {
@@ -35,5 +39,13 @@ export class ViewService {
 
   public getDashboardId(): string {
     return this.dashboardId;
+  }
+
+  public getIsDashboardActive(): boolean{
+    return this.isDashboardActive;
+  }
+
+  public setIsDashboardActive(bool: boolean){
+    this.isDashboardActive = bool;
   }
 }

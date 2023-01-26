@@ -228,6 +228,7 @@ export default class Project {
     gs.forEach((group: Node, index: number, parent: NodeList) => {
       if (group instanceof Element) {
         group.addEventListener("click", (event) => {
+          this.viewService.setIsDashboardActive(true);
           let elementClickedBis = event.target as HTMLElement;
           let elementClicked = elementClickedBis.parentElement;
           if (elementClicked == null) throw new Error("Element not found");
@@ -238,12 +239,12 @@ export default class Project {
           // Remove the hidden style from the container
           let container = document.getElementsByClassName("container")[0];
           if (container == null) throw new Error("Container not found");
-          if (!device) {
-            container.setAttribute("style", "display: none;");
-            return;
-          }
+          // if (!device) {
+          //   container.setAttribute("style", "display: none;");
+          //   return;
+          // }
 
-          container.setAttribute("style", "display: block;");
+          // container.setAttribute("style", "display: block;");
           this.viewService.setDashboardId(device as string);
         });
       }
