@@ -1,5 +1,5 @@
 <app-header *ngIf="viewService.getView() != 'Log' && viewService.getView() != 'Create Account'"></app-header>
-<app-dashboard *ngIf="viewService.getView() === 'Dashboard'" [inputSensorID]="'AM107-9'"></app-dashboard>
+<app-dashboard *ngIf="viewService.getView() === 'Dashboard'" [inputSensorID]="viewService.getDashboardId()"></app-dashboard>
 <app-create-account *ngIf="viewService.getView() === 'Create Account'"></app-create-account>
 <app-notifications
   *ngIf="viewService.getView() === 'Notifications'"
