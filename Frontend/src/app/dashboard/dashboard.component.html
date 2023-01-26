@@ -1,75 +1,88 @@
-<div class="container" style="height: 60vh;">
-   <div class="row mt-5 mb-5">
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title">Battery</div>
-                <img src="assets/pictures/200.png" alt="" class="card-img">
-                <div class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
-            </div>
+<div id="svg-container"></div>
+<div class="container">
+  <div class="col mb-5">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Dashboard for device 
+          <span class="text-danger">{{roomName}}</span>
+          </h3>
+        <div class="card-text">
+          Different informations provided by a MQTT sensor to help you manage
+          your room
         </div>
+      </div>
     </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title">CO2</div>
-                <img src="assets/pictures/200.png" alt="" class="card-img">
-                <div class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
-            </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col mb-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Battery</h5>
+          <app-battery></app-battery>
+          <h6 class="card-text text-muted">
+            {{cardText}}{{criticalRateBattery}}
+          </h6>
         </div>
+      </div>
     </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title">Humidity</div>
-                <img src="assets/pictures/200.png" alt="" class="card-img">
-                <div class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
-            </div>
+    <div class="col mb-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">CO2</h5>
+            <app-gauge [gauge]="co2Chart"></app-gauge>
+          <h6 class="card-text text-muted">
+            {{cardText}}{{criticalRateCO2}}
+          </h6>
         </div>
+      </div>
     </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title">Temperature</div>
-                <img src="assets/pictures/200.png" alt="" class="card-img">
-                <div class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</div>
-            </div>
+    <div class="col mb-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Humidity</h5>
+          <app-gauge [gauge]="humidityChart"></app-gauge>
+          <h6 class="card-text text-muted">
+            {{cardText}}{{criticalRateHumidity}}
+          </h6>
         </div>
+      </div>
     </div>
-   </div>
-   <div class="row">
-    <div class="col-7">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body"></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="col mb-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Temperature</h5>
+            <app-gauge [gauge]="temperatureChart"></app-gauge>
+          <h6 class="card-text text-muted">
+            {{cardText}}{{criticalRateTemperature}}
+          </h6>
         </div>
+      </div>
     </div>
-    <div class="col">
-        <div class="card">
-            <div class="card-body"></div>
-        </div>
-    </div>
-   </div>
-</div>
+  </div>
 
-<!-- <div *ngFor="let room of rooms">
-    <div>{{room.deviceName}}</div>
-    <div>{{room.activity}}</div>
-    <div>{{room.co2}}</div>
-    <div>{{room.humidity}}</div>
-    <div>{{room.pressure}}</div>
-    <div>{{room.temperature}}</div>
-    <div>{{room.ts}}</div>
-</div> -->
+  <div class="row">
+    <div class="col-7">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-body"></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="card-body"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body"></div>
+      </div>
+    </div>
+  </div>
+</div>

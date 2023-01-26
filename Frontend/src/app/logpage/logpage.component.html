@@ -1,0 +1,71 @@
+<div class="background">
+  <img src="../../assets/pictures/background.jpg" />
+</div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <!-- ========================================================== -->
+    <!-- ======================== USERNAME ======================== -->
+    <!-- ========================================================== -->
+    <label for="username">Username</label>
+    <input
+      type="username"
+      class="form-control"
+      required
+      id="username"
+      aria-describedby="usernameHelp"
+      placeholder="Enter username"
+      formControlName="username"
+    />
+  </div>
+  <div
+    *ngIf="username?.invalid && (username?.dirty || username?.touched)"
+    class="alert alert-danger"
+  >
+    <div *ngIf="username?.hasError('required')">Username is required.</div>
+
+    <div *ngIf="username?.hasError('minlength')">
+      Username must be at least 3 characters long.
+    </div>
+  </div>
+  <!-- ========================================================== -->
+  <!-- ======================== PASSWORD ======================== -->
+  <!-- ========================================================== -->
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      required
+      id="password"
+      placeholder="Password"
+      formControlName="password"
+    />
+  </div>
+  <small id="passwordForget" class="form-text text-muted"
+    >Forgot your password ? Please contact an administrator</small
+  >
+  <div
+    *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+    class="alert alert-danger"
+  >
+    <div *ngIf="password?.hasError('required')">Password is required.</div>
+  </div>
+  <div *ngIf="incorrectPassword == true" class="alert alert-danger">
+    Incorrect password.
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+    <label class="form-check-label" for="exampleCheck1">Remember me</label>
+  </div>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [ngClass]="{ disabled: loginForm.invalid }"
+    [ngStyle]="{ cursor: loginForm.invalid ? 'not-allowed' : 'pointer' }"
+  >
+    Login
+  </button>
+  <button type="button" class="btn btn-link" (click)="onRegister()">
+    I don't have an account
+  </button>
+</form>
