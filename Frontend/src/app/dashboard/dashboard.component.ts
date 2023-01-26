@@ -90,8 +90,6 @@ export class DashboardComponent {
     const D = new DefaultDico();
     this.roomService.getRoom(this.inputSensorID).subscribe(
       (result: Room[]) => {
-        console.log(result);
-
         let informationNumber = 0;
         for (let i = 0; i < result.length; i++) {
           informationNumber = i;

@@ -40,10 +40,11 @@ export default class Project {
     this.currentTypeSearched = type;
   }
 
-  displayOnPage() {
+  displayOnPage(fromComboBox: boolean = false) {
     let container = document.getElementById("svg-container");
     if (container == null) throw new Error("Container not found");
-    this.history.push({ depth: this.currentDepth, index: this.currentIndex });
+    if (!fromComboBox)
+      this.history.push({ depth: this.currentDepth, index: this.currentIndex });
 
     container.innerHTML = "";
     if (this.currentDepth > 0) this.displayReturnButton();
@@ -201,7 +202,7 @@ export default class Project {
       let elementClicked = event.target as HTMLSelectElement;
       let value = elementClicked.value;
       this.currentTypeSearched = value;
-      this.displayOnPage();
+      this.displayOnPage(true);
     });
     types.forEach((type) => {
       let option = document.createElement("option");

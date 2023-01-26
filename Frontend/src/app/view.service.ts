@@ -34,8 +34,6 @@ export class ViewService {
   }
 
   public getDashboardId(): string {
-    console.log("Dashboard ID : " + this.dashboardId);
-
     return this.dashboardId;
   }
 }
