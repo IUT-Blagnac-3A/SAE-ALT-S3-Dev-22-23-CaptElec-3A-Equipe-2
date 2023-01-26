@@ -7,7 +7,7 @@ export default async function modifyProject (req: Request, res: Response) {
     await updateProject( oldName,  newName )
         .then(result => {
             console.log(res, " project has been successfully modified to the database.");
-            res.send(result)
+            res.send({'message' : 'project has been successfully modified to the database.'})
         })
         .catch((error) => {
             console.log('error in handler : ', error)
