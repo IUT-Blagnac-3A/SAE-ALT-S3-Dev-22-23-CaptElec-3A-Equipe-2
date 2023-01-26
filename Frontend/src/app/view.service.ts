@@ -15,7 +15,8 @@ const views = [
 })
 export class ViewService {
   // view = "Log";
-  view = "Log";
+  view = "Dashboard";
+  dashboardId = "AM107-9";
 
   constructor() {}
 
@@ -26,5 +27,13 @@ export class ViewService {
 
   public getView(): string {
     return this.view;
+  }
+
+  public setDashboardId(inputDashboardId: string): void {
+    this.dashboardId = inputDashboardId;
+  }
+
+  public getDashboardId(): string{
+    return this.dashboardId;
   }
 }
