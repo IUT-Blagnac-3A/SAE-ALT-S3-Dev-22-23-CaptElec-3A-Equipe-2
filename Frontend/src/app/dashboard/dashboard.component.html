@@ -1,6 +1,6 @@
-<div id="svg-container"></div>
-<!-- Style: hidden -->
-<div class="container" style="display: none">
+<div id="svg-container" *ngIf="!viewService.getIsDashboardActive()"></div>
+<!-- Style: hidden --> 
+<div class="container" *ngIf="viewService.getIsDashboardActive()">
   <div class="col mb-5">
     <div class="card">
       <div class="card-body">

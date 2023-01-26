@@ -8,7 +8,7 @@ import { ViewService } from '../view.service';
 })
 export class HeaderComponent {
 
-  constructor(private viewService: ViewService){
+  constructor(public viewService: ViewService){
 
   }
 
