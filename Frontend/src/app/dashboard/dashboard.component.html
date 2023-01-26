@@ -1,11 +1,13 @@
 <div id="svg-container"></div>
-<div class="container">
+<!-- Style: hidden -->
+<div class="container" style="display: none">
   <div class="col mb-5">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Dashboard for device 
-          <span class="text-danger">{{roomName}}</span>
-          </h3>
+        <h3 class="card-title">
+          Dashboard for device
+          <span class="text-danger">{{ roomName }}</span>
+        </h3>
         <div class="card-text">
           Different informations provided by a MQTT sensor to help you manage
           your room
@@ -20,7 +22,7 @@
           <h5 class="card-title">Battery</h5>
           <app-battery></app-battery>
           <h6 class="card-text text-muted">
-            {{cardText}}{{criticalRateBattery}}
+            {{ cardText }}{{ criticalRateBattery }}
           </h6>
         </div>
       </div>
@@ -29,9 +31,9 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">CO2</h5>
-            <app-gauge [gauge]="co2Chart"></app-gauge>
+          <app-gauge [gauge]="co2Chart"></app-gauge>
           <h6 class="card-text text-muted">
-            {{cardText}}{{criticalRateCO2}}
+            {{ cardText }}{{ criticalRateCO2 }}
           </h6>
         </div>
       </div>
@@ -42,7 +44,7 @@
           <h5 class="card-title">Humidity</h5>
           <app-gauge [gauge]="humidityChart"></app-gauge>
           <h6 class="card-text text-muted">
-            {{cardText}}{{criticalRateHumidity}}
+            {{ cardText }}{{ criticalRateHumidity }}
           </h6>
         </div>
       </div>
@@ -51,9 +53,9 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Temperature</h5>
-            <app-gauge [gauge]="temperatureChart"></app-gauge>
+          <app-gauge [gauge]="temperatureChart"></app-gauge>
           <h6 class="card-text text-muted">
-            {{cardText}}{{criticalRateTemperature}}
+            {{ cardText }}{{ criticalRateTemperature }}
           </h6>
         </div>
       </div>

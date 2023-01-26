@@ -68,16 +68,30 @@ export class DashboardComponent {
       "IUT-BLAGNAC"
     );
 
-    let newProject = new Project("IUT-BLAGNAC", values, this.svgService);
+    let newProject = new Project(
+      "IUT-BLAGNAC",
+      values,
+      this.svgService,
+      this.viewServ
+    );
     newProject.displayOnPage();
-
-    // this.renderCharts();
+    // Display all the 5 secondes the current viewService.dashboardId
+    this.viewService.setDashboardId(this.roomName);
+    setInterval(() => {
+      if (this.roomName != this.viewService.dashboardId) {
+        this.roomName = this.viewService.dashboardId;
+        this.inputSensorID = this.viewService.dashboardId;
+        this.getRoomInformations();
+      }
+    }, 500);
   }
 
   getRoomInformations(): void {
     const D = new DefaultDico();
     this.roomService.getRoom(this.inputSensorID).subscribe(
       (result: Room[]) => {
+        console.log(result);
+
         let informationNumber = 0;
         for (let i = 0; i < result.length; i++) {
           informationNumber = i;
