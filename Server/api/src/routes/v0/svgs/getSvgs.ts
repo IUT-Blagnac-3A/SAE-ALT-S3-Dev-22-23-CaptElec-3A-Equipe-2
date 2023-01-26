@@ -12,8 +12,8 @@ export default async function getSvgs(req: Request, res: Response) {
     return;
   }
 
-  let parentPath = "/app/src/database";
-  let direct = `${username}-${id}/${projectname}`;
+  const parentPath = "/app/src/database";
+  const direct = `${username}-${id}/${projectname}`;
   const path = `${parentPath}/${direct}/`;
 
   console.log(path);
@@ -23,18 +23,18 @@ export default async function getSvgs(req: Request, res: Response) {
     return;
   }
 
-  let files: string[] = [];
+  const files: string[] = [];
   fs.readdirSync(path).forEach((file) => {
     if (file.endsWith(".svg")) files.push(file);
   });
 
-  let srcFolder = "/app";
+  const srcFolder = "/app";
 
   let resultfiles = {};
   for (let i = 0; i < files.length; i++) {
-    let name = files[i].split(".")[0];
-    let filePath = `${srcFolder}/${path.slice(5)}/${files[i]}`;
-    let content = fs.readFileSync(`${filePath}`, "utf8");
+    const name = files[i].split(".")[0];
+    const filePath = `${srcFolder}/${path.slice(5)}/${files[i]}`;
+    const content = fs.readFileSync(`${filePath}`, "utf8");
     resultfiles = { ...resultfiles, [name]: content };
   }
   res.send(resultfiles);

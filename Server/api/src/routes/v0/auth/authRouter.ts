@@ -1,6 +1,6 @@
 import * as express from "express";
-import authMiddleware from "../../middleware/auth.js";
-import getPayload from "../../utils/getPayload.js";
+import authMiddleware from "../../../middleware/auth.js";
+import getPayload from "../../../utils/getPayload.js";
 import login from "./login.js";
 import register from "./register.js";
 

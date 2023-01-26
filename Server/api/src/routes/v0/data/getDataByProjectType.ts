@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { getDataFromProjectType } from "../../models/data.js";
-import { DataType } from "../../utils/dataType.js";
+import { getDataFromProjectType } from "../../../models/data.js";
+import { DataType } from "../../../utils/dataType.js";
 
 export default async function getDataFromProjectTypeHandler (req: Request, res: Response) {
     const project: string = req.params.project

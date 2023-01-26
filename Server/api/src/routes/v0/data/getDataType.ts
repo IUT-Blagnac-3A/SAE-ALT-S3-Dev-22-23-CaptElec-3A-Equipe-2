@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { getDataFromType } from "../../models/data.js";
-import { DataType } from "../../utils/dataType.js";
+import { getDataFromType } from "../../../models/data.js";
+import { DataType } from "../../../utils/dataType.js";
 
 export default async function getDataFromTypeHandler(req: Request, res: Response) {
     console.log("hello request");

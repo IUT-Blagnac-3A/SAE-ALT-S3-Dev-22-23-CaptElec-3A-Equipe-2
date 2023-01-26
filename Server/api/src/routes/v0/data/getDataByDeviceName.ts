@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { getBatteryFromDevice } from "../../models/battery.js";
+import { getDatasFromDevice } from '../../../models/data.js'
 
 export default async function getDataFromDevice (req: Request, res: Response) {
     const deviceName: string = req.params.deviceName
-    await getBatteryFromDevice(deviceName)
+    await getDatasFromDevice(deviceName)
     .then(result => {
         console.log(result)
         res.send(result)
