@@ -36,8 +36,17 @@ export default class DateService {
    * @returns
    */
   static timeStampToDate = (timeStamp: string) => {
+    // @ts-ignore
+    const [_, year, month, day, hour, minute, second, millisecond] =
+      timeStamp.match(dateRegex);
     return new Date(
-      timeStamp
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute),
+      Number(second),
+      Number(millisecond)
     );
   };
   /**
