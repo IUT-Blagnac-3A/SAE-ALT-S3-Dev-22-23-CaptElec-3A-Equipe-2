@@ -70,12 +70,13 @@ export async function getDataFromType(type: string) {
 
 export async function getDataFromProjectType(project: string, type: string) {
   const result = await sql<Data[]>`
-        SELECT da.${sql(
+        SELECT DISTINCT da.${sql(
           type
-        )} as value, de.name as device, rpd.room_name as room FROM device de, data da, room_project_device rpd
+        )} as value, da.ts, de.name as device, rpd.room_name as room FROM device de, data da, room_project_device rpd
         WHERE de.deveui = da.deveui 
         AND de.deveui = rpd.deveui
         AND rpd.project_name = ${ project }
+        ORDER BY da.ts DESC
     `.catch((e) => {
         console.log('error : ', e)
         throw new Error(e)

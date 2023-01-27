@@ -6,7 +6,7 @@ export default async function removeProject (req: Request, res: Response) {
     await deleteProject( name )
         .then(result => {
             console.log(res, " project has been successfully removed to the database.");
-            res.send(result)
+            res.send({'message' : 'project has been successfully removed to the database.'})
         })
         .catch((error) => {
             console.log('error in handler : ', error)

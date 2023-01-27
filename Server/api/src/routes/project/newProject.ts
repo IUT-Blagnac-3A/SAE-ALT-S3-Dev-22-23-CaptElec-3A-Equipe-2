@@ -6,7 +6,7 @@ export default async function newProject (req: Request, res: Response) {
     await insertProject( name )
         .then(result => {
             console.log(res, " project has been successfully added to the database.");
-            res.send(result)
+            res.send({'message' : 'project has been successfully added to the database.'})
         })
         .catch((error) => {
             console.log('error in handler : ', error)
