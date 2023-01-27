@@ -72,7 +72,8 @@ export class DashboardComponent {
     this.getRoomInformations();
 
     let values = await this.svgService.getSVGFromClientProject(
-      this.ss.User,
+      // this.ss.User,
+      "remib",
       "IUT-BLAGNAC"
     );
 

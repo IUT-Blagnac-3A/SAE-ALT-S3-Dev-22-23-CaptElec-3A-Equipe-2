@@ -18,7 +18,7 @@ const views = [
 })
 export class ViewService {
   // view = "Log";
-  view = "Log";
+  view = "Dashboard";
   dashboardId = "";
   isDashboardActive = false;
   observableDash$ = new Subject();
