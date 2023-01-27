@@ -24,13 +24,10 @@ export class ViewService {
   observableDash$ = new Subject();
   observableGauge$: Subject<Gauge> = new Subject();
   charts: Chart[] = [];
+  batteryChart!: Chart;
   pluginsCenterText: any[] = [];
 
   constructor() {}
-
-  public changeView(): void{
-    this.dashboardId === "AM107-6" ? this.dashboardId = "AM107-7" : this.dashboardId = "AM107-6";
-  }
 
   public setView(viewName: string): void {
     if (!views.includes(viewName)) throw new Error("Invalid view name");
@@ -46,6 +43,7 @@ export class ViewService {
 
   public setDashboardId(inputDashboardId: string): void {
     this.dashboardId = inputDashboardId;
+    
   }
 
   public getDashboardId(): string {

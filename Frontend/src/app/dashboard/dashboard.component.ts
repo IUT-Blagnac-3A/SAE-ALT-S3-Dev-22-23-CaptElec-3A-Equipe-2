@@ -80,19 +80,19 @@ export class DashboardComponent {
     );
     newProject.displayOnPage();
     // Display all the 5 secondes the current viewService.dashboardId
-    this.viewService.setDashboardId(this.roomName);
-    setInterval(() => {
-      if (this.roomName != this.viewService.dashboardId) {
-        this.roomName = this.viewService.dashboardId;
-        this.inputSensorID = this.viewService.dashboardId;
-        this.getRoomInformations();
-      }
-    }, 500);
+    // this.viewService.setDashboardId(this.roomName);
+    // setInterval(() => {
+    //   if (this.roomName != this.viewService.dashboardId) {
+    //     this.roomName = this.viewService.dashboardId;
+    //     this.inputSensorID = this.viewService.dashboardId;
+    //     this.getRoomInformations();
+    //   }
+    // }, 500);
   }
 
   getRoomInformations(): void {
     const D = new DefaultDico();
-    this.roomService.getRoom(this.inputSensorID).subscribe(
+    this.roomService.getRoom(this.viewServ.getDashboardId()).subscribe(
       (result: Room[]) => {
         let informationNumber = 0;
         for (let i = 0; i < result.length; i++) {
@@ -158,8 +158,13 @@ export class DashboardComponent {
         console.log(error);
       }
     );
-    this.viewServ.observableGauge$.next(this.co2Chart);
-    this.viewServ.observableGauge$.next(this.humidityChart);
-    this.viewServ.observableGauge$.next(this.temperatureChart);
+
+    setTimeout(()=>{
+      this.viewServ.observableGauge$.next(this.co2Chart);
+      this.viewServ.observableGauge$.next(this.humidityChart);
+      this.viewServ.observableGauge$.next(this.temperatureChart);
+    },0)
+    
+    
   }
 }

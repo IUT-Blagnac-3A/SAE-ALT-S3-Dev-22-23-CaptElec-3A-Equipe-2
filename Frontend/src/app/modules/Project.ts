@@ -235,7 +235,7 @@ export default class Project {
           let id = elementClicked.getAttribute("id")?.toUpperCase();
           if (id == null) throw new Error("Id not found");
           let device = this.svgService.findDeviceLinkedToRoom(id);
-          this.viewService.setDashboardId(device as string);
+          
           // Remove the hidden style from the container
           let container = document.getElementsByClassName("container")[0];
           if (container == null) throw new Error("Container not found");
@@ -246,6 +246,7 @@ export default class Project {
 
           // container.setAttribute("style", "display: block;");
           this.viewService.setDashboardId(device as string);
+          this.viewService.observableDash$.next(this.viewService.getDashboardId());
         });
       }
     });
