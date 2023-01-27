@@ -24,11 +24,40 @@ export async function getAllData() {
   return result;
 }
 
+export async function getAllDataFromProject(project: string) {
+  const result = await sql<Data[]>`
+        SELECT * FROM data da, device de, room_project_device rpd
+        WHERE da.deveui = de.deveui
+        AND de.deveui = rpd.deveui
+        AND rpd.project_name = ${project}
+    `.catch((e) => {
+        console.log('error : ', e)
+        throw new Error(e)
+    })
+
+  return result;
+}
+
 export async function getDatasFromDevice(name_device: string) {
   const result = await sql<Data[]>`
         SELECT * FROM device de, data da, room_project_device rpd
         WHERE de.deveui = da.deveui 
         AND de.deveui = rpd.deveui
+        AND de.name  = ${ name_device }
+    `.catch((e) => {
+        console.log('error : ', e)
+        throw new Error(e)
+    })
+
+  return result;
+}
+
+export async function getProjectDataFromDevice(project: string, name_device: string) {
+  const result = await sql<Data[]>`
+        SELECT * FROM device de, data da, room_project_device rpd
+        WHERE de.deveui = da.deveui 
+        AND de.deveui = rpd.deveui
+        AND rpd.project_name = ${project}
         AND de.name  = ${ name_device }
     `.catch((e) => {
         console.log('error : ', e)

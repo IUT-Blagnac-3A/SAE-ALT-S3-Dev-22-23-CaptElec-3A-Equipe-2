@@ -10,12 +10,12 @@ export default async function userProjectMiddleware(req: Request, res: Response,
         .then(result => {
             if (!result) {
                 res.send(401)
-            } else {
-                next()
             }
         })
         .catch((e) => {
             console.log('error in handler : ', e)
             res.status(500).send({ "error" : '' + e})
         });
+
+    next();
 }

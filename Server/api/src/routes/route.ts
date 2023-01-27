@@ -10,7 +10,7 @@ import getSvgs from "./v0/svgs/getSvgs.js";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import authMiddleware from "../middleware/auth.js";
-import userProjectMiddleware from "../middleware/userProject.js";
+import { v1Routes } from "./v1/v1Router.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -21,12 +21,13 @@ console.log(path.join(srcDirName.join("\\"), "database"));
 
 export const routes = express.Router();
 
+routes.use("/v1", authMiddleware, v1Routes)
+
 routes.get("/", (req, res) => res.send({ hello: "world" }));
 
 routes.use("/data", dataRouter);
-//routes.use("/project/:project", authMiddleware, userProjectMiddleware, dataRouter)
 routes.use("/battery", batteryRouter);
-routes.use("/project", projectRouter)
+routes.use("/project", projectRouter);
 
 routes.use("/auth", authRouter);
 
