@@ -1,4 +1,7 @@
 import { Injectable } from "@angular/core";
+import { Chart } from "chart.js";
+import { Subject } from "rxjs";
+import { Gauge } from "./gauge/gauge.model";
 
 const views = [
   "Log",
@@ -18,8 +21,16 @@ export class ViewService {
   view = "Dashboard";
   dashboardId = "";
   isDashboardActive = false;
+  observableDash$ = new Subject();
+  observableGauge$: Subject<Gauge> = new Subject();
+  charts: Chart[] = [];
+  pluginsCenterText: any[] = [];
 
   constructor() {}
+
+  public changeView(): void{
+    this.dashboardId === "AM107-6" ? this.dashboardId = "AM107-7" : this.dashboardId = "AM107-6";
+  }
 
   public setView(viewName: string): void {
     if (!views.includes(viewName)) throw new Error("Invalid view name");

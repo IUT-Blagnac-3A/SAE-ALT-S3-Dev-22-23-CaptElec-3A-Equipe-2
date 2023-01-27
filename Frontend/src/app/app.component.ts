@@ -16,5 +16,9 @@ export class AppComponent {
 
   ngOnInit() {
     this.viewService = this.viewServ;
+    setInterval(()=>{
+      this.viewServ.changeView();
+      this.viewServ.observableDash$.next(this.viewServ.getDashboardId())
+    },5000)
   }
 }

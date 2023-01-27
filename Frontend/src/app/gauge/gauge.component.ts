@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Gauge } from './gauge.model';
 import DefaultDico from '../modules/default.dico';
+import { ViewService } from '../view.service';
 Chart.register(...registerables);
 
 @Component({
@@ -12,11 +13,30 @@ Chart.register(...registerables);
 export class GaugeComponent implements AfterViewInit{
   @Input() gauge!: Gauge;
 
+  constructor(private viewServ: ViewService){}
+
   ngAfterViewInit(): void {
     this.renderChart();
+    this.viewServ.observableGauge$.subscribe(value => {
+      this.gauge = value;
+      
+      let newList = [];
+      for(let elem of this.viewServ.charts){
+        if(elem.canvas.getAttribute("id")=== this.gauge.id){
+          elem.destroy();
+        }else{
+          newList.push(elem)
+        }
+        this.viewServ.charts = newList;
+      }
+      
+      this.renderChart();
+    });
   }
 
   renderChart(): void {
+    console.log("oueeee");
+    
     let value = this.gauge.value;
     let unit = this.gauge.unit;
 
@@ -111,7 +131,18 @@ export class GaugeComponent implements AfterViewInit{
       }
     });
 
+    for(let elem of this.viewServ.pluginsCenterText){
+      if(elem.id === pluginId){
+        Chart.unregister(elem)
+      }
+      
+    }
+
+    this.viewServ.charts.push(gaugeChart);
     Chart.register(centerText);
+    this.viewServ.pluginsCenterText.push(centerText);
+
+    
   }
 
 }

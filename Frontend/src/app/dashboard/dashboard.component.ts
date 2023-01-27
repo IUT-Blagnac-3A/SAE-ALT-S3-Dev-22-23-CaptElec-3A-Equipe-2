@@ -49,9 +49,13 @@ export class DashboardComponent {
     private svgService: SVGService,
     private viewServ: ViewService,
     private roomServ: RoomService
-  ) {}
+  ) { }
 
   async ngOnInit() {
+    this.viewServ.observableDash$.subscribe(value => {
+      this.getRoomInformations()
+    });
+
     const D = new DefaultDico();
     this.criticalRateBattery = D.CRITICAL_BATTERY;
     this.criticalRateCO2 = D.CRITICAL_CO2;
@@ -147,10 +151,15 @@ export class DashboardComponent {
           D.MAX_TEMPERATURE,
           D.TEMPERATURE_UNIT
         );
+
+        
       },
       (error: HttpErrorResponse) => {
         console.log(error);
       }
     );
+    this.viewServ.observableGauge$.next(this.co2Chart);
+    this.viewServ.observableGauge$.next(this.humidityChart);
+    this.viewServ.observableGauge$.next(this.temperatureChart);
   }
 }
