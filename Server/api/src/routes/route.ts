@@ -3,7 +3,6 @@ import * as express from "express";
 import { batteryRouter } from "./v0/battery/batteryRouter.js";
 import { authRouter } from "./v0/auth/authRouter.js";
 import { dataRouter } from "./v0/data/dataRouter.js";
-import { projectRouter } from "./project/projectRouter.js";
 
 import getSvgs from "./v0/svgs/getSvgs.js";
 
@@ -27,7 +26,7 @@ routes.get("/", (req, res) => res.send({ hello: "world" }));
 
 routes.use("/data", dataRouter);
 routes.use("/battery", batteryRouter);
-routes.use("/project", projectRouter);
+// routes.use("/project", projectRouter);
 
 routes.use("/auth", authRouter);
 
