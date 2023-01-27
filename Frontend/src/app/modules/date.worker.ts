@@ -58,3 +58,7 @@ const timestampToReadable = (timeStamp: string) => {
     Months[date.getMonth()]
   } ${date.getFullYear()} ${date.toLocaleTimeString()}`;
 };
+
+exports.timestampToReadable = timestampToReadable;
+
+exports.timeStampToDate = timeStampToDate;
