@@ -23,17 +23,15 @@ export default class SVGService {
 
   async getSVGFromClientProject(
     username: string,
-    id: string,
     projectname: string
   ): Promise<File[]> {
     return new Promise(async (resolve, reject) => {
       let svgFiles: File[] = [];
-      let path = `${ENV.SERVER_ADRESS_A}/svgs/${username}/${id}/${projectname}/`;
+      let path = `${ENV.SERVER_ADRESS_A}/svgs/${username}/${projectname}/`;
       let file: File;
 
       const formData = new FormData();
       formData.append("username", username);
-      formData.append("id", id);
       formData.append("projectname", projectname);
 
       await this.http
