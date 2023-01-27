@@ -1,4 +1,7 @@
 import { Injectable } from "@angular/core";
+import { Chart } from "chart.js";
+import { Subject } from "rxjs";
+import { Gauge } from "./gauge/gauge.model";
 
 const views = [
   "Log",
@@ -18,6 +21,11 @@ export class ViewService {
   view = "Dashboard";
   dashboardId = "";
   isDashboardActive = false;
+  observableDash$ = new Subject();
+  observableGauge$: Subject<Gauge> = new Subject();
+  charts: Chart[] = [];
+  batteryChart!: Chart;
+  pluginsCenterText: any[] = [];
 
   constructor() {}
 
@@ -35,6 +43,7 @@ export class ViewService {
 
   public setDashboardId(inputDashboardId: string): void {
     this.dashboardId = inputDashboardId;
+    
   }
 
   public getDashboardId(): string {

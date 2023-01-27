@@ -4,6 +4,7 @@ import { Chart, registerables } from "chart.js";
 import DefaultDico from "../modules/default.dico";
 import { RoomService } from "../room.service";
 import { RoomBattery } from "../roomBattery";
+import { ViewService } from "../view.service";
 Chart.register(...registerables);
 
 @Component({
@@ -16,10 +17,10 @@ export class BatteryComponent implements OnInit {
     this.getBatteryInformations();
   }
 
-  constructor(private roomService: RoomService) {}
+  constructor(private roomService: RoomService, private viewServ: ViewService) {}
 
   getBatteryInformations(): void {
-    this.roomService.getRoomBattery("AM107-9").subscribe(
+    this.roomService.getRoomBattery(this.viewServ.dashboardId).subscribe(
       (result: RoomBattery[]) => {
         let informationNumber = 0;
         for (let i = 0; i < result.length; i++) {
@@ -105,5 +106,7 @@ export class BatteryComponent implements OnInit {
         },
       },
     });
+
+    this.viewServ.batteryChart = batteryChart;
   }
 }
