@@ -4,102 +4,117 @@ import { HttpClient } from "@angular/common/http";
 import ENV from "./environments/environment";
 
 interface LoginResponse {
-    status: number;
-    body: any;
+  status: number;
+  body: any;
 }
 
 interface UserSession {
-    user: string | null;
-    token: string | null;
-    project: string | null;
-    userid: string | null;
+  user: string | null;
+  token: string | null;
+  project: string | null;
 }
 
 @Injectable({
-    providedIn: "root",
+  providedIn: "root",
 })
 export class SessionService {
-    user: string | null = null;
-    token: string | null = null;
-    project: string | null = null;
-    userid: string | null = null;
-    firstname: string | null = null;
-    lastname: string | null = null;
+  user: string | null = null;
+  token: string | null = null;
+  project: string | null = null;
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-
-    login(username: string, password: string): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
-            let path = `${ENV.SERVER_ADRESS_A}/auth/login`;
-            this.http.post(path, {username, password}).subscribe(
-                (response: Object) => {
-                    let castedResponse = response as LoginResponse;
-                    if (castedResponse.status === 401) reject();
-                    else resolve(0);
-                }
-            );
+  login(username: string, password: string): Promise<number> {
+    return new Promise<any>(async (resolve, reject) => {
+      let path = `${ENV.SERVER_ADRESS_A}/auth/login`;
+      await this.http
+        .post(path, { username, password })
+        .subscribe((response: Object) => {
+          let castedResponse = response as LoginResponse;
+          if (castedResponse.status === 401) return resolve(-1);
+          console.log(castedResponse);
+          //@ts-ignore
+          this.setSession(username, castedResponse.token);
+          resolve(0);
         });
-    }
+    });
+  }
 
+  isThereARunningSession(): boolean {
+    let tokenFound = localStorage.getItem("token");
+    return tokenFound !== null;
+  }
 
-    public setSession(username: string, token: string, userid: string, firstname: string, lastname: string, project: string = "DEFAULT__"): void {
-        this.user = username;
-        this.token = token;
-        this.project = project;
-        this.userid = userid;
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
+  getToken(): string {
+    let tokenFound = localStorage.getItem("token");
+    if (tokenFound === null) return "";
+    return tokenFound;
+  }
 
-    public getSession(): UserSession {
-        return {
-            user: this.user,
-            token: this.token,
-            project: this.project,
-            userid: this.userid,
-        };
-    }
+  getUsername(): string {
+    let usernameFound = localStorage.getItem("username");
+    if (usernameFound === null) return "";
+    return usernameFound;
+  }
 
-    public set Project(project: string) {
-        this.project = project;
-    }
+  resetSession(): void {
+    this.user = null;
+    this.token = null;
+    this.project = null;
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+  }
 
-    public get Project(): string {
-        if (this.project === null) return "DEFAULT__";
-        return this.project;
-    }
+  loadBackSessionFromToken(token: string): Promise<number> {
+    let tokenFound = localStorage.getItem(token);
+    let usernameFound = localStorage.getItem("username");
+    if (tokenFound === null || usernameFound === null)
+      return Promise.reject(-1);
+    this.setSession(usernameFound, tokenFound);
+    return Promise.resolve(0);
+  }
 
-    public get User(): string {
-        if (this.user === null) return "";
-        return this.user;
-    }
+  public setSession(
+    username: string,
+    token: string,
+    project: string = "IUT-BLAGNAC"
+  ): void {
+    this.user = username;
+    this.token = token;
+    this.project = project;
+    localStorage.setItem(token, username);
+    localStorage.setItem("token", token);
+    localStorage.setItem("username", username);
+  }
 
-    public get Token(): string {
-        if (this.token === null) return "";
-        return this.token;
-    }
+  public getSession(): UserSession {
+    return {
+      user: this.user,
+      token: this.token,
+      project: this.project,
+    };
+  }
 
-    public get UserID(): string {
-        if (this.userid === null) return "";
-        return this.userid;
-    }
+  public set Project(project: string) {
+    this.project = project;
+  }
 
-    public get FirstName(): string {
-        if (this.firstname === null) return "";
-        return this.firstname;
-    }
+  public get Project(): string {
+    if (this.project === null) return "DEFAULT__";
+    return this.project;
+  }
 
-    public get LastName(): string {
-        if (this.lastname === null) return "";
-        return this.lastname;
-    }
+  public get User(): string {
+    if (this.user === null) return "";
+    return this.user;
+  }
 
-    public get FullName(): string {
-        return `${this.firstname} ${this.lastname}`;
-    }
+  public get Token(): string {
+    if (this.token === null) return "";
+    return this.token;
+  }
 
-    public get IsLoggedIn(): boolean {
-        return this.user !== null && this.token !== null;
-    }
+  public get IsLoggedIn(): boolean {
+    return this.user !== null && this.token !== null;
+  }
 }

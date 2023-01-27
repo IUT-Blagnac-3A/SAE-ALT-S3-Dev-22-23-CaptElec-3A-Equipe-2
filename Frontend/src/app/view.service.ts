@@ -18,7 +18,7 @@ const views = [
 })
 export class ViewService {
   // view = "Log";
-  view = "Dashboard";
+  view = "Log";
   dashboardId = "";
   isDashboardActive = false;
   observableDash$ = new Subject();
@@ -32,8 +32,8 @@ export class ViewService {
   public setView(viewName: string): void {
     if (!views.includes(viewName)) throw new Error("Invalid view name");
     this.view = viewName;
-    if(this.getView()==='Dashboard' && viewName==='Dashboard'){
-      window.location.reload();
+    if (this.getView() === "Dashboard" && viewName === "Dashboard") {
+      // window.location.reload();
     }
   }
 
@@ -43,18 +43,17 @@ export class ViewService {
 
   public setDashboardId(inputDashboardId: string): void {
     this.dashboardId = inputDashboardId;
-    
   }
 
   public getDashboardId(): string {
     return this.dashboardId;
   }
 
-  public getIsDashboardActive(): boolean{
+  public getIsDashboardActive(): boolean {
     return this.isDashboardActive;
   }
 
-  public setIsDashboardActive(bool: boolean){
+  public setIsDashboardActive(bool: boolean) {
     this.isDashboardActive = bool;
   }
 }

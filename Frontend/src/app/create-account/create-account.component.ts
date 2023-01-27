@@ -61,9 +61,7 @@ export class CreateAccountComponent {
       this.sessionService.setSession(
         this.loginForm.value.username as string,
         "token",
-        "userid",
-        "firstname",
-        "lastname"
+        "userid"
       );
       this.viewService.setView("Dashboard");
     }

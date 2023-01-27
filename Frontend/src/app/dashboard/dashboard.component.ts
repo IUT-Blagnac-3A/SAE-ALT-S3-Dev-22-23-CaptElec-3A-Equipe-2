@@ -17,6 +17,7 @@ import { Chart, registerables } from "chart.js";
 import Project from "../modules/Project";
 import { Gauge } from "../gauge/gauge.model";
 import DefaultDico from "../modules/default.dico";
+import { SessionService } from "../session.service";
 
 Chart.register(...registerables);
 
@@ -31,6 +32,7 @@ export class DashboardComponent {
   svgFiles: File[] = [];
   viewService!: ViewService;
   roomService!: RoomService;
+  sessionService!: SessionService;
   roomInformations!: Room[];
   roomName!: string;
   roomCO2!: Number;
@@ -48,12 +50,15 @@ export class DashboardComponent {
   constructor(
     private svgService: SVGService,
     private viewServ: ViewService,
-    private roomServ: RoomService
-  ) { }
+    private roomServ: RoomService,
+    private ss: SessionService
+  ) {
+    this.sessionService = ss;
+  }
 
   async ngOnInit() {
-    this.viewServ.observableDash$.subscribe(value => {
-      this.getRoomInformations()
+    this.viewServ.observableDash$.subscribe((value) => {
+      this.getRoomInformations();
     });
 
     const D = new DefaultDico();
@@ -67,8 +72,7 @@ export class DashboardComponent {
     this.getRoomInformations();
 
     let values = await this.svgService.getSVGFromClientProject(
-      "remiboulle",
-      "0acf456wf",
+      this.ss.User,
       "IUT-BLAGNAC"
     );
 
@@ -151,20 +155,16 @@ export class DashboardComponent {
           D.MAX_TEMPERATURE,
           D.TEMPERATURE_UNIT
         );
-
-        
       },
       (error: HttpErrorResponse) => {
         console.log(error);
       }
     );
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.viewServ.observableGauge$.next(this.co2Chart);
       this.viewServ.observableGauge$.next(this.humidityChart);
       this.viewServ.observableGauge$.next(this.temperatureChart);
-    },0)
-    
-    
+    }, 0);
   }
 }
