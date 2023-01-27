@@ -59,11 +59,11 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
     );
     CREATE TABLE IF NOT EXISTS user_project
     (
-      user_id INTEGER,
-      project_id INTEGER,
-      PRIMARY KEY (user_id, project_id),
-      FOREIGN KEY (user_id) REFERENCES users(id),
-      FOREIGN KEY (project_id) REFERENCES project(id)
+      username VARCHAR(32),
+      project_name VARCHAR(32),
+      PRIMARY KEY (username, project_name),
+      FOREIGN KEY (username) REFERENCES users(username),
+      FOREIGN KEY (project_name) REFERENCES project(name)
     );
     COMMIT;
 
@@ -84,6 +84,16 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
 
     COPY room_project_device(room_name, project_name, deveui)
     FROM '/docker-entrypoint-initdb.d/room_project_device.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
+    COPY users(username,email,password)
+    FROM '/docker-entrypoint-initdb.d/users.csv'
+    DELIMITER ';'
+    CSV HEADER;
+
+    COPY user_project(username, project_name)
+    FROM '/docker-entrypoint-initdb.d/user_project.csv'
     DELIMITER ';'
     CSV HEADER;
 

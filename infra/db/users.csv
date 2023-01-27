@@ -1,0 +1,6 @@
+username;email;password
+ericp;ericp@email.com;$argon2id$v=19$m=65536,t=3,p=4$sOgnixhCduMlmUDxIDBdJQ$IeZRUkbKl5EfjdCuGdsBPW3Lcw8yH1w8ADbWNOTdLu8
+tonyn;tonyn@email.com;$argon2id$v=19$m=65536,t=3,p=4$sOgnixhCduMlmUDxIDBdJQ$IeZRUkbKl5EfjdCuGdsBPW3Lcw8yH1w8ADbWNOTdLu8
+leok;leok@email.com;$argon2id$v=19$m=65536,t=3,p=4$sOgnixhCduMlmUDxIDBdJQ$IeZRUkbKl5EfjdCuGdsBPW3Lcw8yH1w8ADbWNOTdLu8
+mathism;mathism@email.com;$argon2id$v=19$m=65536,t=3,p=4$sOgnixhCduMlmUDxIDBdJQ$IeZRUkbKl5EfjdCuGdsBPW3Lcw8yH1w8ADbWNOTdLu8
+matr;matr@email.com;$argon2id$v=19$m=65536,t=3,p=4$sOgnixhCduMlmUDxIDBdJQ$IeZRUkbKl5EfjdCuGdsBPW3Lcw8yH1w8ADbWNOTdLu8
