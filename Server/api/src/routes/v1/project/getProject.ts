@@ -7,11 +7,12 @@ export default async function getProject (req: Request, res: Response) {
 
     await getAllUserProject(payload.username)
         .then(result => {
-            console.log(res);
             res.send(result)
+            return
         })
         .catch((error) => {
             console.log('error in handler : ', error)
             res.status(500).send({ 'error' : '' + error})
+            return
         });
 }

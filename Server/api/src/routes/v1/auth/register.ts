@@ -10,9 +10,11 @@ export default async function register(req:Request, res: Response) {
 
     await addUser(user).then(() => {
         res.send({ message: "User created" })    
+        return
     })
     .catch((e) => {
         console.log('error in handler : ', e)
         res.status(500).send({ "error" : '' + e})
+        return
     });
 }

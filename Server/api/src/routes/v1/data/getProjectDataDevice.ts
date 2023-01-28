@@ -7,9 +7,11 @@ export default async function getProjectDataDevice(req: Request, res: Response) 
   await getProjectDataFromDevice(project, device)
     .then((result) => {
       res.send(result);
+      return
     })
     .catch((e) => {
       console.log("error in handler : ", e);
       res.status(500).send({ error: "" + e });
+      return
     });
 }

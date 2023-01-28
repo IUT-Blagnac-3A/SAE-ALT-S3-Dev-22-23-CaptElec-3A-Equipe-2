@@ -12,5 +12,6 @@ export default async function getProjectData(req: Request, res: Response) {
     .catch((e) => {
       console.log("error in handler : ", e);
       res.status(500).send({ error: "" + e });
+      return
     });
 }

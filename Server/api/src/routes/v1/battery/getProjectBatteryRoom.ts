@@ -7,10 +7,12 @@ export default async function getProjectBatteryRoom(req: Request, res: Response)
     
     await getBatteryFromRoomProject(room, project)
         .then((result) => {
-        res.send(result);
+            res.send(result);
+            return
         })
         .catch((e) => {
-        console.log("error in handler : ", e);
-        res.status(500).send({ error: "" + e });
+            console.log("error in handler : ", e);
+            res.status(500).send({ error: "" + e });
+            return
         });
     }
