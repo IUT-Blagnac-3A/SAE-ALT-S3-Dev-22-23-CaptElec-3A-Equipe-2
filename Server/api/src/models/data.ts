@@ -16,6 +16,7 @@ export async function getAllData() {
         SELECT * FROM data da, device de, room_project_device rpd
         WHERE da.deveui = de.deveui
         AND de.deveui = rpd.deveui
+        AND da.ts > now() - interval '2 hour'
     `.catch((e) => {
         console.log('error : ', e)
         throw new Error(e)
@@ -29,6 +30,7 @@ export async function getAllDataFromProject(project: string) {
         SELECT * FROM data da, device de, room_project_device rpd
         WHERE da.deveui = de.deveui
         AND de.deveui = rpd.deveui
+        AND da.ts > now() - interval '2 hour'
         AND rpd.project_name = ${project}
     `.catch((e) => {
         console.log('error : ', e)
@@ -43,6 +45,7 @@ export async function getDatasFromDevice(name_device: string) {
         SELECT * FROM device de, data da, room_project_device rpd
         WHERE de.deveui = da.deveui 
         AND de.deveui = rpd.deveui
+        AND da.ts > now() - interval '2 hour'
         AND de.name  = ${ name_device }
     `.catch((e) => {
         console.log('error : ', e)
@@ -57,6 +60,7 @@ export async function getProjectDataFromDevice(project: string, name_device: str
         SELECT * FROM device de, data da, room_project_device rpd
         WHERE de.deveui = da.deveui 
         AND de.deveui = rpd.deveui
+        AND da.ts > now() - interval '2 hour'
         AND rpd.project_name = ${project}
         AND de.name  = ${ name_device }
     `.catch((e) => {
@@ -77,6 +81,7 @@ export async function getDataFromRoomProject(
         AND RPD.room_name = ${name_room} 
         AND RPD.deveui = D.deveui 
         AND D.deveui = Da.deveui
+        AND Da.ts > now() - interval '2 hour'
     `.catch((e) => {
         console.log('error : ', e)
         throw new Error(e)
@@ -89,6 +94,7 @@ export async function getDataFromType(type: string) {
   const result = await sql<Data[]>`
         SELECT da.${sql(type)}, de.name FROM device de, data da 
         WHERE de.deveui = da.deveui 
+        AND da.ts > now() - interval '2 hour'
     `.catch((e) => {
         console.log('error : ', e)
         throw new Error(e)
@@ -104,6 +110,7 @@ export async function getDataFromProjectType(project: string, type: string) {
         )} as value, da.ts, de.name as device, rpd.room_name as room FROM device de, data da, room_project_device rpd
         WHERE de.deveui = da.deveui 
         AND de.deveui = rpd.deveui
+        AND da.ts > now() - interval '2 hour'
         AND rpd.project_name = ${ project }
         ORDER BY da.ts DESC
     `.catch((e) => {
