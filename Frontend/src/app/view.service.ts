@@ -21,7 +21,9 @@ export class ViewService {
   view = "Dashboard";
   dashboardId = "";
   isDashboardActive = false;
+  hasIssue = false;
   observableDash$ = new Subject();
+  observableIssue$ = new Subject();
   observableGauge$: Subject<Gauge> = new Subject();
   charts: Chart[] = [];
   batteryChart!: Chart;
@@ -55,5 +57,13 @@ export class ViewService {
 
   public setIsDashboardActive(bool: boolean) {
     this.isDashboardActive = bool;
+  }
+
+  public getHasIssue(): boolean {
+    return this.hasIssue;
+  }
+
+  public setHasIssue(bool: boolean) {
+    this.hasIssue = bool;
   }
 }

@@ -17,9 +17,10 @@ import { CreateAccountModule } from './create-account/create-account.module';
 import { BatteryComponent } from './battery/battery.component';
 import { GaugeComponent } from './gauge/gauge.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
+import { SummaryComponent } from './summary/summary.component';
 
 @NgModule({
-  declarations: [AppComponent, FooterComponent, HeaderComponent, DashboardComponent, ProjectsComponent, NotificationsComponent, AdministrationComponent, HelperComponent, BatteryComponent, GaugeComponent, LineChartComponent],
+  declarations: [AppComponent, FooterComponent, HeaderComponent, DashboardComponent, ProjectsComponent, NotificationsComponent, AdministrationComponent, HelperComponent, BatteryComponent, GaugeComponent, LineChartComponent, SummaryComponent],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, LogpageModule, CreateAccountModule],
   bootstrap: [AppComponent],
 })
