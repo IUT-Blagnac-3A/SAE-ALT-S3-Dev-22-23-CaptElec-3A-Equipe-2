@@ -31,8 +31,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - $API_PORT:$API_PORT
-    # depends_on:
-    #   - postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
       POSTGRES_HOST: $POSTGRES_HOST
       POSTGRES_PORT: $POSTGRES_PORT
@@ -46,8 +47,9 @@ services:
     build: 
       context: ../Server/mqtt
       dockerfile: Dockerfile
-    # depends_on:
-    #   - postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   portainer:
     image: portainer/portainer-ce
