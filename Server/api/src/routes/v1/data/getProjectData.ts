@@ -7,6 +7,7 @@ export default async function getProjectData(req: Request, res: Response) {
   await getAllDataFromProject(project)
     .then((result) => {
       res.send(result);
+      return
     })
     .catch((e) => {
       console.log("error in handler : ", e);

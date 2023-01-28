@@ -10,7 +10,9 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
         const authHeader = req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
 
-        if (token == null) return res.sendStatus(401)
+        if (token == null) {
+            return res.status(401).send('Please authenticate')
+        }
 
         const decoded: string | jwt.JwtPayload = jwt.verify(token, process.env.TOKEN_SECRET as string);
         (req as CustomRequest).token = decoded
@@ -20,5 +22,6 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
         next()
     } catch (err) {
         res.status(401).send('Please authenticate')
+        return
     }
 }
