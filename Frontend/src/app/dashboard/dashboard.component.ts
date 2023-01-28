@@ -66,7 +66,7 @@ export class DashboardComponent {
     this.criticalRateCO2 = D.CRITICAL_CO2;
     this.criticalRateHumidity = D.CRITICAL_HUMIDITY;
     this.criticalRateTemperature = D.CRITICAL_TEMPERATURE;
-    this.cardText = "Critical limit before sending a notification : ";
+    this.cardText = "Critical limit : ";
     this.viewService = this.viewServ;
     this.roomService = this.roomServ;
     this.getRoomInformations();
@@ -166,6 +166,7 @@ export class DashboardComponent {
       this.viewServ.observableGauge$.next(this.co2Chart);
       this.viewServ.observableGauge$.next(this.humidityChart);
       this.viewServ.observableGauge$.next(this.temperatureChart);
+      this.viewServ.observableIssue$.next("");
     }, 0);
   }
 }
