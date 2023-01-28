@@ -7,8 +7,8 @@ export default async function removeUserToProject(req: Request, res: Response) {
 
     await removeUserProject(username, project)
         .then(() => {
-            console.log(res, " user has been successfully added to the project.");
-            res.send({'message' : 'user has been successfully added to the project.'})
+            console.log(res, " user has been successfully removed to the project.");
+            res.send({'message' : 'user has been successfully removed to the project.'})
             return
         })
         .catch((error) => {
