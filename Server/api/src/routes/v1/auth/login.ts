@@ -19,7 +19,7 @@ export default async function login (req: Request, res: Response) {
                 return
             }
 
-            const token = jwt.sign(user, process.env.TOKEN_SECRET as string, { expiresIn: '1800s'})
+            const token = jwt.sign(user, process.env.TOKEN_SECRET as string)
 
             res.send({ 'token': token })
             return
