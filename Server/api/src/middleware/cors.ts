@@ -4,7 +4,7 @@ export default function corsMiddleware(req: Request, res: Response, next: NextFu
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
     res.header("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
     if ("OPTIONS" === req.method) {
