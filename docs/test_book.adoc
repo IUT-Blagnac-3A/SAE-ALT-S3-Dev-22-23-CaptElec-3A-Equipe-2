@@ -501,7 +501,7 @@ This feature works.
 
 ***
 
-=== API routes for managing users and projects
+=== API routes for managing users, projects and mqtt streams
 
 ***
 
@@ -654,6 +654,149 @@ The system aims to create a link between the back end and front end. This allows
 ----
 {
     "message": "user has been successfully added to the project."
+}
+----
+
+===== Conclusion
+
+This feature works.
+
+***
+
+==== API routes to manage mqtt streams
+
+===== Purposes
+
+The system aims to create a link between the back end and front end. This allows you to manage mqtt streams.
+
+===== Prerequisites
+
+- Postgre and api services must be started.
+- Must have a user created in the database and be loggin in with jwt token.
+- Using software to test API’s like https://www.postman.com/[_postman_].
+
+===== Desired result
+
+**1.** In call to the API _/api/v1/mqtt/_, this displays the list of mqtt streams, we should normally have a result like below :
+
+[source, json]
+----
+[
+    {
+        "name": "Name",
+        "host": "mqtt://stream.example.com",
+        "topic": "application/1/device/+/event/status",
+        "type": "type of data"
+    },
+    {
+        ...
+    }
+]
+----
+
+**2.** In call to the API _/api/v1/mqtt/:name_, this displays the information of the stream from the name of the stream, we should normally have a result like below :
+
+[source, json]
+----
+[
+    {
+        "name": "Name",
+        "host": "mqtt://stream.example.com",
+        "topic": "application/1/device/+/event/status",
+        "type": "type of data"
+    }
+]
+----
+
+**3.** In call to the API _/api/v1/mqtt/addMqtt_, this allows to create a new mqtt stream, by sending a POST request with a body of the form :
+
+[source, json]
+----
+{
+    "name": "Name",
+    "host": "mqtt://stream.example.com",
+    "topic": "application/1/device/+/event/status",
+    "type": "type of data"
+}
+----
+
+**4.** In call to the API _/api/v1/mqtt/removeMqtt/:name_, this allows to delete a mqtt stream from its name, we should normally have a result like below  :
+
+[source, json]
+----
+{
+    "message" : "mqtt stream has been successfully removed."
+}
+----
+
+===== Obtains result
+
+**1.** API route used : _/api/v1/mqtt/_
+
+.Response
+[source, json]
+----
+[
+    {
+        "name": "battery",
+        "host": "mqtt://chirpstack.iut-blagnac.fr",
+        "topic": "application/1/device/+/event/status",
+        "type": "battery"
+    },
+    {
+        "name": "data",
+        "host": "mqtt://chirpstack.iut-blagnac.fr",
+        "topic": "application/1/device/+/event/up",
+        "type": "data"
+    }
+]
+----
+
+**2.** API route used : _/api/v1/mqtt/data_
+
+.Response
+[source, json]
+----
+[
+    {
+        "name": "data",
+        "host": "mqtt://chirpstack.iut-blagnac.fr",
+        "topic": "application/1/device/+/event/up",
+        "type": "data"
+    }
+]
+----
+
+**3.** API route used : _/api/v1/mqtt/addMqtt_
+
+With this body for example :
+
+.Body
+[source, json]
+----
+{
+    "name": "test",
+    "host": "test",
+    "topic": "test",
+    "type": "test"
+}
+----
+
+.Response
+[source, json]
+----
+{
+    "message" : "mqtt stream has been successfully added."
+}
+----
+
+**4.** API route used : _/api/v1/mqtt/removeMqtt_
+
+.Response
+[source, json]
+----
+{
+    "message" : "mqtt stream has been successfully removed."
 }
 ----
 
