@@ -179,7 +179,7 @@ export default class Project {
     // Put the button at the very right of the container
     returnButton.style.position = "absolute";
     returnButton.style.right = "30PX";
-    returnButton.style.top = "60px";
+    returnButton.style.top = "80px";
     // Style the button size
     returnButton.style.width = "100px";
     returnButton.style.height = "50px";
@@ -243,6 +243,7 @@ export default class Project {
     let legendContainer = document.querySelector(".legend-container");
     let svgTitle = document.querySelector("#svg-container h3");
     let dashboard = document.querySelector("app-dashboard .container");
+    let selectMenu = document.querySelector("#type-combo-box");
 
     if (svgContainer == null) throw new Error("Container not found");
     let svg = svgContainer.querySelector("svg");
@@ -265,6 +266,7 @@ export default class Project {
           svgElement?.setAttribute("style", "display: none;");
           legendContainer?.setAttribute("style", "display: none;");
           svgTitle?.setAttribute("style", "display: none;");
+          selectMenu?.setAttribute("style", "display: none;");
           dashboard?.setAttribute("style", "display: block;");
 
           // container.setAttribute("style", "display: block;");
