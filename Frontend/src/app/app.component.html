@@ -13,12 +13,6 @@
     <app-create-account
       *ngIf="viewService.getView() === 'Create Account'"
     ></app-create-account>
-    <app-notifications
-      *ngIf="viewService.getView() === 'Notifications'"
-    ></app-notifications>
-    <app-administration
-      *ngIf="viewService.getView() === 'Administration'"
-    ></app-administration>
     <app-projects *ngIf="viewService.getView() === 'Projects'"></app-projects>
     <app-helper *ngIf="viewService.getView() === 'Help'"></app-helper>
     <app-logpage *ngIf="viewService.getView() === 'Log'"></app-logpage>

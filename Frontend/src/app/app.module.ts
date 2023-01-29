@@ -8,17 +8,13 @@ import { HttpClientModule } from "@angular/common/http";
 import { HeaderComponent } from "./header/header.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ProjectsComponent } from "./projects/projects.component";
-import { NotificationsComponent } from "./notifications/notifications.component";
-import { AdministrationComponent } from "./administration/administration.component";
 import { HelperComponent } from "./helper/helper.component";
 import { LogpageModule } from "./logpage/logpage.module";
-import { CreateAccountComponent } from "./create-account/create-account.component";
 import { CreateAccountModule } from "./create-account/create-account.module";
 import { BatteryComponent } from "./battery/battery.component";
 import { GaugeComponent } from "./gauge/gauge.component";
 import { LineChartComponent } from "./line-chart/line-chart.component";
 import { SummaryComponent } from "./summary/summary.component";
-import { SessionService } from "./session.service";
 
 @NgModule({
   declarations: [
@@ -27,8 +23,6 @@ import { SessionService } from "./session.service";
     HeaderComponent,
     DashboardComponent,
     ProjectsComponent,
-    NotificationsComponent,
-    AdministrationComponent,
     HelperComponent,
     BatteryComponent,
     GaugeComponent,
