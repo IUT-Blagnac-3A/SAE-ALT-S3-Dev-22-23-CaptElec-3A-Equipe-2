@@ -1,0 +1,17 @@
+<div class="summary-container" *ngIf="viewService.getHasIssue()===false">
+    <div class="col logo-container">
+        <img src="https://img.icons8.com/external-wanicon-two-tone-wanicon/512/null/external-ecology-climate-change-wanicon-two-tone-wanicon.png" style="height:150px"/>
+    </div>
+    <div class="col text-container text-center">
+        <h3 class="text-muted">No issue has been detected !</h3>
+    </div>
+</div>
+
+<div class="summary-container" *ngIf="viewService.getHasIssue()===true">
+    <div class="col logo-container">
+        <img src="https://img.icons8.com/bubbles/500/null/error.png" style="height:150px"/>
+    </div>
+    <div class="col text-container text-center">
+        <h5 class="text-muted">Temperature is over {{maxTemperature}} degrees while nobody is in the room... <br> You should consider turning off the heater !</h5>
+    </div>
+</div>

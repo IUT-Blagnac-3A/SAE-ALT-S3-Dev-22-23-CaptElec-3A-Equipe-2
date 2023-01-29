@@ -1,15 +1,33 @@
-<app-header *ngIf="viewService.getView() != 'Log' && viewService.getView() != 'Create Account'"></app-header>
-<app-dashboard *ngIf="viewService.getView() === 'Dashboard'"></app-dashboard>
-<app-create-account *ngIf="viewService.getView() === 'Create Account'"></app-create-account>
-<app-notifications
-  *ngIf="viewService.getView() === 'Notifications'"
-></app-notifications>
-<app-administration
-  *ngIf="viewService.getView() === 'Administration'"
-></app-administration>
-<app-projects *ngIf="viewService.getView() === 'Projects'"></app-projects>
-<app-helper *ngIf="viewService.getView() === 'Help'"></app-helper>
-<app-logpage *ngIf="viewService.getView() === 'Log'"></app-logpage>
-
-<app-footer></app-footer>
+<div class="grid-container">
+  <div class="main-content">
+    <app-header
+      *ngIf="
+        viewService.getView() != 'Log' &&
+        viewService.getView() != 'Create Account'
+      "
+    ></app-header>
+    <app-dashboard
+      *ngIf="viewService.getView() === 'Dashboard'"
+      [inputSensorID]="viewService.getDashboardId()"
+    ></app-dashboard>
+    <app-create-account
+      *ngIf="viewService.getView() === 'Create Account'"
+    ></app-create-account>
+    <app-notifications
+      *ngIf="viewService.getView() === 'Notifications'"
+    ></app-notifications>
+    <app-administration
+      *ngIf="viewService.getView() === 'Administration'"
+    ></app-administration>
+    <app-projects *ngIf="viewService.getView() === 'Projects'"></app-projects>
+    <app-helper *ngIf="viewService.getView() === 'Help'"></app-helper>
+    <app-logpage *ngIf="viewService.getView() === 'Log'"></app-logpage>
+  </div>
+  <app-footer
+    *ngIf="
+      viewService.getView() != 'Log' &&
+      viewService.getView() != 'Create Account'
+    "
+  ></app-footer>
+</div>
 <router-outlet></router-outlet>

@@ -1,10 +1,11 @@
 import * as express from "express";
 
-import { batteryRouter } from "./battery/batteryRouter.js";
-import { authRouter } from "./auth/authRouter.js";
-import { dataRouter } from "./data/dataRouter.js";
+import { batteryRouter } from "./v0/battery/batteryRouter.js";
+import { authRouter } from "./v0/auth/authRouter.js";
+import { dataRouter } from "./v0/data/dataRouter.js";
+import { projectRouter } from "./project/projectRouter.js";
 
-import getSvgs from "./svgs/getSvgs.js";
+import getSvgs from "./v0/svgs/getSvgs.js";
 
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -20,12 +21,14 @@ export const routes = express.Router();
 
 routes.get("/", (req, res) => res.send({ hello: "world" }));
 
-routes.use('/data', dataRouter)
-routes.use('/battery', batteryRouter)
+routes.use("/data", dataRouter);
+//routes.use("/project/:project", authMiddleware, userProjectMiddleware, dataRouter)
+routes.use("/battery", batteryRouter);
+routes.use("/project", projectRouter);
 
-routes.use('/auth', authRouter)
+routes.use("/auth", authRouter);
 
-routes.post("/svgs/:firstname/:lastname/:id/:projectname", getSvgs);
+routes.post("/svgs/:username/:projectname", getSvgs);
 
 routes.get("*", (req, res) => {
   res.send({ error: "404 No page found" });

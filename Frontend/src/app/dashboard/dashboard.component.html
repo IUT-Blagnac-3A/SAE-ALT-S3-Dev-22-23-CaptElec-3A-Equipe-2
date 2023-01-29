@@ -1,66 +1,61 @@
-<!-- <div id="svg-container"></div> -->
-<div class="container">
+<!-- <div id="svg-container" *ngIf="!viewService.getIsDashboardActive()"></div> -->
+<!-- Style: hidden -->
+<div class="container" *ngIf="viewService.getIsDashboardActive()">
   <div class="col mb-5">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Data from device 
-          <span class="text-danger">{{roomName}}</span>
-          </h3>
+        <h3 class="card-title">
+          Dashboard for device
+          <span class="text-danger">{{ roomName }}</span>
+        </h3>
         <div class="card-text">
-          Different informations provided by a MQTT sensor to help you manage your room
+          Different informations provided by a MQTT sensor to help you manage
+          your room
         </div>
       </div>
     </div>
   </div>
-  <div class="row mt-5 mb-5">
-    <div class="col">
+  <div class="row mt-5">
+    <div class="col mb-5">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Battery</h5>
-          <div class="battery-container">
-            <canvas id="batteryChart"></canvas>
-          </div>
+          <app-battery></app-battery>
           <h6 class="card-text text-muted">
-            Below 15% a notification will be sent to you automatically
+            {{ cardText }}{{ criticalRateBattery }}
           </h6>
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col mb-5">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">CO2</h5>
-          <div class="co2-container">
-            <canvas id="co2Chart"></canvas>
-          </div>
+          <app-gauge [gauge]="co2Chart"></app-gauge>
           <h6 class="card-text text-muted">
-            Below 15% a notification will be sent to you automatically
+            {{ cardText }}{{ criticalRateCO2 }}
           </h6>
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col mb-5">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Humidity</h5>
-          <div class="humidity-container">
-            <canvas id="humidityChart"></canvas>
-          </div>
+          <app-gauge [gauge]="humidityChart"></app-gauge>
           <h6 class="card-text text-muted">
-            Below 15% a notification will be sent to you automatically
+            {{ cardText }}{{ criticalRateHumidity }}
           </h6>
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col mb-5">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Temperature</h5>
-          <div class="temperature-container">
-            <canvas id="temperatureChart"></canvas>
-          </div>
+          <app-gauge [gauge]="temperatureChart"></app-gauge>
           <h6 class="card-text text-muted">
-            Below 15% a notification will be sent to you automatically
+            {{ cardText }}{{ criticalRateTemperature }}
           </h6>
         </div>
       </div>
@@ -68,18 +63,15 @@
   </div>
 
   <div class="row">
-    <div class="col-7">
+    <div class="col">
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col">
               <div class="card">
-                <div class="card-body"></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card">
-                <div class="card-body"></div>
+                <div class="card-body">
+                  <app-line-chart></app-line-chart>
+                </div>
               </div>
             </div>
           </div>
@@ -88,18 +80,10 @@
     </div>
     <div class="col">
       <div class="card">
-        <div class="card-body"></div>
+        <div class="card-body">
+          <app-summary></app-summary>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- <div *ngFor="let room of rooms">
-    <div>{{room.devicename}}</div>
-    <div>{{room.activity}}</div>
-    <div>{{room.co2}}</div>
-    <div>{{room.humidity}}</div>
-    <div>{{room.pressure}}</div>
-    <div>{{room.temperature}}</div>
-    <div>{{room.ts}}</div>
-</div> -->
