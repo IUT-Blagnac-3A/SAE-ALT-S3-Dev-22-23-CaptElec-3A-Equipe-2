@@ -14,7 +14,7 @@ export class AppComponent {
     private sessionService: SessionService,
     private viewServ: ViewService
   ) {
-    sessionService.resetSession();
+    // sessionService.resetSession();
     if (this.sessionService.isThereARunningSession()) {
       let token = this.sessionService.getToken();
       this.sessionService.loadBackSessionFromToken(token);
