@@ -1,0 +1,785 @@
+= SAÉ Alternant Dév CaptElec - Test book
+
+:toc:
+:toclevels: 5
+:toc-title: Contents
+
+== Backend
+
+***
+
+=== API routes to authentication
+
+***
+
+==== API routes to register
+
+===== Purposes
+
+This allows you to create a new user in data base.
+
+===== Prerequisites
+
+- Postgre and api services must be started.
+- Using software to test API’s like https://www.postman.com/[_postman_].
+
+===== Desired result
+
+In call to the api _/api/v1/auth/register_, this allows to register a new user, by sending a POST request with a body of the form :
+
+[source, json]
+----
+{
+    "username": "exmaple",
+    "email": "example@example.com",
+    "password": "password"
+}
+----
+
+===== Obtained result
+
+.Response
+[source, json]
+----
+{
+    "message": "User created"
+}
+----
+
+===== Conclusion
+
+This feature works.
+
+***
+
+==== API routes to login
+
+===== Purposes
+
+This allows you to login a user and return a jwt token.
+
+===== Prerequisites
+
+- Postgre and api services must be started.
+- Must have a user created in the database
+- Using software to test API’s like https://www.postman.com/[_postman_].
+
+===== Desired result
+
+In call to the api _/api/v1/auth/login_, this allows login authentication in order to use protected APIs, by sending a POST request with a body of the form :
+
+[source, json]
+----
+{
+    "username": "example",
+    "password": "password"
+}
+----
+
+===== Obtained result
+
+This is the token that will allow the use of API routes that are protected.
+
+.Response
+[source, text]
+----
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6bnVsbCwidXNlcm5hbWUiOiJsb2xvIiwiZW1haWwiOiJsb2xvQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJGFyZ29uMmlkJHY9MTkkbT02NTUzNix0PTMscD00JHpldXJaT3NUbHZPSzZZUW1LZ01Fa1Ekdmp2NlMyTEplZC81SjRueTVsb1c0S0dOeFlCQVgySzA4dmlKc01nMmJ1VSIsImlhdCI6MTY3NDIyNzY5MiwiZXhwIjoxNjc0MjI5NDkyfQ.eh8WeXedZo5ibFtGbIMvRnGTo0kYlqKEpsCgI2BufLE
+----
+
+===== Conclusion
+
+This feature works.
+
+
+***
+
+=== API routes to extract data of mqtt device
+
+***
+
+==== API route from /api/v1/battery
+
+===== Purposes
+
+The system aims to create a link between the back end and front end. First, the back end stores the mqtt data that each device emits. Then, the front end interprets the data received through the API.
+
+===== Prerequisites
+
+- Mqtt, postgre and api services must be started.
+- Must have a user created in the database and be loggin in with jwt token.
+- A simple internet browser to send GET requests.
+
+===== Desired result
+
+**1.** In call to the API _/api/v1/battery/:project/all_, from the name of the project, normally we should get all the data from the batteries as a result this way :
+
+[source, json]
+----
+[
+    {
+        "id": 0,
+        "deveui": "24e124128c123456",
+        "ts": "a timestamp",
+        "battery": 50,
+        "name": "AM???-??",
+        "room_name": "B000",
+        "project_name": "Project"
+    },
+    {
+        ...
+    }
+]
+----
+
+**2.** In call to the API _/api/v1/batery/:project/device/:device_, from the name of the project and the name of the device, we should normally have a result like below :
+
+[source, json]
+----
+[
+    {
+        "id": 0,
+        "deveui": "24e124128c123456",
+        "ts": "a timestamp",
+        "battery": 50,
+        "name": "AM???-??",
+        "room_name": "B000",
+        "project_name": "Project"
+    }
+]
+----
+
+**3.** In call to the API _/api/v1/data/:project/room/:room_, from the name of the project and the name of the room, we should normally have a result like below :
+
+[source, json]
+----
+[
+    {
+        "id": 0,
+        "deveui": "24e124128c123456",
+        "ts": "a timestamp",
+        "battery": 50,
+        "name": "AM???-??",
+        "room_name": "B000",
+        "project_name": "Project"
+    }
+]
+----
+
+===== Obtained result
+
+**1.** API route used : _/api/v1/battery/IUT-BLAGNAC/all_
+
+.Response
+[source, json]
+----
+[
+    {
+        "id": 1,
+        "deveui": "24e124128c012135",
+        "ts": "2023-01-28T10:39:29.646Z",
+        "battery": 100,
+        "name": "AM107-17",
+        "room_name": "B112",
+        "project_name": "IUT-BLAGNAC"
+    },
+    {
+        "id": 2,
+        "deveui": "24e124128c011783",
+        "ts": "2023-01-28T10:39:38.612Z",
+        "battery": 100,
+        "name": "AM107-13",
+        "room_name": "B105",
+        "project_name": "IUT-BLAGNAC"
+    },
+    {
+        "id": 3,
+        "deveui": "24e124128c014727",
+        "ts": "2023-01-28T10:40:08.384Z",
+        "battery": 100,
+        "name": "AM107-20",
+        "room_name": "B217",
+        "project_name": "IUT-BLAGNAC"
+    },
+    {
+        ...
+    }
+]
+----
+
+**2.** API route used : _/api/v1/battery/IUT-BLAGNAC/device/:device_
+
+.Response
+[source, json]
+----
+
+[
+    {
+        "id": 37,
+        "deveui": "24e124128c010091",
+        "ts": "2023-01-28T11:08:38.025Z",
+        "battery": 43.7,
+        "name": "AM107-7",
+        "room_name": "B001",
+        "project_name": "IUT-BLAGNAC"
+    }
+]
+----
+
+**3.** API route used : _/api/v1/battery/IUT-BLAGNAC/room/B001_
+
+.Response
+[source, json]
+----
+
+[
+    {
+        "id": 37,
+        "deveui": "24e124128c010091",
+        "ts": "2023-01-28T11:08:38.025Z",
+        "battery": 43.7,
+        "name": "AM107-7",
+        "room_name": "B001",
+        "project_name": "IUT-BLAGNAC"
+    }
+]
+----
+
+===== Conclusion
+
+This feature works.
+
+***
+
+==== API route from /api/v1/data
+
+===== Purposes
+The system aims to create a link between the back end and front end. First, the back end stores the mqtt data that each device emits. Then, the front end interprets the data received through the API.
+
+===== Prerequisites
+- Mqtt, postgre and api services must be started.
+- Must have a user created in the database and be loggin in with jwt token.
+- A simple internet browser to send GET requests.
+
+===== Desired result
+
+**1.** In call to the API _/api/v1/data/:project/all_, from the name of the project, normally we should get all the data from the devices as a result this way :
+
+[source, json]
+----
+[
+    {
+        "id": "0",
+        "deveui": "24e124128c123456",
+        "ts": "a timestamp",
+        "activity": 0,
+        "co2": 650,
+        "humidity": 28.0,
+        "pressure": 997.7,
+        "temperature": 22.0,
+        "name": "AM???-???",
+        "room_name": "B000",
+        "project_name": "Project"
+    },
+    {
+        ...
+    }
+]
+----
+
+**2.** In call to the API _/api/v1/data/:project/type/:type_, from the name of the project and the type of data, we should normally have a result like below :
+
+[source, json]
+----
+[
+    {
+        "value": 20.0,
+        "ts": "a timestamp",
+        "device": "AM???-??",
+        "room": "B000"
+    }
+]
+----
+
+**3.** In call to the API _/api/v1/data/:project/device/:device_, from the name of the project and the name of the device, we should normally have a result like below :
+
+[source, json]
+----
+[
+    {
+        "id": "0",
+        "deveui": "24e124128c123456",
+        "ts": "a timestamp",
+        "activity": 0,
+        "co2": 650,
+        "humidity": 28.0,
+        "pressure": 997.7,
+        "temperature": 22.0,
+        "name": "AM???-???",
+        "room_name": "B000",
+        "project_name": "Project"
+    }
+]
+----
+
+**4.** In call to the API _/api/v1/data/:project/room/:room_, from the name of the project and the room, we should normally have a result like below :
+
+[source, json]
+----
+[
+    {
+        "id": "0",
+        "deveui": "24e124128c123456",
+        "ts": "a timestamp",
+        "activity": 0,
+        "co2": 650,
+        "humidity": 28.0,
+        "pressure": 997.7,
+        "temperature": 22.0,
+        "name": "AM???-???",
+        "room_name": "B000",
+        "project_name": "Project"
+    }
+]
+----
+
+===== Obtained result
+
+**1.** API route used : _/api/v1/data/IUT-BLAGNAC/all_
+
+.Response
+[source, json]
+----
+[
+    {
+        "id": 1,
+        "deveui": "24e124128c014516",
+        "ts": "2023-01-28T10:39:28.229Z",
+        "activity": 0,
+        "co2": 429,
+        "humidity": 31,
+        "pressure": 1000.1,
+        "temperature": 18.8,
+        "name": "AM107-10",
+        "room_name": "B101",
+        "project_name": "IUT-BLAGNAC"
+    },
+    {
+        "id": 2,
+        "deveui": "24e124128c012062",
+        "ts": "2023-01-28T10:39:29.003Z",
+        "activity": 0,
+        "co2": 721,
+        "humidity": 30.5,
+        "pressure": 999.5,
+        "temperature": 19.9,
+        "name": "AM107-15",
+        "room_name": "B108",
+        "project_name": "IUT-BLAGNAC"
+    },
+    {
+        "id": 3,
+        "deveui": "24e124128c013339",
+        "ts": "2023-01-28T10:39:29.091Z",
+        "activity": 0,
+        "co2": 1123,
+        "humidity": 30,
+        "pressure": 1000.3,
+        "temperature": 19.1,
+        "name": "AM107-12",
+        "room_name": "B103",
+        "project_name": "IUT-BLAGNAC"
+    },
+    {
+        ...
+    }
+]
+----
+
+**2.** API route used : _/api/v1/data/IUT-BLAGNAC/type/temperature_
+
+.Response
+[source, json]
+----
+[
+    {
+        "value": 19.6,
+        "ts": "2023-01-28T10:58:38.314Z",
+        "device": "AM107-7",
+        "room": "B001"
+    },
+    {
+        "value": 18.4,
+        "ts": "2023-01-28T10:58:30.058Z",
+        "device": "AM107-39",
+        "room": "E209"
+    },
+    {
+        "value": 17.9,
+        "ts": "2023-01-28T10:58:08.800Z",
+        "device": "AM107-49",
+        "room": "hall-1"
+    },
+    {
+        ...
+    }
+]
+----
+
+**3.** API route used : _/api/v1/data/IUT-BLAGNAC/device/AM107-7_
+
+.Response
+[source, json]
+----
+[
+    {
+        "deveui": "24e124128c010091",
+        "name": "AM107-7",
+        "id": 44,
+        "ts": "2023-01-28T10:48:37.527Z",
+        "activity": 0,
+        "co2": 427,
+        "humidity": 30,
+        "pressure": 1000.1,
+        "temperature": 19.6,
+        "room_name": "B001",
+        "project_name": "IUT-BLAGNAC"
+    },
+    {
+        "deveui": "24e124128c010091",
+        "name": "AM107-7",
+        "id": 92,
+        "ts": "2023-01-28T10:58:38.314Z",
+        "activity": 0,
+        "co2": 431,
+        "humidity": 30,
+        "pressure": 1000,
+        "temperature": 19.6,
+        "room_name": "B001",
+        "project_name": "IUT-BLAGNAC"
+    }
+]
+----
+
+**4.** API route used : _/api/v1/data/IUT-BLAGNAC/room/B001_
+
+.Response
+[source, json]
+----
+[
+    {
+        "deveui": "24e124128c010091",
+        "name": "AM107-7",
+        "id": 44,
+        "ts": "2023-01-28T10:48:37.527Z",
+        "activity": 0,
+        "co2": 427,
+        "humidity": 30,
+        "pressure": 1000.1,
+        "temperature": 19.6,
+        "room_name": "B001",
+        "project_name": "IUT-BLAGNAC"
+    },
+    {
+        "deveui": "24e124128c010091",
+        "name": "AM107-7",
+        "id": 92,
+        "ts": "2023-01-28T10:58:38.314Z",
+        "activity": 0,
+        "co2": 431,
+        "humidity": 30,
+        "pressure": 1000,
+        "temperature": 19.6,
+        "room_name": "B001",
+        "project_name": "IUT-BLAGNAC"
+    }
+]
+----
+
+===== Conclusion
+
+This feature works.
+
+***
+
+=== API routes for managing users and projects
+
+***
+
+==== API routes to manage users
+
+===== Purposes
+
+The system aims to create a link between the back end and front end. This allows you to manage users in projects.
+
+===== Prerequisites
+
+- Postgre and api services must be started.
+- Must have a user created in the database and be loggin in with jwt token.
+- A simple internet browser to send GET requests.
+
+===== Desired result
+
+**1.** In call to the API _/api/v1/project/_, this displays the list of projects affiliated to the logged in user, we should normally have a result like below :
+
+[source, json]
+----
+[
+    {
+        "id": 0,
+        "name": "Project",
+        "username": "User",
+        "project_name": "Project"
+    },
+    {
+        ...
+    }
+]
+----
+
+**2.** In call to the API _/api/v1/project/addUser/:project/:username_, this allows to add a user to a project from its username and the name of a project, we should normally have a result like below :
+
+[source, json]
+----
+{
+    "message": "user has been successfully added to the project."
+}
+----
+
+**3.** In call to the API _/api/v1/project/removeUser/:project/:username_, this allows to remove a user to a project from its username and the name of a project, we should normally have a result like below :
+
+[source, json]
+----
+{
+    "message": "user has been successfully removed to the project."
+}
+----
+
+===== Obtains result
+
+**1.** API route used : _/api/v1/project/_
+
+.Response
+[source, json]
+----
+[
+    {
+        "id": 0,
+        "name": "IUT-BLAGNAC",
+        "username": "tonyn",
+        "project_name": "IUT-BLAGNAC"
+    },
+    {
+        "id": 5,
+        "name": "TEST-PROJECT",
+        "username": "tonyn",
+        "project_name": "TEST-PROJECT"
+    }
+]
+----
+
+**2.** API route used : _/api/v1/project/addUser/IUT-BLAGNAC/tonyn_
+
+.Response
+[source, json]
+----
+{
+    "message": "user has been successfully added to the project."
+}
+----
+
+**3.** API route used : _/api/v1/project/removeUser/IUT-BLAGNAC/tonyn_
+
+.Response
+[source, json]
+----
+{
+    "message": "user has been successfully added to the project."
+}
+----
+
+===== Conclusion
+
+This feature works.
+
+***
+
+==== API routes to manage projects
+
+===== Purposes
+
+The system aims to create a link between the back end and front end. This allows you to manage projects.
+
+===== Prerequisites
+
+- Postgre and api services must be started.
+- Must have a user created in the database and be loggin in with jwt token.
+- Using software to test API’s like https://www.postman.com/[_postman_].
+
+===== Desired result
+
+**1.** In call to the API _/api/v1/project/_, this allows to create a new project from its name, by sending a POST request with a body of the form :
+
+[source, json]
+----
+{
+    "name": "..."
+}
+----
+
+**2.** In call to the API _/api/v1/project/:project_, this allows to delete a project from its name, we should normally have a result like below :
+
+[source, json]
+----
+{
+    "message": "user has been successfully removed to the project."
+}
+----
+
+===== Obtains result
+
+**1.** API route used : _/api/v1/project/addUser/IUT-BLAGNAC/tonyn_
+
+.Response
+[source, json]
+----
+{
+    "message": "user has been successfully added to the project."
+}
+----
+
+**2.** API route used : _/api/v1/project/addUser/IUT-BLAGNAC/tonyn_
+
+.Response
+[source, json]
+----
+{
+    "message": "user has been successfully added to the project."
+}
+----
+
+===== Conclusion
+
+This feature works.
+
+== Frontend
+
+***
+
+=== Authentication page
+
+==== Purposes
+
+This is a private site, so there is an authentication page to secure it.
+
+==== Prerequisites
+
+- Have a user account with an affiliate project
+
+==== Desired result
+
+After entering valid credentials, we are supposed to have access to the functionality of the site.
+
+==== Obtained result
+
+Using Trial IDs :
+
+image::includes/images/auth_page.png[Authentication page]
+
+Access to the site :
+
+image::includes/images/access_site.png[Access site]
+
+=== Navigation SVG
+
+==== Purposes
+
+There is an svg that represents a project (here IUT of Blagnac) divided into several parts (building, stage, classroom). When we click on these different parts, we change the view in order to adapt it.
+
+==== Prerequisites
+
+- Have a user account with an affiliate project
+
+==== Desired result
+
+When we click on the different parts that make up the SVG, we are supposed to change views.
+
+==== Obtained result
+
+**Vue IUT**
+
+image::includes/images/view1.png[view]
+
+**Plan du batiment B**
+
+image::includes/images/view2.png[view]
+
+**2ème étage**
+
+image::includes/images/view3.png[view]
+
+**Dashboard for device AM107-5**
+
+image::includes/images/view4.png[view]
+
+**After clicking the _Back_ button, we go back to the previous view**
+
+image::includes/images/view5.png[view]
+
+==== Conclusion
+
+There is no navigation problem. This feature works fine.
+
+=== Dashboard
+
+==== Purposes
+
+In the dashboard of a device, there is information about the device and the room is in it.
+
+==== Prerequisites
+
+- Have a user account with an affiliate project
+- Have devices configured correctly
+
+==== Desired result
+
+- device information : its name and battery level
+- room information : CO2, humidity, temperature
+- a graph of the room's surrounding temperature and CO2 over the hours leading up to
+- information on the advice to follow to have a good environment in the room
+
+==== Obtained result
+
+image::includes/images/dashboard.png[dashboard]
+
+==== Conclusion
+
+All information is well displayed.
+
+===
+
+Scale of the surrounding features of the rooms
+
+==== Purposes
+
+There is a drop-down list that allows you to select the surrounding features about the rooms that make up a floor in order to have an overview of them.
+
+==== Prerequisites
+
+- Have a user account with an affiliate project
+- Have devices configured correctly
+
+==== Desired result
+
+By default the drop down list is set to temperature, when we change features then we are supposed to have a new scale appear.
+
+**Default: temperature**
+
+image::includes/images/temperature.png[temperature]
+
+==== Obtained result
+
+image::includes/images/humidity.png[humidity]
+
+==== Conclusion
+
+The overview has been modified according to the selected characteristic.
