@@ -21,12 +21,12 @@ export class RoomService {
   public getRoom(roomName: string): Observable<Room[]> {
     let path = `${
       ENV.SERVER_ADRESS_A
-    }/data/${this.sessionService.getProject()}/room/${roomName}}`;
+    }/data/${this.sessionService.getProject()}/device/${roomName}`;
     if (roomName === "")
       path = `${
         ENV.SERVER_ADRESS_A
       }/data/${this.sessionService.getProject()}/all`;
-
+    
     return this.http.get<any>(path, {
       headers: {
         Authorization: "Bearer " + this.sessionService.getToken(),
