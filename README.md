@@ -100,9 +100,9 @@ The project is configured using environment variables. You can find the list of 
 
 ## Run
 
-The project is now running on `http://localhost:4000`.
+The project is now running on `http://localhost`.
 
-[Click here for the direct link](http://localhost:4000)
+[Click here for the direct link](http://localhost)
 
 # Documentation
 
