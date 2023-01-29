@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ViewService } from '../view.service';
 
 @Component({
@@ -6,6 +6,14 @@ import { ViewService } from '../view.service';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent{
+export class FooterComponent {
+
+  constructor(private viewService: ViewService){
+
+  }
+
+  public changeView(viewName: string){
+    this.viewService.setView(viewName);
+  }
 
 }

@@ -1,5 +1,9 @@
 # SAE ALTERNANT DEV 2022/2023 CAPTELEC 3A EQUIPE 2
 
+# Wiki
+
+You can find the project wiki with all the documentation [here](https://github.com/IUT-Blagnac-3A/SAE-ALT-S3-Dev-22-23-CaptElec-3A-Equipe-2/wiki)
+
 # Introduction
 
 <img width="75" height="75" style="float: left; margin: 0 10px 0 0; border-radius:10px" alt="Discord" src="https://cdn.discordapp.com/attachments/579303130886569984/1065183148473843742/1519871482152.png">
