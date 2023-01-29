@@ -22,11 +22,11 @@ export class RoomService {
     let path = `${
       ENV.SERVER_ADRESS_A
     }/data/${this.sessionService.getProject()}/device/${roomName}`;
-    if (roomName === "")
+    if (roomName === null)
       path = `${
         ENV.SERVER_ADRESS_A
       }/data/${this.sessionService.getProject()}/all`;
-    
+
     return this.http.get<any>(path, {
       headers: {
         Authorization: "Bearer " + this.sessionService.getToken(),
