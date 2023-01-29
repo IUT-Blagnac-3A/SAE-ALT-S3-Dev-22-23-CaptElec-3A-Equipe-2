@@ -65,8 +65,19 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USERNAME" --dbname "$POSTGRES_DB" 
       FOREIGN KEY (username) REFERENCES users(username),
       FOREIGN KEY (project_name) REFERENCES project(name)
     );
+    CREATE TABLE IF NOT EXISTS mqtt_flux
+	  (
+      name VARCHAR(32) PRIMARY KEY,
+      host VARCHAR(64) NOT NULL,
+      topic VARCHAR(128) NOT NULL,
+      type VARCHAR(32) NOT NULL
+    );
     COMMIT;
 
+    INSERT INTO mqtt_flux (name, host, topic, type)
+    VALUES 	('battery', 'mqtt://chirpstack.iut-blagnac.fr', 'application/1/device/+/event/status', 'battery'), 
+		        ('data', 'mqtt://chirpstack.iut-blagnac.fr', 'application/1/device/+/event/up', 'data');
+    
     COPY project(name)
     FROM '/docker-entrypoint-initdb.d/projects.csv'
     DELIMITER ';'

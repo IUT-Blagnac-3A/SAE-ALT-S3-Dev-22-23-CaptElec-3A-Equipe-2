@@ -10,6 +10,17 @@ const sql = postgres('postgres://postgres:password@postgres:5432/postgres', {
     password: process.env.POSTGRES_PASSWORD,   // Password of database user
 })
 
+async function getMqttFlux() {
+    try {
+        const res = await sql`
+        SELECT * FROM mqtt_flux
+        `
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 async function insertData({deveui, ts, activity, co2, humidity, pressure, temperature }) {
     try {
         const res = await sql`
@@ -36,4 +47,4 @@ async function insertBattery({ deveui, ts, battery }) {
     }
 }
 
-module.exports = {sql, insertData, insertBattery}
+module.exports = {sql, getMqttFlux, insertData, insertBattery}
