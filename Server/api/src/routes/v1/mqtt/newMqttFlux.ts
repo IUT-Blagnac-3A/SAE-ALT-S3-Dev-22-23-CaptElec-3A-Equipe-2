@@ -9,7 +9,7 @@ export default async function getProject (req: Request, res: Response) {
 
     await insertMqttFlux(name, host, topic, type)
         .then(result => {
-            res.send(result)
+            res.send({'message' : 'mqtt stream has been successfully added.'})
             return
         })
         .catch((error) => {

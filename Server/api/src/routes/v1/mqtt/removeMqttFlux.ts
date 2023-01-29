@@ -6,7 +6,7 @@ export default async function getProject (req: Request, res: Response) {
 
     await deleteMqttFlux(name)
         .then(result => {
-            res.send(result)
+            res.send({'message' : 'mqtt stream has been successfully removed.'})
             return
         })
         .catch((error) => {
