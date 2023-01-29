@@ -1,6 +1,8 @@
 import SVGFile from "./SVGFile";
 import SVGService, { SVGData } from "./SVG";
 import { ViewService } from "../view.service";
+import DefineEnvironnementType from "./type.environnement";
+import Legend from "./Legend";
 
 const types = ["activity", "co2", "humidity", "pressure", "temperature"];
 const typesEmote = ["🏃", "🌬", "💧", "🗜️", "🌡"];
@@ -54,6 +56,7 @@ export default class Project {
 
     if (this.currentDepth == this.maxDepth) {
       this.colorLastDepth();
+      this.displayScaleColor();
       this.launchOnClick();
       this.displayComboBoxWithTypes();
     } else {
@@ -183,6 +186,8 @@ export default class Project {
     // Set the button text
     returnButton.innerHTML = "Retour";
     returnButton.addEventListener("click", () => {
+      console.log("Return button clicked");
+
       this.currentDepth--;
       this.currentIndex = this.history[this.history.length - 2].index;
       this.history.pop();
@@ -219,6 +224,17 @@ export default class Project {
     container.appendChild(comboBox);
   }
 
+  displayScaleColor() {
+    let currentType = this.currentTypeSearched;
+    let envType = DefineEnvironnementType(currentType);
+    let max = envType.max;
+    let min = envType.min;
+    let colors = envType.rangeColor;
+    let legend = new Legend(min, max, colors, envType.unit);
+    legend.display();
+    this.displayReturnButton();
+  }
+
   launchOnClick() {
     let svgContainer = document.getElementById("svg-container");
     if (svgContainer == null) throw new Error("Container not found");
@@ -235,7 +251,7 @@ export default class Project {
           let id = elementClicked.getAttribute("id")?.toUpperCase();
           if (id == null) throw new Error("Id not found");
           let device = this.svgService.findDeviceLinkedToRoom(id);
-          
+
           // Remove the hidden style from the container
           let container = document.getElementsByClassName("container")[0];
           if (container == null) throw new Error("Container not found");
@@ -246,7 +262,9 @@ export default class Project {
 
           // container.setAttribute("style", "display: block;");
           this.viewService.setDashboardId(device as string);
-          this.viewService.observableDash$.next(this.viewService.getDashboardId());
+          this.viewService.observableDash$.next(
+            this.viewService.getDashboardId()
+          );
         });
       }
     });

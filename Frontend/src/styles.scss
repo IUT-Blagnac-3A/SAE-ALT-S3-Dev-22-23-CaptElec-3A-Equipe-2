@@ -44,6 +44,8 @@
   stroke-opacity: 0.5;
   pointer-events: all;
   transition: fill 1.2s, stroke 1s;
+  // Lake the color brighter
+  filter: brightness(1.5);
 }
 
 #svg-container svg g {
