@@ -1,14 +1,12 @@
 import * as express from "express";
 
-import { batteryRouter } from "./v0/battery/batteryRouter.js";
-import { authRouter } from "./v0/auth/authRouter.js";
-import { dataRouter } from "./v0/data/dataRouter.js";
-import { projectRouter } from "./project/projectRouter.js";
-
-import getSvgs from "./v0/svgs/getSvgs.js";
+import getSvgs from "./v1/svgs/getSvgs.js";
 
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+
+import { v1Routes } from "./v1/v1Router.js";
+import corsMiddleware from "../middleware/cors.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,16 +17,9 @@ console.log(path.join(srcDirName.join("\\"), "database"));
 
 export const routes = express.Router();
 
-routes.get("/", (req, res) => res.send({ hello: "world" }));
-
-routes.use("/data", dataRouter);
-//routes.use("/project/:project", authMiddleware, userProjectMiddleware, dataRouter)
-routes.use("/battery", batteryRouter);
-routes.use("/project", projectRouter);
-
-routes.use("/auth", authRouter);
-
-routes.post("/svgs/:username/:projectname", getSvgs);
+// routes.use("/v1/auth", authRouter);
+routes.post("/v1/svgs/:username/:projectname", getSvgs);
+routes.use("/v1", corsMiddleware, v1Routes);
 
 routes.get("*", (req, res) => {
   res.send({ error: "404 No page found" });

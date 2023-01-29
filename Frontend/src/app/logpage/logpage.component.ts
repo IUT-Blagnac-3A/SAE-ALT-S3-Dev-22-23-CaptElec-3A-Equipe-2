@@ -45,16 +45,12 @@ export class LogpageComponent {
       this.loginForm.value.password == ""
     )
       return;
-    let result = await this.session.login(
+    let userSession = await this.session.login(
       this.loginForm.value.username as string,
       this.loginForm.value.password as string
     );
-    if (result == 0) {
-      this.sessionService.setSession(
-        this.loginForm.value.username as string,
-        "token",
-        "userid"
-      );
+
+    if (userSession != null) {
       this.viewService.setView("Dashboard");
     } else {
       this.incorrectPassword = true;

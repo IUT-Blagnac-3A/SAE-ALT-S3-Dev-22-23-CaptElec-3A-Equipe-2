@@ -34,9 +34,9 @@ export async function getUserByUsername(username: string) {
 
 export async function checkUserProject(username: string, project: string) {
     const result = await sql<User[]>`
-        SELECT * FROM user u, project p, user_project up
-        WHERE u.id = up.user_id
-        AND p.id = up.project_id
+        SELECT * FROM users u, project p, user_project up
+        WHERE u.username = up.username
+        AND p.name = up.project_name
         AND u.username = ${ username }
         AND p.name = ${ project }
     `.catch(e => {
@@ -44,7 +44,7 @@ export async function checkUserProject(username: string, project: string) {
         throw new Error(e)
     })
 
-    if (result.length != 0) return false
+    if (result.length == 0) return false
 
     return true
 }

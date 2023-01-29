@@ -70,14 +70,22 @@ export default class SVGService {
    */
   async getRoomsValues(type: string, project: string): Promise<Array<SVGData>> {
     if (!types.includes(type)) throw new Error("Type not found");
-    let path = `${ENV.SERVER_ADRESS_A}/data/project/${project}/type/${type}`;
+    let path = `${ENV.SERVER_ADRESS_A}/data/${project}/type/${type}`;
     const formData = new FormData();
     formData.append("project", project);
     formData.append("type", type);
 
+    let token = localStorage.getItem("token");
+
+    if (token == null) throw new Error("Token not found");
     return new Promise(async (res, rej) => {
       await this.http
-        .get(path, { responseType: "json" })
+        .get(path, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: "json",
+        })
         .subscribe((data: any) => {
           this.data = data;
           res(data);

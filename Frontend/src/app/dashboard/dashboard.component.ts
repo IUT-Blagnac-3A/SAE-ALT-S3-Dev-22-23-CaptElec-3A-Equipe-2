@@ -107,6 +107,7 @@ export class DashboardComponent {
         }
 
         this.roomInformations = result;
+        if (!this.roomInformations[0]) return;
         this.roomName = this.roomInformations[0].name;
 
         let co2Color = "";
@@ -175,8 +176,6 @@ export class DashboardComponent {
   // Method to add a svg-container to the page
   addSVGContainer() {
     // Find the svg-container tag
-    console.log("addSVGContainer");
-
     const svgContainer = document.getElementById("svg-container");
     if (!svgContainer) {
       const svgContainer = document.createElement("div");
