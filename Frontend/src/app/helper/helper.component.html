@@ -1,75 +1,113 @@
 <div class="container">
-    <br>
-    <h5>More informations about this page can be found <a href="assets/documents/help-page.pdf" download="help-page.pdf">here</a>.</h5>
-    <br><br>
-    <div class="card">
-        <div class="card-header">
-            Common errors
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Lorem Ipsum</h5>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Lorem ipsum dolor sit amet.</li>
-                <li class="list-group-item">Lorem ipsum dolor sit amet.</li>
-                <li class="list-group-item">Lorem ipsum dolor sit amet.</li>
-            </ul>
-        </div>
+  <br />
+  <h5>
+    More informations about this page can be found
+    <a href="assets/documents/help-page.pdf" download="help-page.pdf">here</a>.
+  </h5>
+  <br /><br />
+  <div class="card">
+    <div class="card-header">Note</div>
+    <div class="card-body">
+      <h5 class="card-title">Introduction</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Note that project is still at an early stage. A bunch of features are
+          missing, and you may find some bugs around the app.
+        </li>
+      </ul>
     </div>
-    <br>
-    <hr>
-    <br>
-    <div class="card">
-        <div class="card-header">
-            Known issues
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Lorem Ipsum</h5>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-                <li class="list-group-item">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-                <li class="list-group-item">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-            </ul>
-            <br>
-            <h5 class="card-title">Lorem Ipsum</h5>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-                <li class="list-group-item">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</li>
-            </ul>
-        </div>
+  </div>
+  <br />
+  <hr />
+  <br />
+  <div class="card">
+    <div class="card-header">Known issues</div>
+    <div class="card-body">
+      <h5 class="card-title">
+        Dashboard not displaying well after a Deco | Reco
+      </h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          This is a well known issue. The problem is that the dashboard is
+          loading the previous state of the user, and not the new one. This is
+          due to the fact that the dashboard is not a component, but a page.
+          This will be fixed in the future.
+        </li>
+      </ul>
+      <br />
+      <h5 class="card-title">Inactive Buttons</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Some buttons are inactive, all the backend is ready, but the frontend
+          as to be implemented.
+        </li>
+      </ul>
     </div>
-    <br>
-    <hr>
-    <br>
-    <h1>Contact</h1>
-    <form (ngSubmit)="submit">
-        <div class="form-group col">
-            <label for="firstname" class="form-label">Firstname</label><br>
-            <input Required minlength="2" maxlength="50" type="text" name="firstname" class="form-control" placeholder="Enter your firstname" ngModel>
-            <!--<div *ngif="name.touched && name.invalid" class="alert alert-danger">INVALID</div>-->
-        </div>
-        <pre></pre>
-        <div class="form-group col">
-            <label for="lastname">Lastname</label><br>
-            <input Required minlength="2" maxlength="50" type="text" name="lastname" class="form-control" placeholder="Enter your lastname" ngModel>
-
-        </div>
-        <pre></pre>
-        <div class="form-group">
-            <label for="email">Email</label><br>
-            <input  Required minlength="3" maxlength="320" type="email" name="email" class="form-control" placeholder="example@domain.com" ngModel>
-
-        </div>
-        <pre></pre>
-        <div class="form-group">
-            <label for="message">Message</label><br>
-            <textarea  Required minlength="5" maxlength="1000" type="text" name="message" class="form-control" placeholder="Enter your message..." ngModel></textarea>
-
-        </div>
-        <pre></pre>
-        <button class="btn btn-primary" type="submit">Submit</button>
-    </form>
-    <br><br>
+  </div>
+  <br />
+  <hr />
+  <br />
+  <h1>Contact</h1>
+  <form (ngSubmit)="(submit)">
+    <div class="form-group col">
+      <label for="firstname" class="form-label">Firstname</label><br />
+      <input
+        Required
+        minlength="2"
+        maxlength="50"
+        type="text"
+        name="firstname"
+        class="form-control"
+        placeholder="Enter your firstname"
+        ngModel
+      />
+      <!--<div *ngif="name.touched && name.invalid" class="alert alert-danger">INVALID</div>-->
+    </div>
+    <pre></pre>
+    <div class="form-group col">
+      <label for="lastname">Lastname</label><br />
+      <input
+        Required
+        minlength="2"
+        maxlength="50"
+        type="text"
+        name="lastname"
+        class="form-control"
+        placeholder="Enter your lastname"
+        ngModel
+      />
+    </div>
+    <pre></pre>
+    <div class="form-group">
+      <label for="email">Email</label><br />
+      <input
+        Required
+        minlength="3"
+        maxlength="320"
+        type="email"
+        name="email"
+        class="form-control"
+        placeholder="example@domain.com"
+        ngModel
+      />
+    </div>
+    <pre></pre>
+    <div class="form-group">
+      <label for="message">Message</label><br />
+      <textarea
+        Required
+        minlength="5"
+        maxlength="1000"
+        type="text"
+        name="message"
+        class="form-control"
+        placeholder="Enter your message..."
+        ngModel
+      ></textarea>
+    </div>
+    <pre></pre>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+  <br /><br />
 </div>
-<script>
-
-</script>
+<script></script>
