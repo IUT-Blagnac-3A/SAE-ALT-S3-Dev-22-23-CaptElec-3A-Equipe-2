@@ -7,11 +7,8 @@
         </h2>
         <div class="d-none d-md-block">
           <p class="menu">
-            <a href="#">Overview</a>
-            <a href="#">Notifications</a>
-            <a href="#">Administration</a>
-            <a href="#">Projects and sensors</a>
-            <a href="#">Help</a>
+            <a href="#" (click)='changeView("Dashboard");viewService.setIsDashboardActive(false)'>Overview</a>
+            <a href="#" (click)='changeView("Help")'>Help</a>
           </p>
         </div>
         <ul class="footer-social p-0">
