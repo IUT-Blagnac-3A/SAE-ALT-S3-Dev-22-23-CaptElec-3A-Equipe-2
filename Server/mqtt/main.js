@@ -1,15 +1,27 @@
+const db = require('./db')
 const mqttHandler = require('./mqttHandler')
 const battery = require('./batteryCallback')
 const data = require('./dataCallback')
 
-const mqttBattery = new mqttHandler('mqtt://chirpstack.iut-blagnac.fr', 'application/1/device/+/event/status')
-const mqttData = new mqttHandler('mqtt://chirpstack.iut-blagnac.fr', 'application/1/device/+/event/up')
+var handlers = []
 
-const handlers = [
-    {handler: mqttBattery, callback: battery},
-    {handler: mqttData, callback: data}
-]
+db.getMqttFlux()
+    .then(result => {
+        result.forEach(flux => handlers.push(
+        {
+            handler: new mqttHandler(flux['host'], flux['topic']),
+            callback:   function(){
+                            if (flux['type'] == 'data') {
+                                return data;
+                            } else if (flux['type'] == 'battery') {
+                                return battery;
+                            } 
+                        }
+        }))})
+        .catch((error) => {
+            console.log(error)
+        });
 
-handlers.forEach(e => {
-    e.handler.connect(e.callback)
+handlers.forEach(hdl => {
+    hdl.handler.connect(hdl.callback)
 })
