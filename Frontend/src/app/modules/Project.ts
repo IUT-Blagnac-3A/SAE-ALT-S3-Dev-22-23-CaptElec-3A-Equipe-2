@@ -186,6 +186,8 @@ export default class Project {
     // Set the button text
     returnButton.innerHTML = "Retour";
     returnButton.addEventListener("click", () => {
+      let dashboard = document.querySelector("app-dashboard .container");
+      dashboard?.setAttribute("style", "display: none;");
       console.log("Return button clicked");
 
       this.currentDepth--;
@@ -237,6 +239,11 @@ export default class Project {
 
   launchOnClick() {
     let svgContainer = document.getElementById("svg-container");
+    let svgElement = document.querySelector("#svg-container svg");
+    let legendContainer = document.querySelector(".legend-container");
+    let svgTitle = document.querySelector("#svg-container h3");
+    let dashboard = document.querySelector("app-dashboard .container");
+
     if (svgContainer == null) throw new Error("Container not found");
     let svg = svgContainer.querySelector("svg");
     if (svg == null) throw new Error("Svg not found");
@@ -255,7 +262,10 @@ export default class Project {
           // Remove the hidden style from the container
           let container = document.getElementsByClassName("container")[0];
           if (container == null) throw new Error("Container not found");
-          svgContainer?.setAttribute("style", "display: none;");
+          svgElement?.setAttribute("style", "display: none;");
+          legendContainer?.setAttribute("style", "display: none;");
+          svgTitle?.setAttribute("style", "display: none;");
+          dashboard?.setAttribute("style", "display: block;");
 
           // container.setAttribute("style", "display: block;");
           this.viewService.setDashboardId(device as string);
