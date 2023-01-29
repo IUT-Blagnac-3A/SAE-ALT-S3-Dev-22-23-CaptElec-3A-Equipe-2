@@ -52,6 +52,7 @@ export class LogpageComponent {
 
     if (userSession != null) {
       this.viewService.setView("Dashboard");
+      window.location.reload();
     } else {
       this.incorrectPassword = true;
     }
