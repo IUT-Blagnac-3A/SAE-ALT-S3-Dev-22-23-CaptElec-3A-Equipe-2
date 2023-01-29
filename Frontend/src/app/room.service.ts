@@ -27,23 +27,24 @@ export class RoomService {
         ENV.SERVER_ADRESS_A
       }/data/${this.sessionService.getProject()}/all`;
 
-    return this.http.get<any>(
-      ENV.SERVER_ADRESS_A +
-        `/data/` +
-        this.sessionService.getProject() +
-        "/room/" +
-        roomName,
-      {
-        headers: {
-          Authorization: "Bearer " + this.sessionService.getToken(),
-        },
-      }
-    );
+    return this.http.get<any>(path, {
+      headers: {
+        Authorization: "Bearer " + this.sessionService.getToken(),
+      },
+    });
   }
 
   public getRoomBattery(roomName: string): Observable<RoomBattery[]> {
     // return this.http.get<any>("http://localhost:3000/api/battery/" + roomName);
-    return this.http.get<any>(ENV.SERVER_ADRESS_A + `/battery/` + roomName, {
+    let path = `${
+      ENV.SERVER_ADRESS_A
+    }/battery/${this.sessionService.getProject()}/device/${roomName}`;
+    if (roomName === "")
+      path = `${
+        ENV.SERVER_ADRESS_A
+      }/battery/${this.sessionService.getProject()}/all`;
+
+    return this.http.get<any>(path, {
       headers: {
         Authorization: "Bearer " + this.sessionService.getToken(),
       },

@@ -76,7 +76,6 @@ export default class SVGService {
     formData.append("type", type);
 
     let token = localStorage.getItem("token");
-    console.log(token);
 
     if (token == null) throw new Error("Token not found");
     return new Promise(async (res, rej) => {
@@ -100,7 +99,6 @@ export default class SVGService {
   async fillSVGs(values: Array<SVGData>, type: string) {
     if (!types.includes(type)) throw new Error("Type not found");
     let environment = DefineEnvironnementType(type);
-    console.log(values);
 
     values.forEach(async (value: SVGData) => {
       let svg = document.getElementById(value.room.toLowerCase());
