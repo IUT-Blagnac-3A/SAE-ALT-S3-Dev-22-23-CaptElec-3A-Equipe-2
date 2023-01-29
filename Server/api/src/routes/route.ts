@@ -18,8 +18,8 @@ console.log(path.join(srcDirName.join("\\"), "database"));
 export const routes = express.Router();
 
 // routes.use("/v1/auth", authRouter);
-routes.post("/v1/svgs/:username/:id/:projectname", getSvgs);
-routes.use("/v1", corsMiddleware, v1Routes)
+routes.post("/v1/svgs/:username/:projectname", getSvgs);
+routes.use("/v1", corsMiddleware, v1Routes);
 
 routes.get("*", (req, res) => {
   res.send({ error: "404 No page found" });

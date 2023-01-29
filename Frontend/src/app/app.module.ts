@@ -18,6 +18,7 @@ import { BatteryComponent } from "./battery/battery.component";
 import { GaugeComponent } from "./gauge/gauge.component";
 import { LineChartComponent } from "./line-chart/line-chart.component";
 import { SummaryComponent } from "./summary/summary.component";
+import { SessionService } from "./session.service";
 
 @NgModule({
   declarations: [
