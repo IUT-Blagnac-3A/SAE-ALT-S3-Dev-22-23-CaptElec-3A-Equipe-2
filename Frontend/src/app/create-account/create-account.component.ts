@@ -56,13 +56,12 @@ export class CreateAccountComponent {
       this.loginForm.value.password == ""
     )
       return;
-    // this.session.login(this.loginForm.value.username as string, this.loginForm.value.password as string)
-    if (true) {
-      this.sessionService.setSession(
-        this.loginForm.value.username as string,
-        "token",
-        "userid"
-      );
+
+    let userSession = this.session.login(
+      this.loginForm.value.username as string,
+      this.loginForm.value.password as string
+    );
+    if (userSession != null) {
       this.viewService.setView("Dashboard");
     }
   }

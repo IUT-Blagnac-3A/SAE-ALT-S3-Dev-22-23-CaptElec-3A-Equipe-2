@@ -16,8 +16,8 @@ export class AppComponent {
   ) {
     // sessionService.resetSession();
     if (this.sessionService.isThereARunningSession()) {
-      let token = this.sessionService.getToken();
-      this.sessionService.loadBackSessionFromToken(token);
+      let token = this.sessionService.reachToken();
+      this.sessionService.loadBackSessionFromToken(token as string);
       viewServ.setView("Dashboard");
     } else {
       viewServ.setView("Log");
