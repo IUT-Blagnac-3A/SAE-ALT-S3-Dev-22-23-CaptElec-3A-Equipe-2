@@ -243,8 +243,7 @@ export default class Project {
     let legendContainer = document.querySelector(".legend-container");
     let svgTitle = document.querySelector("#svg-container h3");
     let dashboard = document.querySelector("app-dashboard .container");
-    let selectMenu = document.querySelector("#type-combo-box");
-
+    
     if (svgContainer == null) throw new Error("Container not found");
     let svg = svgContainer.querySelector("svg");
     if (svg == null) throw new Error("Svg not found");
@@ -266,6 +265,7 @@ export default class Project {
           svgElement?.setAttribute("style", "display: none;");
           legendContainer?.setAttribute("style", "display: none;");
           svgTitle?.setAttribute("style", "display: none;");
+          let selectMenu = document.querySelector("#svg-container select");
           selectMenu?.setAttribute("style", "display: none;");
           dashboard?.setAttribute("style", "display: block;");
 
