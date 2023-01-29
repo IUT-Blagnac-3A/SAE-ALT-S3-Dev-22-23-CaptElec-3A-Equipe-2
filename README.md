@@ -50,7 +50,7 @@ _We had two sprints of 1 week each. The first sprint was used to create the proj
 
 ---
 
-**Second Release:** [here](https://github.com/IUT-Blagnac-3A/SAE-ALT-S3-Dev-22-23-CaptElec-3A-Equipe-2/releases/tag/v1.0.0)
+**Second Release:** [here](https://github.com/IUT-Blagnac-3A/SAE-ALT-S3-Dev-22-23-CaptElec-3A-Equipe-2/releases/tag/v1.1.0)
 
 **Refinement Sprint 2:** [here](https://www.fichier-pdf.fr/2023/01/29/raffinementsprint2/preview/page/1/)
 
