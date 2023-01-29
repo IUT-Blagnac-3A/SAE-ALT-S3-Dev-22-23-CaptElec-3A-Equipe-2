@@ -27,7 +27,7 @@ Chart.register(...registerables);
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent {
-  @ViewChild("svg") svg: ElementRef | null = null;
+  // @ViewChild("svg") svg: ElementRef | null = null;
   @Input() inputSensorID!: string;
   svgFiles: File[] = [];
   viewService!: ViewService;
@@ -57,6 +57,8 @@ export class DashboardComponent {
   }
 
   async ngOnInit() {
+    this.addSVGContainer();
+
     this.viewServ.observableDash$.subscribe((value) => {
       this.getRoomInformations();
     });
@@ -168,5 +170,16 @@ export class DashboardComponent {
       this.viewServ.observableGauge$.next(this.temperatureChart);
       this.viewServ.observableIssue$.next("");
     }, 0);
+  }
+
+  // Method to add a svg-container to the page
+  addSVGContainer() {
+    const svgContainer = document.createElement("div");
+    svgContainer.classList.add("svg-container");
+    svgContainer.id = "svg-container";
+    // Get the app-dashboard tag
+    const appDashboard = document.getElementsByTagName("app-dashboard")[0];
+    // Add the svg-container to the app-dashboard tag
+    appDashboard.appendChild(svgContainer);
   }
 }

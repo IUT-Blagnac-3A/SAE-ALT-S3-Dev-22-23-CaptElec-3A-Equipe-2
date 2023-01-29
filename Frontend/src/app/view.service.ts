@@ -17,8 +17,7 @@ const views = [
   providedIn: "root",
 })
 export class ViewService {
-  // view = "Log";
-  view = "Dashboard";
+  view = "Log";
   dashboardId = "";
   isDashboardActive = false;
   hasIssue = false;
@@ -37,6 +36,11 @@ export class ViewService {
     if (this.getView() === "Dashboard" && viewName === "Dashboard") {
       // window.location.reload();
     }
+  }
+
+  public resetDashboardId(): void {
+    this.dashboardId = "";
+    this.isDashboardActive = false;
   }
 
   public getView(): string {
