@@ -11,8 +11,8 @@ export class HeaderComponent {
 
   public changeView(viewName: string) {
     this.viewService.resetDashboardId();
-    this.viewService.setView(viewName);
-    console.log(this.viewService.getIsDashboardActive());
-    console.log(this.viewService.getView());
+    let b = false;
+    if (viewName === "Dashboard") b = true;
+    this.viewService.setView(viewName, b);
   }
 }
