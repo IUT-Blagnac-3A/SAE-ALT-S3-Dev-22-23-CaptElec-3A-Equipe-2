@@ -30,11 +30,11 @@ export class ViewService {
 
   constructor() {}
 
-  public setView(viewName: string): void {
+  public setView(viewName: string, update: boolean = false): void {
     if (!views.includes(viewName)) throw new Error("Invalid view name");
     this.view = viewName;
-    if (this.getView() === "Dashboard" && viewName === "Dashboard") {
-      // window.location.reload();
+    if (update) {
+      window.location.reload();
     }
   }
 

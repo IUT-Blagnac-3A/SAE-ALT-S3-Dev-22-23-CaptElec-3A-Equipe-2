@@ -255,10 +255,7 @@ export default class Project {
           // Remove the hidden style from the container
           let container = document.getElementsByClassName("container")[0];
           if (container == null) throw new Error("Container not found");
-          // if (!device) {
-          //   container.setAttribute("style", "display: none;");
-          //   return;
-          // }
+          svgContainer?.setAttribute("style", "display: none;");
 
           // container.setAttribute("style", "display: block;");
           this.viewService.setDashboardId(device as string);
