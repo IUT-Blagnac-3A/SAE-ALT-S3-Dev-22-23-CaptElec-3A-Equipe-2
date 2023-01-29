@@ -1,8 +1,6 @@
-import { Component, ViewChild, QueryList, ElementRef } from "@angular/core";
+import { Component } from "@angular/core";
 
-import SVGService from "./modules/SVG";
-
-import File from "./modules/SVGFile";
+import { SessionService } from "./session.service";
 import { ViewService } from "./view.service";
 
 @Component({
@@ -12,7 +10,19 @@ import { ViewService } from "./view.service";
 export class AppComponent {
   viewService!: ViewService;
 
-  constructor(private svgService: SVGService, private viewServ: ViewService) {}
+  constructor(
+    private sessionService: SessionService,
+    private viewServ: ViewService
+  ) {
+    // sessionService.resetSession();
+    if (this.sessionService.isThereARunningSession()) {
+      let token = this.sessionService.getToken();
+      this.sessionService.loadBackSessionFromToken(token);
+      viewServ.setView("Dashboard");
+    } else {
+      viewServ.setView("Log");
+    }
+  }
 
   ngOnInit() {
     this.viewService = this.viewServ;

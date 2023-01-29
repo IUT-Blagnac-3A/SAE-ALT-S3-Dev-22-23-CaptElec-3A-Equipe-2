@@ -17,6 +17,7 @@ import { Chart, registerables } from "chart.js";
 import Project from "../modules/Project";
 import { Gauge } from "../gauge/gauge.model";
 import DefaultDico from "../modules/default.dico";
+import { SessionService } from "../session.service";
 
 Chart.register(...registerables);
 
@@ -31,6 +32,7 @@ export class DashboardComponent {
   svgFiles: File[] = [];
   viewService!: ViewService;
   roomService!: RoomService;
+  sessionService!: SessionService;
   roomInformations!: Room[];
   roomName!: string;
   roomCO2!: Number;
@@ -48,35 +50,56 @@ export class DashboardComponent {
   constructor(
     private svgService: SVGService,
     private viewServ: ViewService,
-    private roomServ: RoomService
-  ) {}
+    private roomServ: RoomService,
+    private ss: SessionService
+  ) {
+    this.sessionService = ss;
+  }
 
   async ngOnInit() {
+    this.addSVGContainer();
+
+    this.viewServ.observableDash$.subscribe((value) => {
+      this.getRoomInformations();
+    });
+
     const D = new DefaultDico();
     this.criticalRateBattery = D.CRITICAL_BATTERY;
     this.criticalRateCO2 = D.CRITICAL_CO2;
     this.criticalRateHumidity = D.CRITICAL_HUMIDITY;
     this.criticalRateTemperature = D.CRITICAL_TEMPERATURE;
-    this.cardText = "Critical limit before sending a notification : ";
+    this.cardText = "Critical limit : ";
     this.viewService = this.viewServ;
     this.roomService = this.roomServ;
     this.getRoomInformations();
 
     let values = await this.svgService.getSVGFromClientProject(
-      "remiboulle",
-      "0acf456wf",
+      // this.ss.User,
+      "remib",
       "IUT-BLAGNAC"
     );
 
-    let newProject = new Project("IUT-BLAGNAC", values, this.svgService);
+    let newProject = new Project(
+      "IUT-BLAGNAC",
+      values,
+      this.svgService,
+      this.viewServ
+    );
     newProject.displayOnPage();
-
-    // this.renderCharts();
+    // Display all the 5 secondes the current viewService.dashboardId
+    // this.viewService.setDashboardId(this.roomName);
+    // setInterval(() => {
+    //   if (this.roomName != this.viewService.dashboardId) {
+    //     this.roomName = this.viewService.dashboardId;
+    //     this.inputSensorID = this.viewService.dashboardId;
+    //     this.getRoomInformations();
+    //   }
+    // }, 500);
   }
 
   getRoomInformations(): void {
     const D = new DefaultDico();
-    this.roomService.getRoom(this.inputSensorID).subscribe(
+    this.roomService.getRoom(this.viewServ.getDashboardId()).subscribe(
       (result: Room[]) => {
         let informationNumber = 0;
         for (let i = 0; i < result.length; i++) {
@@ -140,5 +163,33 @@ export class DashboardComponent {
         console.log(error);
       }
     );
+
+    setTimeout(() => {
+      this.viewServ.observableGauge$.next(this.co2Chart);
+      this.viewServ.observableGauge$.next(this.humidityChart);
+      this.viewServ.observableGauge$.next(this.temperatureChart);
+      this.viewServ.observableIssue$.next("");
+    }, 0);
+  }
+
+  // Method to add a svg-container to the page
+  addSVGContainer() {
+    // Find the svg-container tag
+    console.log("addSVGContainer");
+
+    const svgContainer = document.getElementById("svg-container");
+    if (!svgContainer) {
+      const svgContainer = document.createElement("div");
+      svgContainer.classList.add("svg-container");
+      svgContainer.id = "svg-container";
+      // Set the style as display: block
+      svgContainer.setAttribute("style", "display: block;");
+
+      const appDashboard = document.getElementsByTagName("app-dashboard")[0];
+      // Add the svg-container to the app-dashboard tag
+      appDashboard.appendChild(svgContainer);
+    } else {
+      // Set the style as display: block
+    }
   }
 }

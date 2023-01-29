@@ -4,16 +4,15 @@ import * as fs from "fs";
 
 export default async function getSvgs(req: Request, res: Response) {
   const username: string = req.params.username;
-  const id: string = req.params.id;
   const projectname: string = req.params.projectname;
 
-  if (username == undefined || id == undefined || projectname == undefined) {
+  if (username == undefined || projectname == undefined) {
     res.status(400).send("Bad request : missing parameters");
     return;
   }
 
   const parentPath = "/app/src/database";
-  const direct = `${username}-${id}/${projectname}`;
+  const direct = `${username}/${projectname}`;
   const path = `${parentPath}/${direct}/`;
 
   console.log(path);

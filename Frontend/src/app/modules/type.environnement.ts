@@ -6,6 +6,7 @@ interface EnvironmentType {
   max: number;
   minColor: string;
   maxColor: string;
+  rangeColor: string[];
 }
 
 const DefineEnvironnementType = function (type: string) {
@@ -18,6 +19,7 @@ const DefineEnvironnementType = function (type: string) {
         max: D.TEMPERATURE_MAX,
         minColor: D.TEMPERATURE_MIN_COLOR,
         maxColor: D.TEMPERATURE_MAX_COLOR,
+        rangeColor: D.TEMPERATURE_RANGE_COLOR,
       } as EnvironmentType;
     case "humidity":
       return {
@@ -26,6 +28,7 @@ const DefineEnvironnementType = function (type: string) {
         max: D.HUMIDITY_MAX,
         minColor: D.HUMIDITY_MIN_COLOR,
         maxColor: D.HUMIDITY_MAX_COLOR,
+        rangeColor: D.HUMIDITY_RANGE_COLOR,
       } as EnvironmentType;
     case "pressure":
       return {
@@ -34,6 +37,7 @@ const DefineEnvironnementType = function (type: string) {
         max: D.PRESSURE_MAX,
         minColor: D.PRESSURE_MIN_COLOR,
         maxColor: D.PRESSURE_MAX_COLOR,
+        rangeColor: D.PRESSURE_RANGE_COLOR,
       } as EnvironmentType;
     case "co2":
       return {
@@ -42,6 +46,7 @@ const DefineEnvironnementType = function (type: string) {
         max: D.CO2_MAX,
         minColor: D.CO2_MIN_COLOR,
         maxColor: D.CO2_MAX_COLOR,
+        rangeColor: D.CO2_RANGE_COLOR,
       } as EnvironmentType;
     case "activity":
       return {
@@ -50,6 +55,7 @@ const DefineEnvironnementType = function (type: string) {
         max: D.ACTIVITY_MAX,
         minColor: D.ACTIVITY_MIN_COLOR,
         maxColor: D.ACTIVITY_MAX_COLOR,
+        rangeColor: D.ACTIVITY_RANGE_COLOR,
       } as EnvironmentType;
     default:
       return {
@@ -58,6 +64,7 @@ const DefineEnvironnementType = function (type: string) {
         max: 0,
         minColor: "#000000",
         maxColor: "#000000",
+        rangeColor: ["#000000", "#000000", "#000000"],
       } as EnvironmentType;
   }
 };

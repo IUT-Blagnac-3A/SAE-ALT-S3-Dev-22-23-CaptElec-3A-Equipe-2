@@ -1,7 +1,11 @@
 import SVGFile from "./SVGFile";
 import SVGService, { SVGData } from "./SVG";
+import { ViewService } from "../view.service";
+import DefineEnvironnementType from "./type.environnement";
+import Legend from "./Legend";
 
 const types = ["activity", "co2", "humidity", "pressure", "temperature"];
+const typesEmote = ["🏃", "🌬", "💧", "🗜️", "🌡"];
 
 /**
  * @author EricP
@@ -10,6 +14,7 @@ export default class Project {
   name: string;
   svgArray: SVGFile[] = [];
   svgService: SVGService;
+  viewService: ViewService;
   svgArrayWithDepth: Array<SVGFile[]> = [];
   currentDepth: number = 0;
   currentIndex: number = 0;
@@ -18,9 +23,15 @@ export default class Project {
   currentTypeSearched = "temperature";
   history: Array<{ depth: number; index: number }> = [];
 
-  constructor(name: string, svgArray: SVGFile[], svgService: SVGService) {
+  constructor(
+    name: string,
+    svgArray: SVGFile[],
+    svgService: SVGService,
+    viewServ: ViewService
+  ) {
     this.name = name;
     this.svgArray = svgArray;
+    this.viewService = viewServ;
     this.svgService = svgService;
     this.maxDepth = this.determineMaxDepth(svgArray);
     this.buildSvgArrayWithDepth();
@@ -31,10 +42,11 @@ export default class Project {
     this.currentTypeSearched = type;
   }
 
-  displayOnPage() {
+  displayOnPage(fromComboBox: boolean = false) {
     let container = document.getElementById("svg-container");
     if (container == null) throw new Error("Container not found");
-    this.history.push({ depth: this.currentDepth, index: this.currentIndex });
+    if (!fromComboBox)
+      this.history.push({ depth: this.currentDepth, index: this.currentIndex });
 
     container.innerHTML = "";
     if (this.currentDepth > 0) this.displayReturnButton();
@@ -44,7 +56,9 @@ export default class Project {
 
     if (this.currentDepth == this.maxDepth) {
       this.colorLastDepth();
+      this.displayScaleColor();
       this.launchOnClick();
+      this.displayComboBoxWithTypes();
     } else {
       this.launchInteraction();
     }
@@ -172,12 +186,53 @@ export default class Project {
     // Set the button text
     returnButton.innerHTML = "Retour";
     returnButton.addEventListener("click", () => {
+      console.log("Return button clicked");
+
       this.currentDepth--;
       this.currentIndex = this.history[this.history.length - 2].index;
       this.history.pop();
       this.displayOnPage();
     });
     container.appendChild(returnButton);
+  }
+
+  displayComboBoxWithTypes() {
+    let container = document.getElementById("svg-container");
+    if (container == null) throw new Error("Container not found");
+    let comboBox = document.createElement("select");
+    comboBox.setAttribute("id", "type-combo-box");
+    comboBox.setAttribute("class", "form-select");
+    comboBox.setAttribute("aria-label", "Default select example");
+    comboBox.addEventListener("change", (event) => {
+      let elementClicked = event.target as HTMLSelectElement;
+      let value = elementClicked.value;
+      this.currentTypeSearched = value;
+      this.displayOnPage(true);
+    });
+    types.forEach((type) => {
+      let option = document.createElement("option");
+      option.setAttribute("value", type);
+      // upperCase the first letter
+      let indexOfType = types.indexOf(type);
+      type =
+        typesEmote[indexOfType] + type.charAt(0).toUpperCase() + type.slice(1);
+      option.innerHTML = type;
+      comboBox.appendChild(option);
+    });
+    // The placeholder is the currentTypeSearched
+    comboBox.value = this.currentTypeSearched;
+    container.appendChild(comboBox);
+  }
+
+  displayScaleColor() {
+    let currentType = this.currentTypeSearched;
+    let envType = DefineEnvironnementType(currentType);
+    let max = envType.max;
+    let min = envType.min;
+    let colors = envType.rangeColor;
+    let legend = new Legend(min, max, colors, envType.unit);
+    legend.display();
+    this.displayReturnButton();
   }
 
   launchOnClick() {
@@ -189,14 +244,24 @@ export default class Project {
     gs.forEach((group: Node, index: number, parent: NodeList) => {
       if (group instanceof Element) {
         group.addEventListener("click", (event) => {
+          this.viewService.setIsDashboardActive(true);
           let elementClickedBis = event.target as HTMLElement;
           let elementClicked = elementClickedBis.parentElement;
           if (elementClicked == null) throw new Error("Element not found");
-          console.log(elementClicked);
           let id = elementClicked.getAttribute("id")?.toUpperCase();
           if (id == null) throw new Error("Id not found");
           let device = this.svgService.findDeviceLinkedToRoom(id);
-          console.log(device);
+
+          // Remove the hidden style from the container
+          let container = document.getElementsByClassName("container")[0];
+          if (container == null) throw new Error("Container not found");
+          svgContainer?.setAttribute("style", "display: none;");
+
+          // container.setAttribute("style", "display: block;");
+          this.viewService.setDashboardId(device as string);
+          this.viewService.observableDash$.next(
+            this.viewService.getDashboardId()
+          );
         });
       }
     });

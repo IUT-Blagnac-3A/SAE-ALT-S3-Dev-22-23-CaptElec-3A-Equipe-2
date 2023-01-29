@@ -25,6 +25,8 @@ export class LogpageComponent {
     private viewService: ViewService,
     private sessionService: SessionService
   ) {
+    // if (this.sessionService.isConnected())
+    //   this.viewService.setView("Dashboard");
     this.session = new SessionService(http);
   }
 
@@ -43,14 +45,15 @@ export class LogpageComponent {
       this.loginForm.value.password == ""
     )
       return;
-    // this.session.login(this.loginForm.value.username as string, this.loginForm.value.password as string)
-    if (false) {
+    let result = await this.session.login(
+      this.loginForm.value.username as string,
+      this.loginForm.value.password as string
+    );
+    if (result == 0) {
       this.sessionService.setSession(
         this.loginForm.value.username as string,
         "token",
-        "userid",
-        "firstname",
-        "lastname"
+        "userid"
       );
       this.viewService.setView("Dashboard");
     } else {

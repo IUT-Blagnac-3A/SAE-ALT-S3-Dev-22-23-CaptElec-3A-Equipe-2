@@ -1,62 +1,66 @@
 footer {
-	padding: 5em 0;
+  background: #1dbcbf;
+  padding: 60px 0;
+  // top margin to compensate for the navbar
+  margin-top: 60px;
+  position: relative;
+  z-index: 1;
 }
 
 footer .footer-heading {
-	font-size: 25px;
-	color: #fff;
-	font-weight: 500;
-	margin-bottom: 30px;
+  font-size: 25px;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 30px;
 }
 
 a {
-	color: #ffffff;
-	text-decoration: none;
-	background-color: transparent;
+  color: #ffffff;
+  text-decoration: none;
+  background-color: transparent;
 }
 
 footer .menu a {
-	color: rgba(255, 255, 255, 0.6);
-	margin: 0 10px;
-	text-transform: uppercase;
-	letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 footer p {
-	color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .footer-social li a span {
-	position: absolute;
-	font-size: 20px;
-	top: 40%;
-	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+  position: absolute;
+  font-size: 20px;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 footer .footer-social li a {
-	background: transparent;
-	border: 1px solid #1dbcbf;
+  background: transparent;
+  border: 1px solid #1dbcbf;
 }
 
 .footer-social li a {
-	height: 40px;
-	width: 40px;
-	display: block;
-	background: rgba(0, 0, 0, 0.05);
-	border-radius: 50%;
-	position: relative;
+  height: 40px;
+  width: 40px;
+  display: block;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  position: relative;
 }
 
-
 footer li {
-	list-style: none;
-	margin: 0 10px 0 0;
-	display: inline-block;
+  list-style: none;
+  margin: 0 10px 0 0;
+  display: inline-block;
 }
 
 footer .menu {
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }

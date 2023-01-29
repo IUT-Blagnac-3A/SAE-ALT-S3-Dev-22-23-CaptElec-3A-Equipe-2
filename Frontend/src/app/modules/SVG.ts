@@ -23,17 +23,15 @@ export default class SVGService {
 
   async getSVGFromClientProject(
     username: string,
-    id: string,
     projectname: string
   ): Promise<File[]> {
     return new Promise(async (resolve, reject) => {
       let svgFiles: File[] = [];
-      let path = `${ENV.SERVER_ADRESS_A}/svgs/${username}/${id}/${projectname}/`;
+      let path = `${ENV.SERVER_ADRESS_A}/svgs/${username}/${projectname}/`;
       let file: File;
 
       const formData = new FormData();
       formData.append("username", username);
-      formData.append("id", id);
       formData.append("projectname", projectname);
 
       await this.http
@@ -103,8 +101,7 @@ export default class SVGService {
       let color = await SVGService.findColorNuance(
         environment.min,
         environment.max,
-        environment.minColor,
-        environment.maxColor,
+        environment.rangeColor,
         value.value
       );
       for (let i = 0; i < paths?.length; i++) {
@@ -120,28 +117,30 @@ export default class SVGService {
   static async findColorNuance(
     min: number,
     max: number,
-    minColor: string,
-    maxColor: string,
+    colors: string[],
     value: number
   ): Promise<string> {
-    let minColorRGB = SVGService.hexToRgb(minColor);
-    let maxColorRGB = SVGService.hexToRgb(maxColor);
-    let color = {
-      r: 0,
-      g: 0,
-      b: 0,
-    };
-    let nuance = (value - min) / (max - min);
-    color.r = Math.floor(
-      minColorRGB.r + nuance * (maxColorRGB.r - minColorRGB.r)
-    );
-    color.g = Math.floor(
-      minColorRGB.g + nuance * (maxColorRGB.g - minColorRGB.g)
-    );
-    color.b = Math.floor(
-      minColorRGB.b + nuance * (maxColorRGB.b - minColorRGB.b)
-    );
-    return SVGService.rgbToHex(color.r, color.g, color.b);
+    const step = (max - min) / (colors.length - 1);
+    const index = Math.floor((value - min) / step);
+    const weight = (value - (min + index * step)) / step;
+    const color1 = colors[index];
+    const color2 = colors[index + 1] || color1;
+    const r1 = parseInt(color1.substring(1, 3), 16);
+    const g1 = parseInt(color1.substring(3, 5), 16);
+    const b1 = parseInt(color1.substring(5, 7), 16);
+    const r2 = parseInt(color2.substring(1, 3), 16);
+    const g2 = parseInt(color2.substring(3, 5), 16);
+    const b2 = parseInt(color2.substring(5, 7), 16);
+    const r = Math.floor(r1 + (r2 - r1) * weight)
+      .toString(16)
+      .padStart(2, "0");
+    const g = Math.floor(g1 + (g2 - g1) * weight)
+      .toString(16)
+      .padStart(2, "0");
+    const b = Math.floor(b1 + (b2 - b1) * weight)
+      .toString(16)
+      .padStart(2, "0");
+    return "#" + r + g + b;
   }
 
   static hexToRgb(hex: string): any {
